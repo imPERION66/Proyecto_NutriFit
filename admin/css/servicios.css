@@ -173,6 +173,43 @@
   box-shadow: var(--shadow-md);
 }
 
+.nutri-card.nutri-card-add {
+  border: 2px dashed var(--color-primary-text);
+  background-color: rgba(255, 255, 255, 0.45);
+  opacity: 0.85;
+  cursor: pointer;
+  justify-content: center;
+  align-items: center;
+  min-height: 280px;
+}
+
+.nutri-card.nutri-card-add:hover {
+  opacity: 1;
+  background-color: rgba(255, 255, 255, 0.75);
+  border-color: var(--color-primary);
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-md);
+}
+
+.nutri-card-add-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  color: var(--color-primary-text);
+  font-weight: 700;
+}
+
+.nutri-card-add-content .add-icon {
+  font-size: 42px;
+  color: var(--color-primary);
+  transition: transform 0.3s ease;
+}
+
+.nutri-card.nutri-card-add:hover .add-icon {
+  transform: scale(1.15) rotate(90deg);
+}
+
 .nutri-avatar-container {
   width: 90px;
   height: 90px;

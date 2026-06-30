@@ -304,6 +304,45 @@
   </div>
 </div>
 
+<!-- ========================================== MODAL AGREGAR NUTRICIONISTA (STAFF) ========================================== -->
+<div id="modal-agregar-nutricionista" class="modal-overlay">
+  <div class="modal-card">
+    <button class="cerrar-modal" id="btn-close-agregar-nutri-modal">&times;</button>
+    <h2>Agregar Nuevo Nutricionista</h2>
+    <p class="modal-subtitle">Registra un nuevo especialista médico en el staff de NutriFit.</p>
+    
+    <form id="form-agregar-nutricionista">
+      <div class="grupo-campo">
+        <label for="nutri-nombre">Nombre Completo <span class="req">*</span></label>
+        <input type="text" id="nutri-nombre" placeholder="Ej. Dr. Alberto Santos" required>
+      </div>
+
+      <div class="grupo-campo" style="margin-top: 15px;">
+        <label for="nutri-especialidad">Especialidad <span class="req">*</span></label>
+        <input type="text" id="nutri-especialidad" placeholder="Ej. Nutrición Deportiva" required>
+      </div>
+
+      <div class="grupo-campo" style="margin-top: 15px;">
+        <label for="nutri-imagen">URL de Fotografía (o ruta de archivo) <span class="req">*</span></label>
+        <input type="text" id="nutri-imagen" placeholder="Ej. https://images.unsplash.com/... o ruta local" required>
+      </div>
+
+      <div class="grupo-campo" style="margin-top: 15px;">
+        <label for="nutri-estado">Estado Inicial</label>
+        <select id="nutri-estado">
+          <option value="Disponible">Disponible</option>
+          <option value="No Disponible">No Disponible</option>
+        </select>
+      </div>
+
+      <div class="form-actions" style="margin-top: 25px;">
+        <button type="button" class="btn-cancelar" id="btn-cancel-agregar-nutri">Cancelar</button>
+        <button type="submit" class="btn-guardar-submit">Registrar Nutricionista</button>
+      </div>
+    </form>
+  </div>
+</div>
+
 <!-- Scripts de Supabase y Lógica de Administración -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="../js/supabase-config.js"></script>

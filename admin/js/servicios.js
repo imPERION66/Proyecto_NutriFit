@@ -212,6 +212,11 @@ function initServiciosEventListeners() {
   document.getElementById("btn-cancel-horarios").addEventListener("click", cerrarModalHorarios);
   document.getElementById("form-editar-horarios").addEventListener("submit", guardarHorariosSubmit);
 
+  // Modal Agregar Nutricionista - Eventos
+  document.getElementById("btn-close-agregar-nutri-modal").addEventListener("click", cerrarModalAgregarNutri);
+  document.getElementById("btn-cancel-agregar-nutri").addEventListener("click", cerrarModalAgregarNutri);
+  document.getElementById("form-agregar-nutricionista").addEventListener("submit", guardarAgregarNutriSubmit);
+
   // Añadir hora chip
   document.getElementById("btn-add-chip-hour").addEventListener("click", agregarChipHoraAction);
 
@@ -243,12 +248,21 @@ function renderizarSuscripciones() {
   }).join("");
 }
 
-// ========================================== SUBMÓDULO B: NUTRICIONISTAS ==========================================
+// ========================================== SUBMÓDULO B: NUTRICIONISTAS STAFF ==========================================
 function renderizarNutricionistas() {
   const grid = document.getElementById("nutricionistas-grid");
   if (!grid) return;
 
-  grid.innerHTML = nutricionistas.map(n => {
+  const addCardHtml = `
+    <article class="nutri-card nutri-card-add" onclick="abrirModalAgregarNutri()">
+      <div class="nutri-card-add-content">
+        <i class="fa-solid fa-plus add-icon"></i>
+        <span>Agregar Nuevo Nutricionista</span>
+      </div>
+    </article>
+  `;
+
+  const cardsHtml = nutricionistas.map(n => {
     const labelEstado = (n.estado === "Disponible") ? "Disponible" : "No Disponible";
     const claseEstado = (n.estado === "Disponible") ? "disponible" : "no-disponible";
     const labelBotonToggle = (n.estado === "Disponible") ? "Marcar No Disponible" : "Marcar Disponible";
@@ -275,6 +289,8 @@ function renderizarNutricionistas() {
       </article>
     `;
   }).join("");
+
+  grid.innerHTML = addCardHtml + cardsHtml;
 }
 
 function toggleStatusNutricionista(id) {
@@ -345,6 +361,40 @@ function removerChipHora(index) {
 
 function cerrarModalHorarios() {
   document.getElementById("modal-editar-horarios").classList.remove("show");
+}
+
+function abrirModalAgregarNutri() {
+  const modal = document.getElementById("modal-agregar-nutricionista");
+  const form = document.getElementById("form-agregar-nutricionista");
+  form.reset();
+  modal.classList.add("show");
+}
+
+function cerrarModalAgregarNutri() {
+  document.getElementById("modal-agregar-nutricionista").classList.remove("show");
+}
+
+function guardarAgregarNutriSubmit(e) {
+  e.preventDefault();
+  const nombre = document.getElementById("nutri-nombre").value.trim();
+  const especialidad = document.getElementById("nutri-especialidad").value.trim();
+  const imagen = document.getElementById("nutri-imagen").value.trim() || "https://cdn-icons-png.flaticon.com/512/147/147144.png";
+  const estado = document.getElementById("nutri-estado").value;
+
+  const nuevoNutri = {
+    id: "nutri-" + Date.now(),
+    nombre,
+    especialidad,
+    imagen,
+    estado,
+    horarios: []
+  };
+
+  nutricionistas.push(nuevoNutri);
+  guardarNutricionistas();
+  renderizarNutricionistas();
+  cerrarModalAgregarNutri();
+  mostrarToast("Nuevo nutricionista registrado con éxito.");
 }
 
 function guardarHorariosSubmit(e) {
@@ -518,3 +568,4 @@ window.abrirModalHorarios = abrirModalHorarios;
 window.removerChipHora = removerChipHora;
 window.abrirModalReceta = abrirModalReceta;
 window.eliminarReceta = eliminarReceta;
+window.abrirModalAgregarNutri = abrirModalAgregarNutri;
