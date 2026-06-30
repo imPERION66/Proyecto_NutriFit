@@ -271,7 +271,7 @@ function abrirModalTestimonio(id = null) {
       document.getElementById("testimonio-imagen").value = t.imagen;
     }
   } else {
-    titulo.textContent = "Agregar Nuevo Caso de Éxito";
+    titulo.textContent = "Registrar Caso de Éxito";
     document.getElementById("form-testimonio-id").value = "";
     document.getElementById("testimonio-imagen").value = "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&q=80";
   }
