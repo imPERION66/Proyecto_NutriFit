@@ -545,6 +545,88 @@
   }
 }
 
+/* Estilos para campos de formulario en modales */
+.modal-card .grupo-campo {
+  display: flex;
+  flex-direction: column;
+  margin-top: 15px;
+  text-align: left;
+}
+
+.modal-card .grupo-campo label {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--color-dark);
+  margin-bottom: 6px;
+}
+
+.modal-card .grupo-campo input[type="text"],
+.modal-card .grupo-campo textarea {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-white);
+  color: var(--color-dark);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13.5px;
+  transition: var(--transition);
+}
+
+.modal-card .grupo-campo input[type="text"]:focus,
+.modal-card .grupo-campo textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(79, 168, 118, 0.15);
+}
+
+.modal-card .form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 25px;
+  border-top: 1px solid var(--color-border);
+  padding-top: 20px;
+}
+
+.modal-card .btn-cancelar {
+  padding: 10px 20px;
+  border: 1px solid var(--color-border);
+  background-color: var(--color-bg-light);
+  color: var(--color-text);
+  border-radius: var(--radius-sm);
+  font-size: 13.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.modal-card .btn-cancelar:hover {
+  background-color: #eee;
+  color: var(--color-dark);
+}
+
+.modal-card .btn-guardar-submit {
+  padding: 10px 20px;
+  border: none;
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  border-radius: var(--radius-sm);
+  font-size: 13.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.modal-card .btn-guardar-submit:hover {
+  background-color: var(--color-primary-dark);
+}
+
+.modal-card span.req {
+  color: var(--color-oculto);
+  font-weight: bold;
+}
+
 /* ==========================================
    RESPONSIVO
    ========================================== */
