@@ -24,6 +24,7 @@ if (typeof supabase === 'undefined') {
 } else {
     // Inicialización sincrónica inicial con los valores por defecto
     supabaseClient = supabase.createClient(formatSupabaseUrl(DEFAULT_URL), DEFAULT_ANON_KEY);
+    window.supabaseClient = supabaseClient;
     console.log("NutriFit: Cliente de Supabase inicializado con configuración por defecto.");
 }
 
@@ -45,6 +46,7 @@ async function cargarVariablesEntorno() {
 
         if (url && anonKey) {
             supabaseClient = supabase.createClient(formatSupabaseUrl(url), anonKey);
+            window.supabaseClient = supabaseClient;
             console.log("NutriFit: Conexión con Supabase actualizada exitosamente desde el servidor local (/api/config).");
         }
     } catch (error) {

@@ -1488,3 +1488,4 @@ function verificarEstadoDeudorUsuario() {
 
 // Escuchar cambios de estado para actualizar la UI en vivo
 window.addEventListener("nf_clientes_estado_modificado", verificarEstadoDeudorUsuario);
+});
