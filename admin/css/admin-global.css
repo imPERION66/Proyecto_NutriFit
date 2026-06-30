@@ -102,6 +102,21 @@ body {
     color: var(--color-primary);
 }
 
+/* Nuevo Branding de Logotipo Bicolor */
+.logo-nutri {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--color-dark);
+    font-family: 'DM Sans', sans-serif;
+}
+
+.logo-fit {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--color-primary);
+    font-family: 'DM Sans', sans-serif;
+}
+
 /* Usuario en Sidebar */
 .sidebar__user {
     background-color: var(--color-primary-light);
