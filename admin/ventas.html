@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reporte de Ventas - NutriFit Admin</title>
+  
+  <!-- Tipografías y CSS FontAwesome -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500;700&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/admin-global.css">
+  <link rel="stylesheet" href="css/ventas.css">
+  
+  <!-- Comprobación de seguridad rápida antes de renderizar -->
+  <script>
+    (function() {
+      const session = JSON.parse(localStorage.getItem("nf_session") || "null");
+      if (!session || session.id_rol !== 1) {
+        alert("Acceso denegado. No tienes permisos de administrador.");
+        window.location.replace("../index.html");
+      }
+    })();
+  </script>
+</head>
+<body>
+<div class="app">
+  
+  <!-- SIDEBAR DE ADMINISTRACIÓN -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar__logo">
+      <div class="sidebar__logo-icon">
+        <i class="fa-solid fa-leaf"></i>
+      </div>
+      <span class="sidebar__logo-name">NutriFit</span>
+    </div>
+    
+    <!-- Perfil del Admin -->
+    <div class="sidebar__user">
+      <div class="user-avatar" id="user-avatar" data-user-avatar>A</div>
+      <p class="user-name" id="user-name" data-user-name>Administrador</p>
+      <p class="user-email" id="user-email" data-user-email>admin@nutrifit.com</p>
+    </div>
+    
+    <!-- Botón Retorno a Cliente -->
+    <div class="sidebar__action-btn">
+      <a href="../index.html" class="btn-return-client">
+        <i class="fa-solid fa-store"></i> Volver a la Vista General
+      </a>
+    </div>
+    
+    <!-- Navegación Admin -->
+    <nav class="sidebar__nav">
+      <span class="nav-section-label">Principal</span>
+      <a href="dashboard.html" class="nav-item" data-page="dashboard">
+        <i class="fa-solid fa-chart-line"></i> Panel de Control
+      </a>
+      
+      <span class="nav-section-label">Gestión Operativa</span>
+      <a href="pedidos.html" class="nav-item" data-page="pedidos">
+        <i class="fa-solid fa-truck-fast"></i> Pedidos
+      </a>
+      <a href="menu.html" class="nav-item" data-page="carta">
+        <i class="fa-solid fa-bowl-food"></i> Platos y Carta
+      </a>
+      <a href="clientes.html" class="nav-item" data-page="clientes">
+        <i class="fa-solid fa-users"></i> Clientes
+      </a>
+      <a href="reclamos.html" class="nav-item" data-page="reclamos">
+        <i class="fa-solid fa-envelope-open-text"></i> Reclamos
+      </a>
+      
+      <span class="nav-section-label">Reportes y Config.</span>
+      <a href="ventas.html" class="nav-item active" data-page="ventas">
+        <i class="fa-solid fa-chart-pie"></i> Reporte de Ventas
+      </a>
+      <a href="servicios.html" class="nav-item" data-page="servicios">
+        <i class="fa-solid fa-screwdriver-wrench"></i> Servicios
+      </a>
+      <a href="sobre-nosotros.html" class="nav-item" data-page="sobre-nosotros">
+        <i class="fa-solid fa-circle-info"></i> Sobre Nosotros
+      </a>
+    </nav>
+    
+    <!-- Cierre de Sesión -->
+    <div class="sidebar__logout">
+      <button class="btn-logout" id="btn-logout-sidebar">
+        <i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión
+      </button>
+    </div>
+  </aside>
+
+  <!-- Overlay para menú móvil -->
+  <div class="overlay" id="overlay"></div>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="main">
+    
+    <!-- Topbar para móviles -->
+    <div class="topbar">
+      <div class="topbar-logo">
+        <div class="sidebar__logo-icon" style="width:30px;height:30px;font-size:13px;">
+          <i class="fa-solid fa-leaf"></i>
+        </div>
+        <span>NutriFit Admin</span>
+      </div>
+      <button class="btn-menu" id="btn-menu" aria-label="Menú">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+
+    <!-- Panel de Contenido -->
+    <div class="content">
+      <header class="page-header">
+        <h1>Auditoría y Reporte de Ventas</h1>
+        <p>Consulta, filtra y exporta el historial de transacciones financieras, métodos de pago y canales de venta de NutriFit.</p>
+      </header>
+
+      <!-- BARRA DE FILTROS AVANZADA -->
+      <section class="filters-card">
+        <div class="filters-grid">
+          <div class="filter-group">
+            <label for="filtro-desde">Desde</label>
+            <input type="date" id="filtro-desde">
+          </div>
+          
+          <div class="filter-group">
+            <label for="filtro-hasta">Hasta</label>
+            <input type="date" id="filtro-hasta">
+          </div>
+          
+          <div class="filter-group">
+            <label for="filtro-canal">Canal de Venta</label>
+            <select id="filtro-canal">
+              <option value="Todos">Todos los canales</option>
+              <option value="Menu">Menú Diario (Carta)</option>
+              <option value="Suscripciones">Planes / Suscripciones</option>
+            </select>
+          </div>
+          
+          <div class="filter-group actions-column">
+            <button class="btn-export-report" id="btn-export-report">
+              <i class="fa-solid fa-file-arrow-down"></i> Exportar Reporte (Excel / PDF)
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- RESUMEN DE VENTAS EN RANGO -->
+      <section class="sales-summary-row">
+        <div class="summary-metric">
+          <span class="summary-label">Monto Transaccionado</span>
+          <span class="summary-value" id="summary-total-monto">S/ 0.00</span>
+        </div>
+        <div class="summary-metric">
+          <span class="summary-label">Transacciones Totales</span>
+          <span class="summary-value" id="summary-total-transacciones">0</span>
+        </div>
+        <div class="summary-metric">
+          <span class="summary-label">Ticket Promedio</span>
+          <span class="summary-value" id="summary-ticket-promedio">S/ 0.00</span>
+        </div>
+      </section>
+
+      <!-- TABLA DE TRANSACCIONES -->
+      <section class="table-card">
+        <div class="table-container">
+          <table class="ventas-table">
+            <thead>
+              <tr>
+                <th>ID Transacción</th>
+                <th>Fecha/Hora</th>
+                <th>Cliente</th>
+                <th>Concepto Detallado</th>
+                <th>Método de Pago</th>
+                <th class="text-right">Monto Total</th>
+              </tr>
+            </thead>
+            <tbody id="ventas-table-body">
+              <!-- Renderizado dinámico -->
+              <tr>
+                <td colspan="6" class="text-center">Cargando transacciones financieras...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        
+        <!-- Paginación -->
+        <div class="pagination-container">
+          <span class="pagination-info" id="pagination-info">Mostrando transacciones 0 a 0 de 0</span>
+          <div class="pagination-buttons">
+            <button class="btn-pagination" id="btn-prev-page" disabled><i class="fa-solid fa-angle-left"></i> Anterior</button>
+            <div class="pagination-numbers" id="pagination-numbers">
+              <!-- Botones de páginas -->
+            </div>
+            <button class="btn-pagination" id="btn-next-page" disabled>Siguiente <i class="fa-solid fa-angle-right"></i></button>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+<!-- Scripts de Supabase y Lógica -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabase-config.js"></script>
+<script src="js/ventas.js"></script>
+</body>
+</html>

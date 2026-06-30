@@ -9,6 +9,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500;700&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
   <!-- Stylesheets -->
   <link rel="stylesheet" href="css/admin-global.css">
   <link rel="stylesheet" href="css/dashboard.css">
@@ -116,72 +119,75 @@
     <div class="content">
       <header class="page-header">
         <h1>Hola, <span id="admin-first-name" data-user-first-name>Administrador</span></h1>
-        <p>Resumen analítico de la operación y ventas de NutriFit.</p>
+        <p>Resumen analítico de la operación y métricas de salud de NutriFit hoy.</p>
       </header>
 
-      <!-- Grid de Métricas Analíticas Operativas -->
+      <!-- Grid de Métricas KPI Clave -->
       <section class="admin-metrics-grid">
         <article class="metric-card">
           <div class="metric-icon money">
-            <i class="fa-solid fa-wallet"></i>
+            <i class="fa-solid fa-sack-dollar"></i>
           </div>
           <div class="metric-data">
-            <h3>Ingresos Totales</h3>
-            <p id="admin-ingresos">S/ 0.00</p>
+            <h3>Ingresos del Mes</h3>
+            <p id="kpi-ingresos-mes">S/ 0.00</p>
+          </div>
+        </article>
+        
+        <article class="metric-card">
+          <div class="metric-icon plans">
+            <i class="fa-solid fa-receipt"></i>
+          </div>
+          <div class="metric-data">
+            <h3>Planes Activos</h3>
+            <p id="kpi-planes-activos">0</p>
           </div>
         </article>
         
         <article class="metric-card">
           <div class="metric-icon orders">
-            <i class="fa-solid fa-box-archive"></i>
+            <i class="fa-solid fa-calendar-check"></i>
           </div>
           <div class="metric-data">
-            <h3>Pedidos Totales</h3>
-            <p id="admin-pedidos-count">0</p>
+            <h3>Pedidos de Hoy</h3>
+            <p id="kpi-pedidos-hoy">0</p>
           </div>
         </article>
         
         <article class="metric-card">
-          <div class="metric-icon foods">
-            <i class="fa-solid fa-utensils"></i>
+          <div class="metric-icon users">
+            <i class="fa-solid fa-user-plus"></i>
           </div>
           <div class="metric-data">
-            <h3>Platos en Carta</h3>
-            <p id="admin-total-platos">0</p>
-          </div>
-        </article>
-        
-        <article class="metric-card">
-          <div class="metric-icon pending">
-            <i class="fa-solid fa-bell"></i>
-          </div>
-          <div class="metric-data">
-            <h3>Pedidos Activos</h3>
-            <p id="admin-pedidos-pendientes">0</p>
+            <h3>Nuevos Clientes</h3>
+            <p id="kpi-nuevos-clientes">0</p>
           </div>
         </article>
       </section>
 
-      <!-- Panel de Rendimiento y KPIs Detallados (Sin redundancias de accesos directos) -->
-      <section class="panel-card">
-        <h2>Rendimiento y Estados</h2>
-        <div class="admin-kpi-grid">
-          <article class="admin-kpi-card">
-            <div class="admin-kpi-label">Ventas Acumuladas</div>
-            <div class="admin-kpi-value" id="admin-ventas-acumuladas">S/ 0.00</div>
-            <div class="admin-kpi-caption">Monto total facturado en la tienda</div>
-          </article>
-          
-          <article class="admin-kpi-card">
-            <div class="admin-kpi-label">Estado del Inventario</div>
-            <div class="admin-kpi-value" id="admin-inventario-estado">0 categorías activas</div>
-            <div class="admin-kpi-caption">Diversificación del menú de platos</div>
-          </article>
-        </div>
+      <!-- SECCIÓN DE GRÁFICOS ANALÍTICOS -->
+      <section class="dashboard-charts-row">
+        <article class="chart-card">
+          <div class="chart-card-header">
+            <h3><i class="fa-solid fa-chart-bar icon-green"></i> Rendimiento de Ventas Semanal</h3>
+          </div>
+          <div class="chart-canvas-wrapper">
+            <canvas id="chart-ventas-semanal"></canvas>
+          </div>
+        </article>
+        
+        <article class="chart-card">
+          <div class="chart-card-header">
+            <h3><i class="fa-solid fa-chart-pie icon-green"></i> Distribución de Ingresos</h3>
+          </div>
+          <div class="chart-canvas-wrapper">
+            <canvas id="chart-distribucion-ingresos"></canvas>
+          </div>
+        </article>
       </section>
 
       <!-- Listado de Pedidos Recientes -->
-      <section class="table-card">
+      <section class="table-card" style="margin-top: 30px;">
         <div class="table-card__header">
           <h2>Gestión de Pedidos Recientes</h2>
           <a href="pedidos.html">Ver todos los pedidos <i class="fa-solid fa-chevron-right" style="font-size:10px; margin-left:2px;"></i></a>
