@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestión de Sobre Nosotros - NutriFit Admin</title>
+  
+  <!-- Tipografías y CSS FontAwesome -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500;700&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/admin-global.css">
+  <link rel="stylesheet" href="css/sobre-nosotros.css">
+  
+  <!-- Comprobación de seguridad rápida antes de renderizar -->
+  <script>
+    (function() {
+      const session = JSON.parse(localStorage.getItem("nf_session") || "null");
+      if (!session || session.id_rol !== 1) {
+        alert("Acceso denegado. No tienes permisos de administrador.");
+        window.location.replace("../index.html");
+      }
+    })();
+  </script>
+</head>
+<body>
+<div class="app">
+  
+  <!-- SIDEBAR DE ADMINISTRACIÓN -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar__logo">
+      <div class="sidebar__logo-icon">
+        <i class="fa-solid fa-leaf"></i>
+      </div>
+      <span class="sidebar__logo-name">NutriFit</span>
+    </div>
+    
+    <!-- Perfil del Admin -->
+    <div class="sidebar__user">
+      <div class="user-avatar" id="user-avatar" data-user-avatar>A</div>
+      <p class="user-name" id="user-name" data-user-name>Administrador</p>
+      <p class="user-email" id="user-email" data-user-email>admin@nutrifit.com</p>
+    </div>
+    
+    <!-- Botón Retorno a Client -->
+    <div class="sidebar__action-btn">
+      <a href="../index.html" class="btn-return-client">
+        <i class="fa-solid fa-store"></i> Volver a la Vista General
+      </a>
+    </div>
+    
+    <!-- Navegación Admin -->
+    <nav class="sidebar__nav">
+      <span class="nav-section-label">Principal</span>
+      <a href="dashboard.html" class="nav-item" data-page="dashboard">
+        <i class="fa-solid fa-chart-line"></i> Panel de Control
+      </a>
+      
+      <span class="nav-section-label">Gestión Operativa</span>
+      <a href="pedidos.html" class="nav-item" data-page="pedidos">
+        <i class="fa-solid fa-truck-fast"></i> Pedidos
+      </a>
+      <a href="menu.html" class="nav-item" data-page="carta">
+        <i class="fa-solid fa-bowl-food"></i> Menu NutriFit
+      </a>
+      <a href="clientes.html" class="nav-item" data-page="clientes">
+        <i class="fa-solid fa-users"></i> Clientes
+      </a>
+      <a href="reclamos.html" class="nav-item" data-page="reclamos">
+        <i class="fa-solid fa-envelope-open-text"></i> Reclamos
+      </a>
+      
+      <span class="nav-section-label">Reportes y Config.</span>
+      <a href="ventas.html" class="nav-item" data-page="ventas">
+        <i class="fa-solid fa-chart-pie"></i> Reporte de Ventas
+      </a>
+      <a href="servicios.html" class="nav-item" data-page="servicios">
+        <i class="fa-solid fa-screwdriver-wrench"></i> Servicios
+      </a>
+      <a href="sobre-nosotros.html" class="nav-item active" data-page="sobre-nosotros">
+        <i class="fa-solid fa-circle-info"></i> Sobre Nosotros
+      </a>
+    </nav>
+    
+    <!-- Cierre de Sesión -->
+    <div class="sidebar__logout">
+      <button class="btn-logout" id="btn-logout-sidebar">
+        <i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión
+      </button>
+    </div>
+  </aside>
+
+  <!-- Overlay para menú móvil -->
+  <div class="overlay" id="overlay"></div>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="main">
+    
+    <!-- Topbar para móviles -->
+    <div class="topbar">
+      <div class="topbar-logo">
+        <div class="sidebar__logo-icon" style="width:30px;height:30px;font-size:13px;">
+          <i class="fa-solid fa-leaf"></i>
+        </div>
+        <span>NutriFit Admin</span>
+      </div>
+      <button class="btn-menu" id="btn-menu" aria-label="Menú">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+
+    <!-- Panel de Contenido -->
+    <div class="content">
+      <header class="page-header">
+        <h1>Gestión de Información Institucional</h1>
+        <p>Configura los textos corporativos de NutriFit (Historia, Misión y Visión) y administra la publicación de casos de éxito y testimonios reales de clientes en la web pública.</p>
+      </header>
+
+      <!-- SECCIÓN A: HISTORIA, MISIÓN Y VISIÓN (TEXTO EDITORIAL) -->
+      <section class="card-editorial-container">
+        <div class="editorial-card-header">
+          <div class="header-left">
+            <i class="fa-solid fa-book-bookmark icon-green"></i>
+            <h3>Información Corporativa e Historia</h3>
+          </div>
+          <div class="header-right">
+            <button class="btn-editorial-action" id="btn-edit-editorial">
+              <i class="fa-solid fa-pen-to-square"></i> Editar Contenido
+            </button>
+            <div class="editorial-edit-actions" id="editorial-edit-actions" style="display: none;">
+              <button class="btn-editorial-save" id="btn-save-editorial">
+                <i class="fa-solid fa-check"></i> Guardar
+              </button>
+              <button class="btn-editorial-cancel" id="btn-cancel-editorial">
+                <i class="fa-solid fa-xmark"></i> Cancelar
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="editorial-grid" id="editorial-view-container">
+          <!-- Vista Estática de Misión, Visión y Fundador -->
+          <div class="editorial-box">
+            <div class="box-tag tag-mision">Misión</div>
+            <h4 id="view-mision-titulo">Cargando...</h4>
+            <p id="view-mision-texto">Cargando...</p>
+          </div>
+          <div class="editorial-box">
+            <div class="box-tag tag-vision">Visión</div>
+            <h4 id="view-vision-titulo">Cargando...</h4>
+            <p id="view-vision-texto">Cargando...</p>
+          </div>
+          <div class="editorial-box">
+            <div class="box-tag tag-fundador">Fundador/Historia</div>
+            <h4 id="view-valores-titulo">Cargando...</h4>
+            <p id="view-valores-texto">Cargando...</p>
+          </div>
+        </div>
+
+        <form id="editorial-form-container" style="display: none;">
+          <!-- Formulario de Edición de Misión, Visión y Fundador -->
+          <div class="editorial-grid">
+            <div class="editorial-box edit-mode">
+              <div class="box-tag tag-mision">Misión</div>
+              <input type="text" id="edit-mision-titulo" class="input-editorial-titulo" required>
+              <textarea id="edit-mision-texto" class="textarea-editorial-texto" rows="6" required></textarea>
+            </div>
+            <div class="editorial-box edit-mode">
+              <div class="box-tag tag-vision">Visión</div>
+              <input type="text" id="edit-vision-titulo" class="input-editorial-titulo" required>
+              <textarea id="edit-vision-texto" class="textarea-editorial-texto" rows="6" required></textarea>
+            </div>
+            <div class="editorial-box edit-mode">
+              <div class="box-tag tag-fundador">Fundador/Historia</div>
+              <input type="text" id="edit-valores-titulo" class="input-editorial-titulo" required>
+              <textarea id="edit-valores-texto" class="textarea-editorial-texto" rows="6" required></textarea>
+            </div>
+          </div>
+        </form>
+      </section>
+
+      <!-- SECCIÓN B: CASOS DE ÉXITO REALES (GESTIÓN DE TESTIMONIOS) -->
+      <section class="testimonials-admin-section">
+        <div class="section-title-bar">
+          <i class="fa-solid fa-quote-left icon-green"></i>
+          <h3>Casos de Éxito y Testimonios</h3>
+        </div>
+        <p class="section-desc">Administra los testimonios que verán los visitantes de la web pública. Puedes crear nuevos, editar su información o alternar su visibilidad.</p>
+        
+        <div class="testimonials-admin-grid" id="testimonials-admin-grid">
+          <!-- Carga dinámica: Tarjeta "Agregar Nuevo" + tarjetas de testimonios -->
+        </div>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+<!-- ========================================== MODAL AGREGAR / EDITAR CASO DE ÉXITO ========================================== -->
+<div id="modal-testimonio" class="modal-overlay">
+  <div class="modal-card">
+    <button class="cerrar-modal" id="btn-close-testimonio-modal">&times;</button>
+    <h2 id="modal-testimonio-titulo">Agregar Nuevo Caso de Éxito</h2>
+    <p class="modal-subtitle">Registra o edita los logros y testimonios de un cliente de NutriFit.</p>
+    
+    <form id="form-testimonio">
+      <input type="hidden" id="form-testimonio-id">
+      
+      <div class="grupo-campo">
+        <label for="testimonio-nombre">Nombre del Cliente <span class="req">*</span></label>
+        <input type="text" id="testimonio-nombre" placeholder="Ej. Valeria Rodríguez" required>
+      </div>
+
+      <div class="grupo-campo" style="margin-top: 15px;">
+        <label for="testimonio-objetivo">Objetivo Nutricional Alcanzado <span class="req">*</span></label>
+        <input type="text" id="testimonio-objetivo" placeholder="Ej. Bajar de Peso (-12 kg) o Aumento de Masa muscular" required>
+      </div>
+
+      <div class="grupo-campo" style="margin-top: 15px;">
+        <label for="testimonio-reseña">Texto de la Reseña <span class="req">*</span></label>
+        <textarea id="testimonio-reseña" rows="4" placeholder="Escribe el testimonio del cliente aquí..." required></textarea>
+      </div>
+
+      <div class="grupo-campo" style="margin-top: 15px;">
+        <label for="testimonio-imagen">URL de Fotografía de Perfil <span class="req">*</span></label>
+        <input type="text" id="testimonio-imagen" placeholder="Ej. https://images.unsplash.com/... o ruta de imagen" required>
+      </div>
+
+      <div class="form-actions" style="margin-top: 25px;">
+        <button type="button" class="btn-cancelar" id="btn-cancel-testimonio">Cancelar</button>
+        <button type="submit" class="btn-guardar-submit">Guardar Testimonio</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Scripts de Supabase y Lógica de Administración -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabase-config.js"></script>
+<script src="js/sobre-nosotros.js"></script>
+</body>
+</html>

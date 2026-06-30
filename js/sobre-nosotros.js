@@ -3,10 +3,14 @@
 // =========================================================================
 
 document.addEventListener("DOMContentLoaded", () => {
-    // 1. Inicializar la animación de contadores con IntersectionObserver
+    // 1. Cargar textos e historias de éxito dinámicamente
+    cargarEditorialPublico();
+    cargarTestimoniosPublicos();
+
+    // 2. Inicializar la animación de contadores con IntersectionObserver
     initStatsCounterAnimation();
 
-    // 2. Inicializar los eventos de control del modal de video
+    // 3. Inicializar los eventos de control del modal de video
     initVideoModalControls();
 });
 
@@ -150,3 +154,66 @@ function cerrarTestimonioVideo() {
 // Exponer funciones globales para interactuar con los handlers de clicks inline en el HTML
 window.reproducirTestimonio = reproducirTestimonio;
 window.cerrarTestimonioVideo = cerrarTestimonioVideo;
+
+/**
+ * Carga dinámicamente los contenidos institucionales si han sido actualizados por el Administrador.
+ */
+function cargarEditorialPublico() {
+    try {
+        const editorial = JSON.parse(localStorage.getItem("nf_editorial"));
+        if (!editorial) return;
+
+        const elMisionT = document.getElementById("view-mision-titulo");
+        const elMisionP = document.getElementById("view-mision-texto");
+        const elVisionT = document.getElementById("view-vision-titulo");
+        const elVisionP = document.getElementById("view-vision-texto");
+        const elValoresT = document.getElementById("view-valores-titulo");
+        const elValoresP = document.getElementById("view-valores-texto");
+
+        if (elMisionT) elMisionT.textContent = editorial.mision_titulo;
+        if (elMisionP) elMisionP.textContent = editorial.mision_texto;
+        if (elVisionT) elVisionT.textContent = editorial.vision_titulo;
+        if (elVisionP) elVisionP.textContent = editorial.vision_texto;
+        if (elValoresT) elValoresT.textContent = editorial.valores_titulo;
+        if (elValoresP) elValoresP.textContent = editorial.valores_texto;
+    } catch (err) {
+        console.warn("NutriFit: No se pudo inyectar el contenido editorial:", err);
+    }
+}
+
+/**
+ * Carga dinámicamente los casos de éxito de clientes en la sección testimonios.
+ */
+function cargarTestimoniosPublicos() {
+    try {
+        const listado = JSON.parse(localStorage.getItem("nf_testimonios"));
+        const grid = document.getElementById("testimonials-public-grid");
+        if (!listado || !grid) return;
+
+        // Filtrar únicamente testimonios en estado "Publicado"
+        const publicados = listado.filter(t => t.estado === "Publicado");
+
+        if (publicados.length === 0) {
+            grid.innerHTML = '<p class="empty-testimonials" style="grid-column: 1/-1; text-align: center; font-style: italic; color: var(--color-text-light);">Próximamente más historias de éxito de nuestra comunidad.</p>';
+            return;
+        }
+
+        grid.innerHTML = publicados.map(t => `
+            <article class="testimonial-card">
+                <div class="testimonial-img-wrapper">
+                    <img src="${t.imagen}" alt="Testimonio de ${t.nombre}" onerror="this.src='https://cdn-icons-png.flaticon.com/512/147/147144.png'">
+                </div>
+                <div class="testimonial-body">
+                    <h3>${t.nombre}</h3>
+                    <span class="testimonial-meta">Objetivo: ${t.objetivo}</span>
+                    <p class="testimonial-text">"${t.reseña}"</p>
+                    <button class="btn-play-video" onclick="reproducirTestimonio('${t.nombre}', 'https://www.youtube.com/embed/dQw4w9WgXcQ')">
+                        <i class="fa-solid fa-play"></i> Ver Testimonio
+                    </button>
+                </div>
+            </article>
+        `).join("");
+    } catch (err) {
+        console.warn("NutriFit: Error al inyectar testimonios dinámicos:", err);
+    }
+}
