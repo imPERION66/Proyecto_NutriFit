@@ -1,0 +1,783 @@
+/* =========================================================================
+   ESTILOS ESPECÍFICOS PARA EL PERFIL DEL CLIENTE - NUTRIFIT
+   ========================================================================= */
+
+/* SECCIÓN HERO DE PERFIL */
+.perfil-hero {
+    background: linear-gradient(180deg, var(--color-primary-light) 0%, rgba(255, 255, 255, 0) 100%);
+    padding: 60px 5% 40px;
+    border-radius: 0 0 35px 35px;
+    margin-bottom: 40px;
+}
+
+.perfil-hero-info {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+    text-align: center;
+}
+
+@media (min-width: 768px) {
+    .perfil-hero-info {
+        flex-direction: row;
+        text-align: left;
+        gap: 35px;
+    }
+}
+
+.avatar-container {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    border: 4px solid var(--color-white);
+    box-shadow: 0 10px 25px rgba(79, 168, 118, 0.15);
+    overflow: hidden;
+    background-color: var(--color-white);
+}
+
+.avatar-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.perfil-resumen h1 {
+    font-size: 28px;
+    color: var(--color-dark);
+    font-weight: 900;
+    margin-bottom: 6px;
+}
+
+.perfil-resumen p {
+    font-size: 15px;
+    color: var(--color-text);
+    margin-bottom: 15px;
+}
+
+.perfil-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+}
+
+@media (min-width: 768px) {
+    .perfil-badges {
+        justify-content: flex-start;
+    }
+}
+
+.badge-profile-goal,
+.badge-profile-imc {
+    font-size: 13.5px;
+    font-weight: 700;
+    padding: 6px 14px;
+    border-radius: 20px;
+}
+
+.badge-profile-goal {
+    background-color: var(--color-primary-light);
+    color: var(--color-primary-text);
+    border: 1px solid var(--color-border);
+}
+
+.badge-profile-imc {
+    background-color: var(--color-goal-mantener-bg);
+    color: var(--color-goal-mantener);
+    border: 1px solid #cce3f0;
+}
+
+/* LAYOUT DE DASHBOARD */
+.perfil-contenido {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto 80px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+    align-items: start;
+}
+
+@media (min-width: 992px) {
+    .perfil-contenido {
+        grid-template-columns: 1fr 3fr;
+    }
+}
+
+/* PANEL IZQUIERDO: PESTAÑAS */
+.perfil-sidebar {
+    background-color: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: 20px;
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    overflow-x: auto;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.01);
+}
+
+@media (min-width: 992px) {
+    .perfil-sidebar {
+        flex-direction: column;
+        overflow-x: visible;
+    }
+}
+
+.tab-btn {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 20px;
+    background: transparent;
+    border: none;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--color-text);
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.3s ease;
+    width: auto;
+}
+
+@media (min-width: 992px) {
+    .tab-btn {
+        width: 100%;
+    }
+}
+
+.tab-btn i {
+    font-size: 18px;
+    transition: transform 0.3s;
+}
+
+.tab-btn:hover {
+    color: var(--color-primary-text);
+    background-color: var(--color-primary-light);
+}
+
+.tab-btn:hover i {
+    transform: scale(1.1);
+}
+
+.tab-btn.active {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+}
+
+.tab-btn.active:hover {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+}
+
+/* CONTENEDOR DE PESTAÑAS (PANEL DERECHO) */
+.perfil-panels {
+    background-color: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: 24px;
+    padding: 30px 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.015);
+}
+
+@media (min-width: 768px) {
+    .perfil-panels {
+        padding: 45px;
+    }
+}
+
+.tab-panel {
+    display: none;
+}
+
+.tab-panel.active {
+    display: block;
+    animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.tab-panel h2 {
+    font-size: 24px;
+    color: var(--color-dark);
+    font-weight: 900;
+    margin-bottom: 8px;
+}
+
+.panel-descripcion {
+    font-size: 14.5px;
+    color: var(--color-text);
+    line-height: 1.6;
+    margin-bottom: 35px;
+}
+
+/* PESTAÑA 1: DATOS PERSONALES (EDICIÓN EN LÍNEA) */
+.datos-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+@media (min-width: 768px) {
+    .datos-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.dato-row {
+    background-color: var(--color-bg-light);
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    transition: all 0.3s;
+}
+
+.dato-row:not(.readonly):hover {
+    border-color: var(--color-primary-text);
+}
+
+.dato-info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex-grow: 1;
+}
+
+.dato-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--color-text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.dato-value {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--color-dark);
+    transition: opacity 0.2s;
+}
+
+.dato-input {
+    font-size: 15.5px;
+    font-weight: 700;
+    color: var(--color-dark);
+    background-color: var(--color-white);
+    border: 1px solid var(--color-primary);
+    border-radius: 8px;
+    padding: 8px 12px;
+    outline: none;
+    width: 100%;
+    box-shadow: 0 0 0 3px rgba(79, 168, 118, 0.08);
+}
+
+.dato-input.select {
+    cursor: pointer;
+}
+
+/* Botón Editar Inline */
+.btn-edit-inline {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1px solid var(--color-border);
+    background-color: var(--color-white);
+    color: var(--color-text);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+    flex-shrink: 0;
+}
+
+.btn-edit-inline:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+    background-color: var(--color-primary-light);
+    transform: scale(1.05);
+}
+
+.btn-edit-inline.editing {
+    border-color: var(--color-primary);
+    background-color: var(--color-primary);
+    color: var(--color-white);
+}
+
+.btn-edit-inline.editing:hover {
+    background-color: var(--color-primary-hover);
+    color: var(--color-white);
+}
+
+/* Casos especiales */
+.dato-row.readonly {
+    background-color: #f1f5f3;
+    opacity: 0.85;
+}
+
+.lock-badge {
+    color: var(--color-text-light);
+    font-size: 16px;
+    padding-right: 8px;
+}
+
+/* PESTAÑA 2: DIRECCIÓN Y GPS */
+.direccion-box {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    max-width: 650px;
+}
+
+.input-gps-wrapper {
+    display: flex;
+    gap: 12px;
+    position: relative;
+    width: 100%;
+}
+
+.input-gps-wrapper input {
+    flex-grow: 1;
+    padding: 14px 16px;
+    border: 1px solid #d1d5db;
+    border-radius: 12px;
+    font-size: 15.5px;
+    outline: none;
+    transition: all 0.25s;
+    background-color: var(--color-bg-light);
+}
+
+.input-gps-wrapper input:focus {
+    border-color: var(--color-primary);
+    background-color: var(--color-white);
+    box-shadow: 0 0 0 4px rgba(79, 168, 118, 0.12);
+}
+
+/* Botón GPS */
+.btn-gps {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 14px 20px;
+    background-color: var(--color-dark);
+    color: var(--color-white);
+    border: none;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 14.5px;
+    cursor: pointer;
+    transition: all 0.3s;
+    flex-shrink: 0;
+}
+
+.btn-gps:hover {
+    background-color: var(--color-primary);
+    box-shadow: 0 6px 15px rgba(79, 168, 118, 0.2);
+}
+
+.btn-gps.detecting {
+    background-color: var(--color-primary);
+    animation: gpsPulse 1.2s infinite alternate;
+}
+
+@keyframes gpsPulse {
+    from { opacity: 0.7; transform: scale(0.98); }
+    to { opacity: 1; transform: scale(1.02); }
+}
+
+/* Display de Coordenadas */
+.coordenadas-display {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    background-color: var(--color-bg-light);
+    border: 1px solid var(--color-border);
+    border-radius: 14px;
+    padding: 16px;
+}
+
+.coord-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.coord-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--color-text-light);
+    text-transform: uppercase;
+}
+
+.coord-val {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--color-dark);
+}
+
+.btn-guardar-panel {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border: none;
+    border-radius: 12px;
+    padding: 15px 30px;
+    font-size: 15.5px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s;
+    align-self: flex-start;
+}
+
+.btn-guardar-panel:hover {
+    background-color: var(--color-primary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(79, 168, 118, 0.2);
+}
+
+/* PESTAÑA 3: BILLETERA NUTRIFIT */
+.metodos-pago-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+    margin-bottom: 40px;
+}
+
+@media (min-width: 600px) {
+    .metodos-pago-row {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.metodo-item {
+    background-color: var(--color-bg-light);
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
+    padding: 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.metodo-item:hover {
+    border-color: var(--color-primary-text);
+}
+
+.metodo-item.active {
+    border-color: var(--color-primary);
+    background-color: var(--color-primary-light);
+    box-shadow: 0 4px 15px rgba(79, 168, 118, 0.05);
+}
+
+.metodo-icon {
+    font-size: 24px;
+    color: var(--color-text);
+}
+
+.metodo-item.active .metodo-icon {
+    color: var(--color-primary);
+}
+
+.metodo-item span {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--color-dark);
+}
+
+/* SECCIÓN TARJETAS */
+.tarjetas-cabecera {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: 15px;
+}
+
+.tarjetas-cabecera h3 {
+    font-size: 18px;
+    color: var(--color-dark);
+    font-weight: 700;
+}
+
+.btn-add-card-trigger {
+    background-color: var(--color-primary-light);
+    color: var(--color-primary-text);
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    padding: 10px 16px;
+    font-size: 13.5px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-add-card-trigger:hover {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border-color: var(--color-primary);
+}
+
+/* Tarjetas Grid */
+.tarjetas-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+@media (min-width: 600px) {
+    .tarjetas-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Diseño Premium de Tarjeta de Crédito */
+.credit-card-ui {
+    background: linear-gradient(135deg, var(--color-primary-hover) 0%, var(--color-dark) 100%);
+    border-radius: 18px;
+    padding: 24px;
+    color: var(--color-white);
+    min-height: 175px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 10px 25px rgba(31, 42, 36, 0.15);
+    position: relative;
+    overflow: hidden;
+}
+
+.credit-card-ui::after {
+    content: '';
+    position: absolute;
+    right: -20px;
+    top: -20px;
+    width: 120px;
+    height: 120px;
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 50%;
+}
+
+.card-top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-chip {
+    width: 35px;
+    height: 26px;
+    background: linear-gradient(135deg, #dfc07b 0%, #a88434 100%);
+    border-radius: 4px;
+    position: relative;
+}
+
+.btn-delete-card {
+    background: rgba(255, 255, 255, 0.15);
+    border: none;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    color: var(--color-white);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+    z-index: 5;
+}
+
+.btn-delete-card:hover {
+    background-color: var(--color-accent-red);
+    transform: scale(1.1);
+}
+
+.card-middle-row {
+    margin: 18px 0;
+}
+
+.card-number-ui {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.card-bottom-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.card-holder-ui {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    max-width: 70%;
+}
+
+.card-holder-ui span:first-child {
+    font-size: 9px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.6);
+    letter-spacing: 0.5px;
+}
+
+.card-holder-ui span:last-child {
+    font-size: 13.5px;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.card-expiry-ui {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 3px;
+}
+
+.card-expiry-ui span:first-child {
+    font-size: 9px;
+    color: rgba(255, 255, 255, 0.6);
+    text-transform: uppercase;
+}
+
+.card-expiry-ui span:last-child {
+    font-size: 13.5px;
+    font-weight: 700;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+/* Estado Vacío de Tarjetas */
+.tarjetas-vacio {
+    text-align: center;
+    padding: 40px 20px;
+    background-color: var(--color-bg-light);
+    border: 1px dashed var(--color-border);
+    border-radius: 18px;
+}
+
+.vacio-icon {
+    font-size: 40px;
+    color: var(--color-text-light);
+    margin-bottom: 15px;
+}
+
+.tarjetas-vacio h4 {
+    font-size: 16px;
+    color: var(--color-dark);
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.tarjetas-vacio p {
+    font-size: 13.5px;
+    color: var(--color-text);
+    max-width: 450px;
+    margin: 0 auto;
+    line-height: 1.5;
+}
+
+/* Modal Agregar Tarjeta */
+.tarjeta-modal-card {
+    padding: 40px 30px;
+}
+
+.btn-guardar-tarjeta {
+    width: 100%;
+    padding: 14px;
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background .25s ease, transform .2s ease;
+    margin-top: 10px;
+}
+
+.btn-guardar-tarjeta:hover {
+    background: var(--color-primary-hover);
+    transform: translateY(-1px);
+}
+
+/* =========================================================================
+   ESTILOS DE DEUDA DESTACADA PARA EL CLIENTE
+   ========================================================================= */
+.deuda-destacada-card {
+    background-color: #fef2f2;
+    border: 2px solid #fecaca;
+    border-radius: 16px;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    margin-top: 20px;
+    box-shadow: 0 4px 15px rgba(229, 57, 53, 0.06);
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.deuda-icon-text {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.btn-pagar-deuda-online {
+    background-color: #e53935;
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 24px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 12px rgba(229, 57, 53, 0.2);
+}
+
+.btn-pagar-deuda-online:hover {
+    background-color: #c62828;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 15px rgba(229, 57, 53, 0.3);
+}
+
+/* Responsividad */
+@media (max-width: 576px) {
+    .deuda-destacada-card {
+        flex-direction: column;
+        align-items: stretch;
+        text-align: center;
+    }
+    .deuda-icon-text {
+        flex-direction: column;
+        text-align: center;
+    }
+    .btn-pagar-deuda-online {
+        justify-content: center;
+    }
+}

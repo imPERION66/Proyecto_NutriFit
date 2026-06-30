@@ -1,0 +1,226 @@
+ <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriFit - Ordena Comida Saludable</title>
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/index.css">
+    <!-- Icons FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+    <div class="contenedor">
+        <header class="header">
+            <div class="logo">
+                <p>Nutri<span>Fit</span></p>
+            </div>
+            <div class="hamburguesa" id="btn-hamburguesa">
+                <img src="assets/img/menu_hamburguesa.jpg" alt="Menu hamburguesa">
+            </div>
+            <nav class="menu" id="menu-navegacion">
+                <ul class="navegacion">
+                    <li><a href="#">Inicio</a></li>
+                    <li><a href="pages/menu-saludable.html">Menú</a></li>
+                    <li><a href="pages/servicios.html">Servicios</a></li>
+                    <li><a href="pages/sobre-nosotros.html">Sobre Nosotros</a></li>
+                    <li><a href="pages/contacto.html">Contacto</a></li>
+                    <li id="auth-buttons"> 
+                        <a href="#" id="abrir-login">Iniciar Sesión</a> 
+                        <a href="#" id="abrir-registro">Registrarse</a>
+                     </li>
+                </ul>
+            </nav>
+        </header>
+
+        <!-- SECCIÓN DE ESTADO DE CESTA GLOBAL -->
+        <section class="menu-control-panel">
+            <div class="cart-summary-bar">
+                <div class="cart-info">
+                    <span class="total-label">Total a pagar:</span>
+                    <span class="total-value" id="cart-total">S/ 0.00</span>
+                </div>
+                
+                <div class="cart-actions">
+                    <div class="cart-icon-container">
+                        <i class="fa-solid fa-cart-shopping cart-icon"></i>
+                        <span class="cart-badge" id="cart-count">0</span>
+                    </div>
+                    <button class="btn-cart-secondary" id="btn-ir-cesta">Ir a la cesta</button>
+                    <button class="btn-cart-primary" id="btn-continuar">Continuar</button>
+                </div>
+            </div>
+        </section>
+
+        <aside class="presentacion">
+            <div class="informacion">
+                <h1>Ordena tus comidas favoritas y saludables</h1>
+                <div>
+                    <p>Hola, nuestra deliciosa comida está esperando por ti, siempre cerca de ti.</p>
+                </div>
+                <div class="informacion--boton">
+                    <button type="button" onclick="location.href='pages/menu-saludable.html'">Explorar Comidas</button>
+                </div>
+            </div>
+            <div class="presentacion--imagen">
+                <img src="assets/img/presentacion.jpg" alt="Presentación NutriFit">
+            </div>
+        </aside>
+
+        <!-- ========================================== PLATOS RECOMENDADOS ========================================== -->
+        <section class="comida recomendados-seccion">
+            <h2 class="comida--titulo">Recomendados para ti 🔥</h2>
+            <div class="slider-container">
+                <div class="slider-track" id="slider-track-recomendados">
+                    <!-- Cargados dinámicamente desde Supabase / JS -->
+                </div>
+            </div>
+            <!-- Nueva fila de controles con dots e indicadores -->
+            <div class="slider-controls-row">
+                <div class="slider-dots" id="slider-dots-recomendados">
+                    <!-- Dots generados dinámicamente -->
+                </div>
+                <div class="slider-arrows">
+                    <button class="slider-arrow-btn prev" id="btn-prev-recomendados" aria-label="Anterior">&lt;</button>
+                    <button class="slider-arrow-btn next" id="btn-next-recomendados" aria-label="Siguiente">&gt;</button>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- ========================================== FOOTER ========================================== -->
+    <footer class="footer">
+        <div class="footer-contenido">
+            <div class="footer-col-marca">
+                <div class="logo-footer">
+                    <p>Nutri<span>Fit</span></p>
+                </div>
+                <p class="marca-descripcion">
+                    Cuidamos tu salud ofreciéndote deliciosas comidas personalizadas según tus objetivos físicos (bajar de peso, mantenerte en forma o ganar masa muscular).
+                </p>
+                <div class="redes-sociales">
+                    <a href="#" class="red-icon" aria-label="Facebook">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+                    </a>
+                    <a href="#" class="red-icon" aria-label="Instagram">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+                    </a>
+                    <a href="#" class="red-icon" aria-label="WhatsApp">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="footer-col">
+                <h3>Navegación</h3>
+                <ul>
+                    <li><a href="#">Inicio</a></li>
+                    <li><a href="pages/menu-saludable.html">Nuestro Menú</a></li>
+                    <li><a href="pages/servicios.html">Servicios</a></li>
+                    <li><a href="pages/sobre-nosotros.html">Sobre Nosotros</a></li>
+                    <li><a href="pages/contacto.html">Contacto</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-col">
+                <h3>Horarios</h3>
+                <ul>
+                    <li>Lunes a Viernes:</li>
+                    <li class="destacado-horario">8:00 AM - 9:00 PM</li>
+                    <li>Sábados y Domingos:</li>
+                    <li class="destacado-horario">9:00 AM - 6:00 PM</li>
+                </ul>
+            </div>
+            
+            <div class="footer-col">
+                <h3>Legal</h3>
+                <ul>
+                    <li><a href="#">Políticas de Privacidad</a></li>
+                    <li><a href="#">Términos y Condiciones</a></li>
+                    <li class="reclamaciones-item">
+                        <a href="admin/reclamos.html" class="libro-reclamaciones">
+                            <img src="assets/img/libro-reclamaciones.png" alt="Libro de Reclamaciones" class="img-reclamaciones" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3503/3503810.png'">
+                            <span>Libro de Reclamaciones</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2026 NutriFit. Todos los derechos reservados. Diseñado para tu bienestar.</p>
+        </div>
+    </footer>
+    <!-- ========================================== MODAL LOGIN ========================================== -->
+      <div id="modal-login" class="modal-overlay">
+         <div class="login-tarjeta modal-card"> 
+            <button class="cerrar-modal" data-close="modal-login"> 
+                &times;
+                 </button>
+                  <div class="logo"> 
+                    <p>Nutri<span>Fit</span></p>
+                 </div> 
+                 <h2>Bienvenido de nuevo</h2> 
+                 <p class="subtitulo"> Ingresa tus credenciales para acceder a tu cuenta.
+                 </p> 
+                 <form id="form-login">
+                     <div class="grupo-campo"> 
+                        <label for="log-correo"> Correo Electrónico </label> 
+                        <input type="email" id="log-correo" placeholder="correo@ejemplo.com" required > 
+                    </div>
+                     <div class="grupo-campo"> 
+                        <label for="log-contrasena"> Contraseña </label>
+                         <input type="password" id="log-contrasena" placeholder="Tu contraseña de acceso" required > 
+                        </div> 
+                        <div id="error-login" class="mensaje-error"></div>
+                         <button type="submit" class="btn-login"> Ingresar </button> 
+                    </form> 
+                    <p class="enlace-registro"> ¿No tienes una cuenta aún? 
+                        <a href="#" id="switch-to-register"> Regístrate aquí </a>
+                     </p> 
+                    </div> 
+                </div>
+             <!-- ========================================== MODAL REGISTRO ========================================== --> 
+              <div id="modal-registro" class="modal-overlay">
+                 <div class="registro-tarjeta modal-card"> 
+                    <button class="cerrar-modal" data-close="modal-registro"> &times; </button> 
+                    <div class="logo"> <p>Nutri<span>Fit</span></p>
+                 </div> 
+                 <h2>Únete a nosotros</h2>
+                 <p class="subtitulo"> Empieza tu cambio hacia una vida más saludable hoy mismo. </p> 
+                 <form id="form-registro"> 
+                    <div class="grupo-campo">
+                         <label for="reg-nombre"> Nombre Completo </label>
+                         <input type="text" id="reg-nombre" placeholder="Ej. Juan Pérez" required >
+                         </div> <div class="grupo-campo"> 
+                            <label for="reg-correo"> Correo Electrónico </label> 
+                            <input type="email" id="reg-correo" placeholder="correo@ejemplo.com" required > 
+                        </div> <div class="grupo-campo"> 
+                            <label for="reg-contrasena"> Contraseña </label>
+                             <input type="password" id="reg-contrasena" placeholder="Mínimo 6 caracteres" required > 
+                            </div> 
+                            <div id="error-registro" class="mensaje-error"></div> 
+                            <button type="submit" class="btn-registro"> Crear Cuenta </button> 
+                        </form> 
+                        <p class="enlace-login"> ¿Ya tienes una cuenta? 
+                            <a href="#" id="switch-to-login"> Inicia sesión aquí </a>
+                         </p> 
+                    </div> 
+                </div>
+    <div id="modal-pendiente" class="modal-flotante">
+        <div class="modal-contenido">
+            <h3>¡Completa tu Perfil! 🥦</h3>
+            <p>Para ofrecerte un menú personalizado según tus objetivos de salud, necesitamos conocer tu peso y talla actual.</p>
+            <div class="modal-botones">
+                <button id="btn-completar-perfil" class="btn-modal-ok">Completar Ahora</button>
+                <button id="btn-cerrar-modal" class="btn-modal-cancel">Más tarde</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/index.js"></script>
+</body>
+</html>

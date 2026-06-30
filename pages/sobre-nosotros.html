@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre Nosotros - NutriFit</title>
+    
+    <!-- CSS Dependencies -->
+    <link rel="stylesheet" href="../css/normalize.css">
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/sobre-nosotros.css">
+    
+    <!-- Icons FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+    <div class="contenedor">
+        
+        <!-- HEADER / NAVBAR -->
+        <header class="header">
+            <div class="logo" onclick="location.href='../index.html'">
+                <p>Nutri<span>Fit</span></p>
+            </div>
+            <div class="hamburguesa" id="btn-hamburguesa">
+                <img src="../assets/img/menu_hamburguesa.jpg" alt="Menu hamburguesa" onerror="this.src='https://cdn-icons-png.flaticon.com/512/561/561115.png'">
+            </div>
+            <nav class="menu" id="menu-navegacion">
+                <ul class="navegacion">
+                    <li><a href="../index.html">Inicio</a></li>
+                    <li><a href="menu-saludable.html">Menú</a></li>
+                    <li><a href="servicios.html">Servicios</a></li>
+                    <li><a href="#" class="active-nav" style="color: var(--color-primary); font-weight: 700;">Sobre Nosotros</a></li>
+                    <li><a href="contacto.html">Contacto</a></li>
+                    <li id="auth-buttons"> 
+                        <a href="#" id="abrir-login" class="btn-login-nav">Iniciar Sesión</a> 
+                        <a href="#" id="abrir-registro" class="btn-reg-nav">Registrarse</a>
+                     </li>
+                </ul>
+        </header>
+
+        <!-- SECCIÓN DE ESTADO DE CESTA GLOBAL -->
+        <section class="menu-control-panel">
+            <div class="cart-summary-bar">
+                <div class="cart-info">
+                    <span class="total-label">Total a pagar:</span>
+                    <span class="total-value" id="cart-total">S/ 0.00</span>
+                </div>
+                
+                <div class="cart-actions">
+                    <div class="cart-icon-container">
+                        <i class="fa-solid fa-cart-shopping cart-icon"></i>
+                        <span class="cart-badge" id="cart-count">0</span>
+                    </div>
+                    <button class="btn-cart-secondary" id="btn-ir-cesta">Ir a la cesta</button>
+                    <button class="btn-cart-primary" id="btn-continuar">Continuar</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 1: NUESTRA HISTORIA (MISIÓN, VISIÓN Y FUNDADOR) -->
+        <section class="about-hero">
+            <h1>Quiénes Somos</h1>
+            <p>Conoce la historia, pasión y objetivos que impulsan a NutriFit Gourmet a transformar la alimentación diaria.</p>
+        </section>
+
+        <section class="history-section">
+            
+            <!-- Fila Misión (Imagen Izquierda, Texto Derecha) -->
+            <div class="history-row">
+                <div class="history-image">
+                    <img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=600&q=80" alt="Alimentación Saludable Misión">
+                </div>
+                <div class="history-content">
+                    <div class="history-tag">Misión</div>
+                    <h2>Transformar vidas a través de la nutrición inteligente</h2>
+                    <p>Nuestra misión es hacer de la alimentación saludable una experiencia deliciosa, accesible y personalizada. Creemos que comer sano no debe ser aburrido ni restrictivo, por lo que creamos recetas gourmet balanceadas por nutricionistas expertos que facilitan cumplir tus objetivos físicos sin sacrificar el sabor.</p>
+                </div>
+            </div>
+
+            <!-- Fila Visión (Texto Izquierda, Imagen Derecha) -->
+            <div class="history-row reverse">
+                <div class="history-image">
+                    <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&q=80" alt="NutriFit Visión de Liderazgo">
+                </div>
+                <div class="history-content">
+                    <div class="history-tag">Visión</div>
+                    <h2>Ser el referente líder en bienestar personalizado</h2>
+                    <p>Nos proyectamos como la plataforma líder en nutrición gourmet personalizada del país, logrando integrar tecnología, asesoramiento médico directo y cocina de alta calidad para acompañar a nuestra comunidad en cada paso de su cambio de vida. Buscamos democratizar el acceso a un estilo de vida saludable y sostenible.</p>
+                </div>
+            </div>
+
+            <!-- Fila Fundador (Imagen Izquierda, Texto Derecha) -->
+            <div class="history-row">
+                <div class="history-image">
+                    <img src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=600&q=80" alt="Fundador Chef Gourmet NutriFit">
+                </div>
+                <div class="history-content">
+                    <div class="history-tag">Fundador</div>
+                    <h2>Pasión por el bienestar y la alta cocina</h2>
+                    <p>NutriFit nació de la visión de nuestro fundador, un apasionado chef y promotor del fitness. Tras identificar lo difícil que resultaba encontrar menús balanceados con macros precisos y gran sabor en el día a día, decidió reunir a un equipo élite de nutricionistas y cocineros para crear una solución gastronómica saludable y científica.</p>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- SECCIÓN 2: PANEL DE IMPACTO (CONTADORES ESTADÍSTICOS) -->
+        <section class="stats-panel" id="stats-panel">
+            <div class="stats-container">
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fa-solid fa-users"></i></div>
+                    <div class="stat-number" id="stat-clients" data-target="17000">0</div>
+                    <div class="stat-label">Clientes Satisfechos</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fa-solid fa-weight-scale"></i></div>
+                    <div class="stat-number" id="stat-weight" data-target="50000">0</div>
+                    <div class="stat-label">Kilos Perdidos en Comunidad</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fa-solid fa-utensils"></i></div>
+                    <div class="stat-number" id="stat-dishes" data-target="100">0</div>
+                    <div class="stat-label">Platos Diseñados por Nutricionistas</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 3: CASOS DE ÉXITO Y TESTIMONIOS (CON REPRODUCTOR DE VIDEO) -->
+        <section class="testimonials-section">
+            <div class="section-title">
+                <h2>Casos de Éxito Reales</h2>
+                <p>Nuestra comunidad comparte sus logros y experiencias inspiradoras tras adoptar el estilo de vida NutriFit.</p>
+            </div>
+            
+            <div class="testimonials-grid">
+                <!-- Testimonio 1 -->
+                <article class="testimonial-card">
+                    <div class="testimonial-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&q=80" alt="Testimonio Carlos Pérez">
+                    </div>
+                    <div class="testimonial-body">
+                        <h3>Valeria Rodríguez</h3>
+                        <span class="testimonial-meta">Objetivo: Bajar de peso (-12 kg)</span>
+                        <p class="testimonial-text">"La comida de NutriFit no solo me ayudó a bajar mis medidas de manera rápida, sino que me enseñó a comer rico y saludable sin pasar hambre."</p>
+                        <button class="btn-play-video" onclick="reproducirTestimonio('Valeria Rodríguez', 'https://www.youtube.com/embed/dQw4w9WgXcQ')">
+                            <i class="fa-solid fa-play"></i> Ver Testimonio
+                        </button>
+                    </div>
+                </article>
+
+                <!-- Testimonio 2 -->
+                <article class="testimonial-card">
+                    <div class="testimonial-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80" alt="Testimonio Carlos Pérez">
+                    </div>
+                    <div class="testimonial-body">
+                        <h3>Carlos Pérez</h3>
+                        <span class="testimonial-meta">Objetivo: Aumento de Masa (+8 kg)</span>
+                        <p class="testimonial-text">"Tener listos mis macros diarios de carbohidratos y proteínas aceleró mi ganancia muscular notablemente. Recomiendo el Plan Mensual al 100%."</p>
+                        <button class="btn-play-video" onclick="reproducirTestimonio('Carlos Pérez', 'https://www.youtube.com/embed/dQw4w9WgXcQ')">
+                            <i class="fa-solid fa-play"></i> Ver Testimonio
+                        </button>
+                    </div>
+                </article>
+
+                <!-- Testimonio 3 -->
+                <article class="testimonial-card">
+                    <div class="testimonial-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&q=80" alt="Testimonio Andrea Solano">
+                    </div>
+                    <div class="testimonial-body">
+                        <h3>Andrea Solano</h3>
+                        <span class="testimonial-meta">Objetivo: Mantenerse Saludable</span>
+                        <p class="testimonial-text">"El sabor gourmet de los platos es increíble. Trabajo todo el día y NutriFit me solucionó la vida con comidas saludables directo en mi oficina."</p>
+                        <button class="btn-play-video" onclick="reproducirTestimonio('Andrea Solano', 'https://www.youtube.com/embed/dQw4w9WgXcQ')">
+                            <i class="fa-solid fa-play"></i> Ver Testimonio
+                        </button>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 4: COMUNIDAD NUTRIFIT (REDES SOCIALES) -->
+        <section class="social-community-section">
+            <div class="community-banner">
+                <h2>¡Únete a nuestra Movida Saludable!</h2>
+                <p>Síguenos en nuestras redes sociales oficiales y accede a consejos de nutrición diaria, sorteos exclusivos y recetas saludables gratuitas.</p>
+                
+                <div class="community-social-links">
+                    <a class="community-social-btn whatsapp" href="https://wa.me/#" target="_blank">
+                        <i class="fa-brands fa-whatsapp"></i><span>WhatsApp</span>
+                    </a>
+                    <a class="community-social-btn facebook" href="https://facebook.com/#" target="_blank">
+                        <i class="fa-brands fa-facebook"></i><span>Facebook</span>
+                    </a>
+                    <a class="community-social-btn instagram" href="https://instagram.com/#" target="_blank">
+                        <i class="fa-brands fa-instagram"></i><span>Instagram</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER INTEGRADO -->
+        <footer class="footer" style="padding-top: 40px; border-top: 1px solid var(--color-border);">
+            <div class="footer-contenido" style="padding-bottom: 20px;">
+                <div class="footer-col-marca">
+                    <div class="logo-footer">
+                        <p>Nutri<span>Fit</span></p>
+                    </div>
+                    <p class="marca-descripcion">
+                        Cuidamos tu salud ofreciéndote deliciosas comidas personalizadas según tus objetivos físicos (bajar de peso, mantenerte en forma o ganar masa muscular).
+                    </p>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Navegación</h3>
+                    <ul>
+                        <li><a href="../index.html">Inicio</a></li>
+                        <li><a href="menu-saludable.html">Nuestro Menú</a></li>
+                        <li><a href="servicios.html">Servicios</a></li>
+                        <li><a href="#" class="active-nav-footer" style="color: var(--color-primary);">Sobre Nosotros</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Horarios</h3>
+                    <ul>
+                        <li>Lunes a Viernes:</li>
+                        <li class="destacado-horario">8:00 AM - 9:00 PM</li>
+                        <li>Sábados y Domingos:</li>
+                        <li class="destacado-horario">9:00 AM - 6:00 PM</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom" style="margin-top: 20px;">
+                <p>&copy; 2026 NutriFit. Todos los derechos reservados. Diseñado para tu bienestar.</p>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- ========================================== MODAL FLOTANTE DE VIDEO TESTIMONIAL ========================================== -->
+    <div class="video-modal-overlay" id="video-modal">
+        <div class="video-modal-card">
+            <button class="video-modal-close" id="video-modal-close">&times;</button>
+            <h3 class="video-modal-title" id="video-modal-title">Testimonio</h3>
+            <div class="video-aspect-container">
+                <iframe id="testimonial-iframe" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================== MODAL LOGIN ========================================== -->
+    <div id="modal-login" class="modal-overlay">
+        <div class="login-tarjeta modal-card"> 
+            <button class="cerrar-modal" data-close="modal-login">&times;</button>
+            <div class="logo"> 
+                <p>Nutri<span>Fit</span></p>
+            </div> 
+            <h2>Bienvenido de nuevo</h2> 
+            <p class="subtitulo">Ingresa tus credenciales para acceder a tu cuenta.</p> 
+            <form id="form-login">
+                <div class="grupo-campo"> 
+                    <label for="log-correo">Correo Electrónico</label> 
+                    <input type="email" id="log-correo" placeholder="correo@ejemplo.com" required> 
+                </div>
+                <div class="grupo-campo"> 
+                    <label for="log-contrasena">Contraseña</label>
+                    <input type="password" id="log-contrasena" placeholder="Tu contraseña de acceso" required> 
+                </div> 
+                <div id="error-login" class="mensaje-error"></div>
+                <button type="submit" class="btn-login">Ingresar</button> 
+            </form> 
+            <p class="enlace-registro">¿No tienes una cuenta aún? 
+                <a href="#" id="switch-to-register">Regístrate aquí</a>
+            </p> 
+        </div> 
+    </div>
+
+    <!-- ========================================== MODAL REGISTRO ========================================== --> 
+    <div id="modal-registro" class="modal-overlay">
+        <div class="registro-tarjeta modal-card"> 
+            <button class="cerrar-modal" data-close="modal-registro">&times;</button> 
+            <div class="logo"> 
+                <p>Nutri<span>Fit</span></p>
+            </div> 
+            <h2>Únete a nosotros</h2>
+            <p class="subtitulo">Empieza tu cambio hacia una vida más saludable hoy mismo.</p> 
+            <form id="form-registro"> 
+                <div class="grupo-campo">
+                    <label for="reg-nombre">Nombre Completo</label>
+                    <input type="text" id="reg-nombre" placeholder="Ej. Juan Pérez" required>
+                </div> 
+                <div class="grupo-campo"> 
+                    <label for="reg-correo">Correo Electrónico</label> 
+                    <input type="email" id="reg-correo" placeholder="correo@ejemplo.com" required> 
+                </div> 
+                <div class="grupo-campo"> 
+                    <label for="reg-contrasena">Contraseña</label>
+                    <input type="password" id="reg-contrasena" placeholder="Mínimo 6 caracteres" required> 
+                </div> 
+                <div id="error-registro" class="mensaje-error"></div> 
+                <button type="submit" class="btn-registro">Crear Cuenta</button> 
+            </form> 
+            <p class="enlace-login">¿Ya tienes una cuenta? 
+                <a href="#" id="switch-to-login">Inicia sesión aquí</a>
+            </p> 
+        </div> 
+    </div>
+
+    <!-- ========================================== MODAL PERFIL PENDIENTE ========================================== -->
+    <div id="modal-pendiente" class="modal-flotante">
+        <div class="modal-contenido">
+            <h3>¡Completa tu Perfil! 🥦</h3>
+            <p>Para ofrecerte un menú personalizado según tus objetivos de salud, necesitamos conocer tu peso y talla actual.</p>
+            <div class="modal-botones">
+                <button id="btn-completar-perfil" class="btn-modal-ok">Completar Ahora</button>
+                <button id="btn-cerrar-modal" class="btn-modal-cancel">Más tarde</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts de Supabase y Lógica General -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/supabase-config.js"></script>
+    <script src="../js/index.js"></script>
+    <script src="../js/sobre-nosotros.js"></script>
+</body>
+</html>

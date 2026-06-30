@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bandeja de Reclamos - NutriFit Admin</title>
+  
+  <!-- Tipografías y CSS FontAwesome -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500;700&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/admin-global.css">
+  <link rel="stylesheet" href="css/reclamos.css">
+  
+  <!-- Comprobación de seguridad rápida antes de renderizar (Previene destellos del panel) -->
+  <script>
+    (function() {
+      const session = JSON.parse(localStorage.getItem("nf_session") || "null");
+      if (!session || session.id_rol !== 1) {
+        alert("Acceso denegado. No tienes permisos de administrador.");
+        window.location.replace("../index.html");
+      }
+    })();
+  </script>
+</head>
+<body>
+<div class="app">
+  
+  <!-- SIDEBAR DE ADMINISTRACIÓN -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar__logo">
+      <div class="sidebar__logo-icon">
+        <i class="fa-solid fa-leaf"></i>
+      </div>
+      <span class="sidebar__logo-name">NutriFit</span>
+    </div>
+    
+    <!-- Perfil del Admin -->
+    <div class="sidebar__user">
+      <div class="user-avatar" id="user-avatar" data-user-avatar>A</div>
+      <p class="user-name" id="user-name" data-user-name>Administrador</p>
+      <p class="user-email" id="user-email" data-user-email>admin@nutrifit.com</p>
+    </div>
+    
+    <!-- Botón Retorno a Client -->
+    <div class="sidebar__action-btn">
+      <a href="../index.html" class="btn-return-client">
+        <i class="fa-solid fa-store"></i> Volver a la Vista General
+      </a>
+    </div>
+    
+    <!-- Navegación Admin -->
+    <nav class="sidebar__nav">
+      <span class="nav-section-label">Principal</span>
+      <a href="dashboard.html" class="nav-item" data-page="dashboard">
+        <i class="fa-solid fa-chart-line"></i> Panel de Control
+      </a>
+      
+      <span class="nav-section-label">Gestión Operativa</span>
+      <a href="pedidos.html" class="nav-item" data-page="pedidos">
+        <i class="fa-solid fa-truck-fast"></i> Pedidos
+      </a>
+      <a href="menu.html" class="nav-item" data-page="carta">
+        <i class="fa-solid fa-bowl-food"></i> Platos y Carta
+      </a>
+      <a href="clientes.html" class="nav-item" data-page="clientes">
+        <i class="fa-solid fa-users"></i> Clientes
+      </a>
+      <a href="reclamos.html" class="nav-item active" data-page="reclamos">
+        <i class="fa-solid fa-envelope-open-text"></i> Reclamos
+      </a>
+      
+      <span class="nav-section-label">Reportes y Config.</span>
+      <a href="ventas.html" class="nav-item" data-page="ventas">
+        <i class="fa-solid fa-chart-pie"></i> Reporte de Ventas
+      </a>
+      <a href="servicios.html" class="nav-item" data-page="servicios">
+        <i class="fa-solid fa-screwdriver-wrench"></i> Servicios
+      </a>
+      <a href="sobre-nosotros.html" class="nav-item" data-page="sobre-nosotros">
+        <i class="fa-solid fa-circle-info"></i> Sobre Nosotros
+      </a>
+    </nav>
+    
+    <!-- Cierre de Sesión -->
+    <div class="sidebar__logout">
+      <button class="btn-logout" id="btn-logout-sidebar">
+        <i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión
+      </button>
+    </div>
+  </aside>
+
+  <!-- Overlay para menú móvil -->
+  <div class="overlay" id="overlay"></div>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="main">
+    
+    <!-- Topbar para móviles -->
+    <div class="topbar">
+      <div class="topbar-logo">
+        <div class="sidebar__logo-icon" style="width:30px;height:30px;font-size:13px;">
+          <i class="fa-solid fa-leaf"></i>
+        </div>
+        <span>NutriFit Admin</span>
+      </div>
+      <button class="btn-menu" id="btn-menu" aria-label="Menú">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+
+    <!-- Panel de Contenido -->
+    <div class="content">
+      <header class="page-header">
+        <h1>Sugerencias y Reclamos ✉️</h1>
+        <p>Bandeja de entrada unificada para gestionar quejas, sugerencias y valoraciones del servicio.</p>
+      </header>
+
+      <!-- Panel de Control y Filtros -->
+      <section class="control-panel-card">
+        <div class="claims-filters-wrapper">
+          <div class="search-input-group">
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            <input type="text" id="search-claim" placeholder="Buscar por cliente, correo o pedido..." class="search-field">
+          </div>
+          
+          <div class="status-filter-pills" id="claims-filters">
+            <button class="filter-pill active" data-status="todos">Todos</button>
+            <button class="filter-pill" data-status="pendiente">Pendientes</button>
+            <button class="filter-pill" data-status="resuelto">Resueltos</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tabla de Reclamos -->
+      <section class="table-card">
+        <div class="table-responsive">
+          <table class="claims-table">
+            <thead>
+              <tr>
+                <th style="width: 120px;">ID Pedido</th>
+                <th style="width: 180px;">Cliente</th>
+                <th>Detalle de la Queja</th>
+                <th style="width: 150px;">Fecha de Envío</th>
+                <th style="width: 120px;">Estado</th>
+                <th style="width: 250px;">Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="claims-table-body">
+              <tr>
+                <td colspan="6" class="table-loading">
+                  <i class="fa-solid fa-circle-notch fa-spin"></i> Cargando sugerencias y reclamos...
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div id="empty-claims" class="empty-state" style="display: none; border: none; padding: 40px 0;">
+          <i class="fa-solid fa-envelope-open"></i>
+          <p>No se encontraron reclamos en esta bandeja.</p>
+        </div>
+      </section>
+
+      <!-- Footer del panel -->
+      <footer class="footer">
+        <div class="footer-bottom-dark">
+          <div class="footer-social-wrapper">
+            <a class="social-item" id="social-whatsapp" href="https://wa.me/#" target="_blank"><i class="fa-brands fa-whatsapp"></i><span>WhatsApp</span></a>
+            <a class="social-item" id="social-facebook" href="https://facebook.com/#" target="_blank"><i class="fa-brands fa-facebook"></i><span>Facebook</span></a>
+            <a class="social-item" id="social-tiktok" href="https://tiktok.com/#" target="_blank"><i class="fa-brands fa-tiktok"></i><span>TikTok</span></a>
+          </div>
+          <p class="copyright-text">© 2026 NutriFit Gourmet · Panel de Administración</p>
+        </div>
+      </footer>
+    </div>
+  </main>
+</div>
+
+<!-- Toast flotante de éxito/error -->
+<div id="toast-admin" class="toast-admin" style="display: none;">
+  <div class="toast-content">
+    <i id="toast-admin-icon" class="fa-solid fa-circle-check"></i>
+    <span id="toast-admin-msg">Respuesta registrada con éxito</span>
+  </div>
+</div>
+
+<!-- Scripts de Supabase y Lógica -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabase-config.js"></script>
+<script src="js/reclamos.js"></script>
+</body>
+</html>

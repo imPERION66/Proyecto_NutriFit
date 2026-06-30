@@ -1,0 +1,436 @@
+/* =========================================================================
+   ESTILOS DEL MÓDULO DE PEDIDOS (ADMIN) - NUTRIFIT
+   ========================================================================= */
+
+/* Panel de Controles y Búsqueda */
+.control-panel-card {
+    background-color: var(--color-white);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    margin-bottom: 24px;
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-sm);
+}
+
+.search-filter-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.search-input-group {
+    position: relative;
+    flex: 1;
+    min-width: 280px;
+}
+
+.search-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-text-light);
+    font-size: 16px;
+}
+
+.search-field {
+    width: 100%;
+    padding: 12px 16px 12px 42px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    font-size: 14px;
+    color: var(--color-dark);
+    background-color: var(--color-bg-light);
+    outline: none;
+    transition: var(--transition);
+}
+
+.search-field:focus {
+    border-color: var(--color-primary);
+    background-color: var(--color-white);
+    box-shadow: 0 0 0 3px rgba(79, 168, 118, 0.1);
+}
+
+/* Pills de Filtro de Estado */
+.status-filter-pills {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.filter-pill {
+    padding: 10px 18px;
+    border-radius: 30px;
+    background-color: var(--color-bg-light);
+    border: 1px solid var(--color-border);
+    color: var(--color-text);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.filter-pill:hover {
+    background-color: var(--color-primary-light);
+    color: var(--color-primary-text);
+    border-color: rgba(79, 168, 118, 0.2);
+}
+
+.filter-pill.active {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border-color: var(--color-primary);
+    font-weight: 700;
+    box-shadow: 0 4px 10px rgba(79, 168, 118, 0.2);
+}
+
+/* Contenedores de Estado */
+.loading-state, .empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    background-color: var(--color-white);
+    border-radius: var(--radius-md);
+    border: 1px dashed var(--color-border);
+    color: var(--color-text);
+}
+
+.loading-state i {
+    font-size: 28px;
+    color: var(--color-primary);
+    margin-bottom: 12px;
+    display: block;
+}
+
+.empty-state i {
+    font-size: 40px;
+    color: var(--color-text-light);
+    margin-bottom: 16px;
+}
+
+/* Grid de Pedidos */
+.admin-orders-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 20px;
+}
+
+/* Tarjeta de Pedido Premium */
+.admin-order-card {
+    background-color: var(--color-white);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.admin-order-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+/* Card Header */
+.admin-order-card__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 14px;
+    border-bottom: 1px solid var(--color-bg-light);
+    padding-bottom: 12px;
+}
+
+.admin-order-card__title-group strong {
+    font-size: 16px;
+    color: var(--color-dark);
+    font-weight: 700;
+}
+
+.admin-order-card__meta {
+    font-size: 12px;
+    color: var(--color-text-light);
+    margin-top: 2px;
+}
+
+/* Chips de Estado */
+.admin-order-chip {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.admin-order-chip.pendiente {
+    background-color: #fef3c7;
+    color: #d97706;
+}
+
+.admin-order-chip.preparando {
+    background-color: var(--color-primary-light);
+    color: var(--color-primary-text);
+}
+
+.admin-order-chip.en-camino {
+    background-color: #e0f2fe;
+    color: #0284c7;
+}
+
+.admin-order-chip.entregado {
+    background-color: #dcfce7;
+    color: #15803d;
+}
+
+.admin-order-chip.cancelado {
+    background-color: #fee2e2;
+    color: #b91c1c;
+}
+
+/* Cuerpo de la Tarjeta */
+.admin-order-card__section {
+    margin-bottom: 14px;
+}
+
+.admin-order-card__info-row {
+    font-size: 13px;
+    color: var(--color-text);
+    line-height: 1.5;
+    margin-bottom: 6px;
+}
+
+.admin-order-card__info-row i {
+    width: 18px;
+    color: var(--color-primary);
+    margin-right: 6px;
+}
+
+/* Lista de Platos */
+.admin-order-card__dishes {
+    background-color: var(--color-bg-light);
+    border-radius: var(--radius-sm);
+    padding: 12px;
+    margin-bottom: 14px;
+}
+
+.admin-order-card__dish-item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: var(--color-dark);
+    margin-bottom: 6px;
+}
+
+.admin-order-card__dish-item:last-child {
+    margin-bottom: 0;
+}
+
+.dish-qty {
+    font-weight: 700;
+    color: var(--color-primary);
+    margin-right: 5px;
+}
+
+/* Fila de Precios y Dropdown de Estado */
+.admin-order-card__total-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto;
+    border-top: 1px dashed var(--color-border);
+    padding-top: 14px;
+}
+
+.admin-order-card__total {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--color-dark);
+}
+
+.total-val {
+    color: var(--color-primary-text);
+    font-size: 16px;
+    font-weight: 900;
+}
+
+.state-select {
+    padding: 8px 12px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-dark);
+    background-color: var(--color-white);
+    outline: none;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.state-select:focus {
+    border-color: var(--color-primary);
+}
+
+/* =========================================================================
+   SECCIÓN DE ALERTA DE RECLAMO (DENTRO DE LA TARJETA)
+   ========================================================================= */
+.claim-alert-container {
+    margin-top: 14px;
+    border-top: 1px solid #fee2e2;
+    padding-top: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.claim-alert-header {
+    background-color: #fee2e2;
+    color: #b91c1c;
+    border-radius: var(--radius-sm);
+    padding: 8px 12px;
+    font-size: 12px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.claim-alert-header:hover {
+    background-color: #fecaca;
+}
+
+.claim-alert-header i {
+    font-size: 14px;
+    animation: pulse 2s infinite;
+}
+
+/* Área Expansible de Reclamo */
+.claim-expandable {
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+    padding: 4px;
+    border-left: 2px solid #fecaca;
+    padding-left: 10px;
+    animation: slideDown 0.3s ease-out forwards;
+}
+
+.claim-expandable.show {
+    display: flex;
+}
+
+.claim-text-title {
+    font-size: 11px;
+    text-transform: uppercase;
+    color: var(--color-text-light);
+    font-weight: 700;
+}
+
+.claim-text {
+    font-size: 13px;
+    color: #7f1d1d;
+    background-color: #fff5f5;
+    padding: 10px;
+    border-radius: var(--radius-sm);
+    line-height: 1.4;
+    word-break: break-word;
+}
+
+/* Campo de Respuesta */
+.claim-reply-area {
+    width: 100%;
+    height: 70px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    padding: 8px;
+    font-size: 13px;
+    resize: none;
+    outline: none;
+    transition: var(--transition);
+}
+
+.claim-reply-area:focus {
+    border-color: var(--color-primary);
+}
+
+.btn-submit-reply {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 8px 14px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    align-self: flex-end;
+    transition: var(--transition);
+    box-shadow: 0 2px 5px rgba(79, 168, 118, 0.15);
+}
+
+.btn-submit-reply:hover {
+    background-color: var(--color-primary-hover);
+    transform: translateY(-1px);
+}
+
+/* Bloqueo de Reclamo Resuelto */
+.claim-resolved-info {
+    background-color: #dcfce7;
+    color: #166534;
+    border-radius: var(--radius-sm);
+    padding: 10px;
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+.claim-resolved-info strong {
+    display: block;
+    margin-bottom: 2px;
+}
+
+/* Toast de Administración */
+.toast-admin {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 1000;
+    animation: slideUp 0.3s ease-out;
+}
+
+.toast-content {
+    background-color: var(--color-dark);
+    color: var(--color-white);
+    border-radius: var(--radius-md);
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 500;
+    box-shadow: var(--shadow-md);
+}
+
+.toast-content i {
+    color: var(--color-primary);
+    font-size: 18px;
+}
+
+/* Animaciones */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+}

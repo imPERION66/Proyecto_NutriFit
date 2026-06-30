@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Pedidos - NutriFit</title>
+    
+    <!-- CSS Dependencies -->
+    <link rel="stylesheet" href="../css/normalize.css">
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/mis_pedidos.css">
+    
+    <!-- Icons FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+    <div class="contenedor">
+        
+        <!-- HEADER / NAVBAR -->
+        <header class="header">
+            <div class="logo" onclick="location.href='../index.html'">
+                <p>Nutri<span>Fit</span></p>
+            </div>
+            <div class="hamburguesa" id="btn-hamburguesa">
+                <img src="../assets/img/menu_hamburguesa.jpg" alt="Menu hamburguesa" onerror="this.src='https://cdn-icons-png.flaticon.com/512/561/561115.png'">
+            </div>
+            <nav class="menu" id="menu-navegacion">
+                <ul class="navegacion">
+                    <li><a href="../index.html">Inicio</a></li>
+                    <li><a href="menu-saludable.html">Menú</a></li>
+                    <li><a href="servicios.html">Servicios</a></li>
+                    <li><a href="sobre-nosotros.html">Sobre Nosotros</a></li>
+                    <li><a href="contacto.html">Contacto</a></li>
+                    <li id="auth-buttons"> 
+                        <a href="#" id="abrir-login" class="btn-login-nav">Iniciar Sesión</a> 
+                        <a href="#" id="abrir-registro" class="btn-reg-nav">Registrarse</a>
+                     </li>
+                </ul>
+            </nav>
+        </header>
+
+        <!-- SECCIÓN DE ESTADO DE CESTA GLOBAL (OCULTA POR DEFECTO EN CSS) -->
+        <section class="menu-control-panel">
+            <div class="cart-summary-bar">
+                <div class="cart-info">
+                    <span class="total-label">Total a pagar:</span>
+                    <span class="total-value" id="cart-total">S/ 0.00</span>
+                </div>
+                
+                <div class="cart-actions">
+                    <div class="cart-icon-container">
+                        <i class="fa-solid fa-cart-shopping cart-icon"></i>
+                        <span class="cart-badge" id="cart-count">0</span>
+                    </div>
+                    <button class="btn-cart-secondary" id="btn-ir-cesta">Ir a la cesta</button>
+                    <button class="btn-cart-primary" id="btn-continuar">Continuar</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTENIDO PRINCIPAL DE HISTORIAL -->
+        <main class="pedidos-container">
+            <h1 class="pedidos-titulo">Mis Pedidos Realizados 📦</h1>
+            <p class="pedidos-subtitulo">Consulta el historial de tus compras y realiza valoraciones de tus platos una vez recibidos.</p>
+
+            <!-- FILTRO DE CALENDARIO INTERACTIVO -->
+            <div class="filter-card">
+                <div class="filter-header">
+                    <i class="fa-solid fa-calendar-days filter-icon"></i>
+                    <h3>Filtrar pedidos por fecha</h3>
+                </div>
+                <div class="filter-controls">
+                    <div class="date-input-group">
+                        <label for="filter-date">Fecha de compra:</label>
+                        <input type="date" id="filter-date" class="input-date">
+                    </div>
+                    <button type="button" id="btn-clear-filter" class="btn-clear">Limpiar Filtro</button>
+                </div>
+            </div>
+
+            <!-- CONTENEDOR DE TARJETAS DE PEDIDOS -->
+            <div class="pedidos-list" id="pedidos-lista-container">
+                <p class="loading-msg"><i class="fa-solid fa-spinner fa-spin"></i> Cargando tu historial de compras...</p>
+            </div>
+
+            <!-- ESTADO VACÍO (EMPTY STATE) -->
+            <div class="pedidos-vacio-panel" id="pedidos-vacio" style="display: none;">
+                <div class="vacio-icon-wrapper">
+                    <i class="fa-solid fa-calendar-xmark"></i>
+                </div>
+                <h2>No se encontraron pedidos en esta fecha</h2>
+                <p>No registras compras en el día seleccionado. ¡Anímate a realizar tu próximo pedido saludable!</p>
+                <button onclick="location.href='menu-saludable.html'" class="btn-ir-menu">Explorar Nuestro Menú</button>
+            </div>
+        </main>
+        
+        <!-- ========================================== FOOTER ========================================== -->
+        <footer class="footer" style="padding-top: 40px; border-top: 1px solid var(--color-border); margin-top: 50px;">
+            <div class="footer-contenido" style="padding-bottom: 20px;">
+                <div class="footer-col-marca">
+                    <div class="logo-footer">
+                        <p>Nutri<span>Fit</span></p>
+                    </div>
+                    <p class="marca-descripcion">
+                        Cuidamos tu salud ofreciéndote deliciosas comidas personalizadas según tus objetivos físicos (bajar de peso, mantenerte en forma o ganar masa muscular).
+                    </p>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Navegación</h3>
+                    <ul>
+                        <li><a href="../index.html">Inicio</a></li>
+                        <li><a href="menu-saludable.html">Nuestro Menú</a></li>
+                        <li><a href="servicios.html">Servicios</a></li>
+                        <li><a href="sobre-nosotros.html">Sobre Nosotros</a></li>
+                        <li><a href="contacto.html">Contacto</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Horarios</h3>
+                    <ul>
+                        <li>Lunes a Viernes:</li>
+                        <li class="destacado-horario">8:00 AM - 9:00 PM</li>
+                        <li>Sábados y Domingos:</li>
+                        <li class="destacado-horario">9:00 AM - 6:00 PM</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom" style="margin-top: 20px;">
+                <p>&copy; 2026 NutriFit. Todos los derechos reservados. Diseñado para tu bienestar.</p>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- Modales Login / Registro -->
+    <div id="modal-login" class="modal-overlay">
+        <div class="login-tarjeta modal-card"> 
+            <button class="cerrar-modal" data-close="modal-login">&times;</button>
+            <div class="logo"> 
+                <p>Nutri<span>Fit</span></p>
+            </div> 
+            <h2>Bienvenido de nuevo</h2> 
+            <p class="subtitulo">Ingresa tus credenciales para acceder a tu cuenta.</p> 
+            <form id="form-login">
+                <div class="grupo-campo"> 
+                    <label for="log-correo">Correo Electrónico</label> 
+                    <input type="email" id="log-correo" placeholder="correo@ejemplo.com" required> 
+                </div>
+                <div class="grupo-campo"> 
+                    <label for="log-contrasena">Contraseña</label>
+                    <input type="password" id="log-contrasena" placeholder="Tu contraseña de acceso" required> 
+                </div> 
+                <div id="error-login" class="mensaje-error"></div>
+                <button type="submit" class="btn-login">Ingresar</button> 
+            </form> 
+            <p class="enlace-registro">¿No tienes una cuenta aún? 
+                <a href="#" id="switch-to-register">Regístrate aquí</a>
+            </p> 
+        </div> 
+    </div>
+
+    <div id="modal-registro" class="modal-overlay">
+        <div class="registro-tarjeta modal-card"> 
+            <button class="cerrar-modal" data-close="modal-registro">&times;</button> 
+            <div class="logo"> 
+                <p>Nutri<span>Fit</span></p>
+            </div> 
+            <h2>Únete a nosotros</h2>
+            <p class="subtitulo">Empieza tu cambio hacia una vida más saludable hoy mismo.</p> 
+            <form id="form-registro"> 
+                <div class="grupo-campo">
+                    <label for="reg-nombre">Nombre Completo</label>
+                    <input type="text" id="reg-nombre" placeholder="Ej. Juan Pérez" required>
+                </div> 
+                <div class="grupo-campo"> 
+                    <label for="reg-correo">Correo Electrónico</label> 
+                    <input type="email" id="reg-correo" placeholder="correo@ejemplo.com" required> 
+                </div> 
+                <div class="grupo-campo"> 
+                    <label for="reg-contrasena">Contraseña</label>
+                    <input type="password" id="reg-contrasena" placeholder="Mínimo 6 caracteres" required> 
+                </div> 
+                <div id="error-registro" class="mensaje-error"></div> 
+                <button type="submit" class="btn-registro">Crear Cuenta</button> 
+            </form> 
+            <p class="enlace-login">¿Ya tienes una cuenta? 
+                <a href="#" id="switch-to-login">Inicia sesión aquí</a>
+            </p> 
+        </div> 
+    </div>
+
+    <!-- Toast Flotante de Notificaciones -->
+    <div id="toast-notificacion" class="toast-pago-overlay" style="display: none;">
+        <div class="toast-pago-card">
+            <i class="fa-solid fa-circle-check toast-pago-icon" id="toast-icon"></i>
+            <span id="toast-message">Comentario enviado</span>
+        </div>
+    </div>
+
+    <!-- Scripts de Supabase y Lógica -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/supabase-config.js"></script>
+    <script src="../js/index.js"></script>
+    <script src="../js/mis_pedidos.js"></script>
+</body>
+</html>

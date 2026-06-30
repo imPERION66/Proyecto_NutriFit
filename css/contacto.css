@@ -1,0 +1,560 @@
+/* =========================================================================
+   ESTILOS ESPECÍFICOS PARA PÁGINA DE CONTACTO - NUTRIFIT
+   ========================================================================= */
+
+/* SECCIÓN HERO */
+.contacto-hero {
+    text-align: center;
+    padding: 80px 5% 40px;
+    background: linear-gradient(180deg, var(--color-primary-light) 0%, rgba(255, 255, 255, 0) 100%);
+    border-radius: 0 0 40px 40px;
+    margin-bottom: 50px;
+}
+
+.contacto-hero h1 {
+    font-size: clamp(2.2rem, 4vw, 3.8rem);
+    color: var(--color-dark);
+    font-weight: 900;
+    margin-bottom: 16px;
+    line-height: 1.2;
+}
+
+.contacto-hero p {
+    font-size: clamp(0.95rem, 1.1vw, 1.2rem);
+    color: var(--color-text);
+    max-width: 750px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* CONTENEDOR PRINCIPAL */
+.contacto-contenido {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 70px;
+}
+
+/* TARJETAS DE CANALES DIRECTOS */
+.canales-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 30px;
+}
+
+@media (min-width: 768px) {
+    .canales-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.canal-card {
+    background-color: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: 20px;
+    padding: 35px 30px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.015);
+}
+
+.canal-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--color-primary);
+    box-shadow: 0 20px 40px rgba(79, 168, 118, 0.08);
+}
+
+/* Iconos de Canales */
+.canal-icon {
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    margin-bottom: 22px;
+    transition: transform 0.3s ease;
+}
+
+.canal-card:hover .canal-icon {
+    transform: scale(1.1);
+}
+
+.canal-icon.whatsapp {
+    background-color: #e8f9f0;
+    color: #25d366;
+}
+
+.canal-icon.email {
+    background-color: #edf5f1;
+    color: var(--color-primary);
+}
+
+.canal-icon.ubicacion {
+    background-color: #fcefee;
+    color: #e74c3c;
+}
+
+.canal-card h3 {
+    font-size: 20px;
+    color: var(--color-dark);
+    margin-bottom: 12px;
+    font-weight: 700;
+}
+
+.canal-card p {
+    font-size: 14px;
+    color: var(--color-text);
+    line-height: 1.5;
+    margin-bottom: 25px;
+    flex-grow: 1;
+}
+
+/* Botones de los Canales */
+.canal-btn {
+    width: 100%;
+    padding: 12px 20px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 14px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.canal-btn.whatsapp {
+    background-color: #25d366;
+    color: var(--color-white);
+}
+
+.canal-btn.whatsapp:hover {
+    background-color: #20ba5a;
+    box-shadow: 0 8px 16px rgba(37, 211, 102, 0.25);
+}
+
+.canal-btn.email {
+    background-color: var(--color-primary-light);
+    color: var(--color-primary-text);
+    border: 1px solid var(--color-border);
+}
+
+.canal-btn.email:hover {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border-color: var(--color-primary);
+    box-shadow: 0 8px 16px rgba(79, 168, 118, 0.2);
+}
+
+/* Tarjeta de Ubicación y Mapa */
+.canal-card.ubicacion-card {
+    padding-bottom: 20px;
+}
+
+.mapa-contenedor {
+    width: 100%;
+    height: 140px;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    margin-top: auto;
+}
+
+.mapa-contenedor iframe {
+    width: 100%;
+    height: 100%;
+    filter: grayscale(10%) contrast(95%);
+    transition: filter 0.3s;
+}
+
+.canal-card:hover .mapa-contenedor iframe {
+    filter: grayscale(0%) contrast(100%);
+}
+
+/* SECCIÓN FORMULARIO DE CONTACTO */
+.formulario-seccion {
+    background-color: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: 24px;
+    padding: 40px 25px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.01);
+}
+
+@media (min-width: 992px) {
+    .formulario-seccion {
+        grid-template-columns: 2fr 3fr;
+        padding: 55px;
+    }
+}
+
+.formulario-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+}
+
+.formulario-info h2 {
+    font-size: 28px;
+    color: var(--color-dark);
+    font-weight: 900;
+    position: relative;
+    padding-bottom: 12px;
+}
+
+.formulario-info h2::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 60px;
+    height: 4px;
+    background-color: var(--color-primary);
+    border-radius: 2px;
+}
+
+.formulario-info p {
+    font-size: 15px;
+    color: var(--color-text);
+    line-height: 1.7;
+}
+
+.badge-admin-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: var(--color-primary-light);
+    padding: 12px 18px;
+    border-radius: 12px;
+    color: var(--color-primary-text);
+    font-weight: 700;
+    font-size: 13.5px;
+    align-self: flex-start;
+}
+
+.badge-admin-info i {
+    font-size: 16px;
+}
+
+/* Caja de Formulario */
+.contacto-form-box {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.campo-doble {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+@media (min-width: 600px) {
+    .campo-doble {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.grupo-campo {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.grupo-campo label {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--color-dark);
+}
+
+.grupo-campo label .required {
+    color: var(--color-accent-red);
+}
+
+.grupo-campo input,
+.grupo-campo select,
+.grupo-campo textarea {
+    padding: 14px 16px;
+    border: 1px solid #d1d5db;
+    border-radius: 12px;
+    font-size: 15px;
+    outline: none;
+    transition: all 0.25s ease;
+    background-color: var(--color-bg-light);
+    color: var(--color-dark);
+    width: 100%;
+}
+
+.grupo-campo input::placeholder,
+.grupo-campo textarea::placeholder {
+    color: var(--color-text-light);
+}
+
+.grupo-campo input:focus,
+.grupo-campo select:focus,
+.grupo-campo textarea:focus {
+    border-color: var(--color-primary);
+    background-color: var(--color-white);
+    box-shadow: 0 0 0 4px rgba(79, 168, 118, 0.12);
+}
+
+.grupo-campo select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%235c6e63' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    background-size: 18px;
+    padding-right: 40px;
+    cursor: pointer;
+}
+
+.grupo-campo textarea {
+    resize: vertical;
+    font-family: inherit;
+}
+
+/* Botón enviar formulario */
+.btn-enviar-mensaje {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border: none;
+    border-radius: 12px;
+    padding: 16px 28px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    transition: all 0.3s ease;
+    align-self: flex-start;
+    width: 100%;
+}
+
+@media (min-width: 600px) {
+    .btn-enviar-mensaje {
+        width: auto;
+    }
+}
+
+.btn-enviar-mensaje:hover {
+    background-color: var(--color-primary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(79, 168, 118, 0.2);
+}
+
+.btn-enviar-mensaje:active {
+    transform: translateY(0);
+}
+
+.btn-enviar-mensaje:disabled {
+    background-color: var(--color-text-light);
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* Spinner de carga */
+.spinner {
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: var(--color-white);
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.mensaje-error-form {
+    color: var(--color-accent-red);
+    background-color: var(--color-accent-red-bg);
+    padding: 12px 16px;
+    border-radius: 10px;
+    font-size: 14.5px;
+    font-weight: 600;
+    display: none;
+    border-left: 4px solid var(--color-accent-red);
+}
+
+.mensaje-error-form.show {
+    display: block;
+}
+
+/* SECCIÓN PREGUNTAS FRECUENTES (FAQ INTERACTIVO) */
+.faq-seccion {
+    margin-top: 20px;
+}
+
+.faq-cabecera {
+    text-align: center;
+    margin-bottom: 45px;
+}
+
+.faq-cabecera h2 {
+    font-size: 28px;
+    color: var(--color-dark);
+    font-weight: 900;
+    margin-bottom: 12px;
+}
+
+.faq-cabecera p {
+    font-size: 15px;
+    color: var(--color-text);
+    max-width: 650px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+.faq-acordeon {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.faq-item {
+    background-color: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.faq-item:hover {
+    border-color: var(--color-primary-text);
+}
+
+.faq-pregunta {
+    width: 100%;
+    padding: 22px 28px;
+    background: transparent;
+    border: none;
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--color-dark);
+    transition: color 0.3s;
+}
+
+.faq-item:hover .faq-pregunta {
+    color: var(--color-primary-text);
+}
+
+.faq-icono {
+    color: var(--color-text-light);
+    font-size: 16px;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Estado activo del acordeón */
+.faq-item.active {
+    border-color: var(--color-primary);
+    box-shadow: 0 8px 24px rgba(79, 168, 118, 0.05);
+}
+
+.faq-item.active .faq-pregunta {
+    color: var(--color-primary-text);
+}
+
+.faq-item.active .faq-icono {
+    transform: rotate(180deg);
+    color: var(--color-primary);
+}
+
+/* Respuesta desplegable */
+.faq-respuesta {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    padding: 0 28px;
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.faq-item.active .faq-respuesta {
+    max-height: 250px; /* Suficiente para las respuestas */
+    opacity: 1;
+    padding: 0 28px 24px;
+}
+
+.faq-respuesta p {
+    font-size: 15px;
+    color: var(--color-text);
+    line-height: 1.6;
+}
+
+/* ALERTA DE ÉXITO FLOTANTE (TOAST) */
+.toast-overlay {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 1500;
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+    pointer-events: none;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.toast-overlay.show {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+}
+
+.toast-card {
+    background-color: var(--color-white);
+    border: 1px solid #c2ebd0;
+    border-left: 6px solid var(--color-primary);
+    border-radius: 16px;
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    max-width: 420px;
+}
+
+.toast-icon {
+    color: var(--color-primary);
+    font-size: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.toast-contenido h4 {
+    font-size: 16px;
+    color: var(--color-dark);
+    margin-bottom: 4px;
+    font-weight: 700;
+}
+
+.toast-contenido p {
+    font-size: 13.5px;
+    color: var(--color-text);
+    line-height: 1.4;
+}
+
+/* Estilo para ajustar el link activo del Navbar de contacto */
+.active-nav {
+    color: var(--color-primary) !important;
+    background-color: var(--color-primary-light);
+    font-weight: 700;
+}

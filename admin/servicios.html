@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestión de Servicios - NutriFit Admin</title>
+  
+  <!-- Tipografías y CSS FontAwesome -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500;700&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/admin-global.css">
+  <link rel="stylesheet" href="css/servicios.css">
+  
+  <!-- Comprobación de seguridad rápida antes de renderizar -->
+  <script>
+    (function() {
+      const session = JSON.parse(localStorage.getItem("nf_session") || "null");
+      if (!session || session.id_rol !== 1) {
+        alert("Acceso denegado. No tienes permisos de administrador.");
+        window.location.replace("../index.html");
+      }
+    })();
+  </script>
+</head>
+<body>
+<div class="app">
+  
+  <!-- SIDEBAR DE ADMINISTRACIÓN -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar__logo">
+      <div class="sidebar__logo-icon">
+        <i class="fa-solid fa-leaf"></i>
+      </div>
+      <span class="sidebar__logo-name">NutriFit</span>
+    </div>
+    
+    <!-- Perfil del Admin -->
+    <div class="sidebar__user">
+      <div class="user-avatar" id="user-avatar" data-user-avatar>A</div>
+      <p class="user-name" id="user-name" data-user-name>Administrador</p>
+      <p class="user-email" id="user-email" data-user-email>admin@nutrifit.com</p>
+    </div>
+    
+    <!-- Botón Retorno a Client -->
+    <div class="sidebar__action-btn">
+      <a href="../index.html" class="btn-return-client">
+        <i class="fa-solid fa-store"></i> Volver a la Vista General
+      </a>
+    </div>
+    
+    <!-- Navegación Admin -->
+    <nav class="sidebar__nav">
+      <span class="nav-section-label">Principal</span>
+      <a href="dashboard.html" class="nav-item" data-page="dashboard">
+        <i class="fa-solid fa-chart-line"></i> Panel de Control
+      </a>
+      
+      <span class="nav-section-label">Gestión Operativa</span>
+      <a href="pedidos.html" class="nav-item" data-page="pedidos">
+        <i class="fa-solid fa-truck-fast"></i> Pedidos
+      </a>
+      <a href="menu.html" class="nav-item" data-page="carta">
+        <i class="fa-solid fa-bowl-food"></i> Menu NutriFit
+      </a>
+      <a href="clientes.html" class="nav-item" data-page="clientes">
+        <i class="fa-solid fa-users"></i> Clientes
+      </a>
+      <a href="reclamos.html" class="nav-item" data-page="reclamos">
+        <i class="fa-solid fa-envelope-open-text"></i> Reclamos
+      </a>
+      
+      <span class="nav-section-label">Reportes y Config.</span>
+      <a href="ventas.html" class="nav-item" data-page="ventas">
+        <i class="fa-solid fa-chart-pie"></i> Reporte de Ventas
+      </a>
+      <a href="servicios.html" class="nav-item active" data-page="servicios">
+        <i class="fa-solid fa-screwdriver-wrench"></i> Servicios
+      </a>
+      <a href="sobre-nosotros.html" class="nav-item" data-page="sobre-nosotros">
+        <i class="fa-solid fa-circle-info"></i> Sobre Nosotros
+      </a>
+    </nav>
+    
+    <!-- Cierre de Sesión -->
+    <div class="sidebar__logout">
+      <button class="btn-logout" id="btn-logout-sidebar">
+        <i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión
+      </button>
+    </div>
+  </aside>
+
+  <!-- Overlay para menú móvil -->
+  <div class="overlay" id="overlay"></div>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="main">
+    
+    <!-- Topbar para móviles -->
+    <div class="topbar">
+      <div class="topbar-logo">
+        <div class="sidebar__logo-icon" style="width:30px;height:30px;font-size:13px;">
+          <i class="fa-solid fa-leaf"></i>
+        </div>
+        <span>NutriFit Admin</span>
+      </div>
+      <button class="btn-menu" id="btn-menu" aria-label="Menú">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+
+    <!-- Panel de Contenido -->
+    <div class="content">
+      <header class="page-header">
+        <h1>Gestión de Servicios y Nutrición</h1>
+        <p>Controla las suscripciones a planes, modifica tarifas, administra el staff de nutricionistas y publica nuevas recetas saludables para la comunidad.</p>
+      </header>
+
+      <!-- BARRA DE PESTAÑAS (TABS) INTERNAS -->
+      <section class="toolbar-tabs-servicios">
+        <button class="btn-tab-servicios active" data-tab="suscripciones">
+          <i class="fa-solid fa-receipt"></i> Planes y Suscripciones
+        </button>
+        <button class="btn-tab-servicios" data-tab="staff">
+          <i class="fa-solid fa-user-md"></i> Staff de Nutricionistas
+        </button>
+        <button class="btn-tab-servicios" data-tab="recetas">
+          <i class="fa-solid fa-book-open"></i> Comunidad de Recetas
+        </button>
+      </section>
+
+      <!-- ========================================== SUBMÓDULO A: SUSCRIPCIONES ========================================== -->
+      <div class="submodule-content active" id="tab-suscripciones">
+        <div class="suscripciones-layout">
+          <!-- Tabla de Suscripciones Activas -->
+          <div class="table-container-card" style="flex: 2; margin-bottom: 0;">
+            <div class="card-header-tab">
+              <h3>Suscripciones de Clientes</h3>
+            </div>
+            <div class="table-responsive">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Cliente</th>
+                    <th>Plan Contratado</th>
+                    <th>Fecha Inicio</th>
+                    <th>Fecha Fin</th>
+                    <th>Estado</th>
+                  </tr>
+                </thead>
+                <tbody id="suscripciones-table-body">
+                  <!-- Carga dinámica -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Modificar Tarifas del Plan -->
+          <div class="card-pricing-control" style="flex: 1;">
+            <div class="pricing-card-header">
+              <i class="fa-solid fa-tags"></i>
+              <h3>Tarifas de Planes</h3>
+            </div>
+            <p class="pricing-desc">Modifica los precios que se visualizan en la web del cliente en tiempo real.</p>
+            <form id="form-pricing-plans">
+              <div class="grupo-campo">
+                <label for="precio-semanal">Plan Semanal Fit (S/)</label>
+                <input type="number" id="precio-semanal" step="0.10" required>
+              </div>
+              <div class="grupo-campo" style="margin-top: 15px;">
+                <label for="precio-mensual">Plan Mensual Premium (S/)</label>
+                <input type="number" id="precio-mensual" step="0.10" required>
+              </div>
+              <button type="submit" class="btn-guardar-submit" style="width: 100%; margin-top: 20px;">
+                Actualizar Precios <i class="fa-solid fa-rotate"></i>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========================================== SUBMÓDULO B: STAFF DE NUTRICIONISTAS ========================================== -->
+      <div class="submodule-content" id="tab-staff">
+        <div class="nutricionistas-grid" id="nutricionistas-grid">
+          <!-- Carga dinámica de nutricionistas -->
+        </div>
+      </div>
+
+      <!-- ========================================== SUBMÓDULO C: COMUNIDAD DE RECETAS ========================================== -->
+      <div class="submodule-content" id="tab-recetas">
+        <div class="recetas-admin-grid" id="recetas-admin-grid">
+          <!-- Botón Agregar Receta -->
+          <button class="card-add-new-btn" id="btn-trigger-receta-modal">
+            <div class="card-add-new-content">
+              <i class="fa-solid fa-circle-plus"></i>
+              <span>Agregar Nueva Receta</span>
+            </div>
+          </button>
+          <!-- Carga dinámica de recetas -->
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<!-- ========================================== MODAL EDITAR HORARIOS (STAFF) ========================================== -->
+<div id="modal-editar-horarios" class="modal-overlay">
+  <div class="modal-card modal-card-small">
+    <button class="cerrar-modal" id="btn-close-horarios-modal">&times;</button>
+    <h2>Editar Horarios Disponibles</h2>
+    <p class="modal-subtitle">Añade o remueve bloques de horas de consulta libres para el nutricionista.</p>
+    
+    <form id="form-editar-horarios">
+      <input type="hidden" id="horarios-nutricionista-id">
+      
+      <div class="grupo-campo">
+        <label style="font-weight:bold;">Nutricionista</label>
+        <input type="text" id="horarios-nutricionista-nombre" disabled style="background-color: var(--color-bg-light); font-weight: 500;">
+      </div>
+
+      <div class="grupo-campo" style="margin-top: 15px;">
+        <label>Bloques Libres Actualmente</label>
+        <div id="horarios-chips-container" class="chips-container">
+          <!-- Dinámico -->
+        </div>
+      </div>
+
+      <div class="grupo-campo" style="margin-top: 15px; display: flex; gap: 8px; flex-direction: row; align-items: flex-end;">
+        <div style="flex-grow: 1;">
+          <label for="nuevo-bloque-hora">Añadir Bloque de Horas</label>
+          <input type="text" id="nuevo-bloque-hora" placeholder="Ej. 09:00 - 10:00">
+        </div>
+        <button type="button" class="btn-add-chip-action" id="btn-add-chip-hour">
+          <i class="fa-solid fa-plus"></i>
+        </button>
+      </div>
+
+      <div class="form-actions" style="margin-top: 25px;">
+        <button type="button" class="btn-cancelar" id="btn-cancel-horarios">Cancelar</button>
+        <button type="submit" class="btn-guardar-submit">Guardar Cambios</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ========================================== MODAL AGREGAR / EDITAR RECETA ========================================== -->
+<div id="modal-receta" class="modal-overlay">
+  <div class="modal-card">
+    <button class="cerrar-modal" id="btn-close-receta-modal">&times;</button>
+    <h2 id="modal-receta-titulo">Agregar Nueva Receta</h2>
+    <p class="modal-subtitle">Completa los campos y sube los archivos de la receta para la comunidad.</p>
+    
+    <form id="form-receta">
+      <input type="hidden" id="form-receta-id">
+      
+      <div class="grupo-campo">
+        <label for="receta-nombre">Nombre de la Receta <span class="req">*</span></label>
+        <input type="text" id="receta-nombre" placeholder="Ej. Ensalada de Quinoa Crujiente" required>
+      </div>
+
+      <div class="form-row-2">
+        <div class="grupo-campo">
+          <label for="receta-categoria">Categoría <span class="req">*</span></label>
+          <select id="receta-categoria" required>
+            <option value="">Selecciona...</option>
+            <option value="Desayuno">Desayuno</option>
+            <option value="Almuerzo">Almuerzo</option>
+            <option value="Cena">Cena</option>
+            <option value="Snack">Snack</option>
+          </select>
+        </div>
+        <div class="grupo-campo">
+          <label for="receta-tiempo">Tiempo de Preparación <span class="req">*</span></label>
+          <input type="text" id="receta-tiempo" placeholder="Ej. 15 min" required>
+        </div>
+      </div>
+
+      <div class="grupo-campo">
+        <label for="receta-descripcion">Descripción Corta <span class="req">*</span></label>
+        <textarea id="receta-descripcion" rows="2" placeholder="Describe brevemente la preparación y sus aportes..." required></textarea>
+      </div>
+
+      <!-- Links de Archivos Simulados (Supabase Storage Bucket URL) -->
+      <div class="form-row-2">
+        <div class="grupo-campo">
+          <label for="receta-imagen-url">Imagen de Portada (Simular Carga/URL) <span class="req">*</span></label>
+          <input type="text" id="receta-imagen-url" placeholder="Ej. ../assets/img/receta.jpg o URL remota" required>
+        </div>
+        <div class="grupo-campo">
+          <label for="receta-pdf-url">PDF de la Receta (Simular Carga/URL)</label>
+          <input type="text" id="receta-pdf-url" placeholder="Ej. ../assets/receta-pdf.pdf o URL remota">
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="btn-cancelar" id="btn-cancel-receta">Cancelar</button>
+        <button type="submit" class="btn-guardar-submit">Publicar Receta</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Scripts de Supabase y Lógica de Administración -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabase-config.js"></script>
+<script src="js/servicios.js"></script>
+</body>
+</html>

@@ -1,0 +1,298 @@
+/* =========================================================================
+   ESTILOS DE RECLAMOS Y SUGERENCIAS (ADMIN) - NUTRIFIT
+   ========================================================================= */
+
+/* Controles de Búsqueda y Filtros */
+.control-panel-card {
+    background-color: var(--color-white);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    margin-bottom: 24px;
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-sm);
+}
+
+.claims-filters-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.search-input-group {
+    position: relative;
+    flex: 1;
+    min-width: 280px;
+}
+
+.search-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-text-light);
+    font-size: 16px;
+}
+
+.search-field {
+    width: 100%;
+    padding: 12px 16px 12px 42px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    font-size: 14px;
+    color: var(--color-dark);
+    background-color: var(--color-bg-light);
+    outline: none;
+    transition: var(--transition);
+}
+
+.search-field:focus {
+    border-color: var(--color-primary);
+    background-color: var(--color-white);
+    box-shadow: 0 0 0 3px rgba(79, 168, 118, 0.1);
+}
+
+.status-filter-pills {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.filter-pill {
+    padding: 10px 18px;
+    border-radius: 30px;
+    background-color: var(--color-bg-light);
+    border: 1px solid var(--color-border);
+    color: var(--color-text);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.filter-pill:hover {
+    background-color: var(--color-primary-light);
+    color: var(--color-primary-text);
+    border-color: rgba(79, 168, 118, 0.2);
+}
+
+.filter-pill.active {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border-color: var(--color-primary);
+    font-weight: 700;
+    box-shadow: 0 4px 10px rgba(79, 168, 118, 0.2);
+}
+
+/* Contenedor de la Tabla */
+.table-card {
+    background-color: var(--color-white);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-sm);
+    padding: 24px;
+    overflow: hidden;
+}
+
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+}
+
+/* Tabla Estilizada */
+.claims-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 14px;
+}
+
+.claims-table th {
+    background-color: var(--color-bg-light);
+    color: var(--color-dark);
+    font-weight: 700;
+    padding: 14px 18px;
+    border-bottom: 2px solid var(--color-border);
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+}
+
+.claims-table td {
+    padding: 16px 18px;
+    border-bottom: 1px solid var(--color-border);
+    color: var(--color-text);
+    vertical-align: top;
+    line-height: 1.5;
+}
+
+.claims-table tbody tr {
+    transition: background-color 0.2s;
+}
+
+.claims-table tbody tr:hover {
+    background-color: #fafcfb;
+}
+
+/* Carga y Vacío en la tabla */
+.table-loading {
+    text-align: center;
+    padding: 40px 0 !important;
+    font-size: 15px;
+    color: var(--color-text-light);
+}
+
+.table-loading i {
+    color: var(--color-primary);
+    margin-right: 8px;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--color-text-light);
+}
+
+.empty-state i {
+    font-size: 36px;
+    margin-bottom: 12px;
+}
+
+/* Badges de Estado */
+.badge-status {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.badge-status.pendiente {
+    background-color: var(--color-accent-red-bg);
+    color: var(--color-accent-red);
+    border: 1px solid rgba(204, 92, 92, 0.15);
+}
+
+.badge-status.resuelto {
+    background-color: var(--color-primary-light);
+    color: var(--color-primary-text);
+    border: 1px solid rgba(79, 168, 118, 0.15);
+}
+
+/* Estrellas y Detalles */
+.stars-display {
+    color: #fbbf24;
+    font-size: 12px;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.claim-desc-text {
+    font-size: 13px;
+    color: var(--color-dark);
+}
+
+.claim-phone-meta {
+    font-size: 12px;
+    color: var(--color-text-light);
+    margin-top: 4px;
+}
+
+/* Respuesta Guardada */
+.response-locked-box {
+    background-color: #f0fdf4;
+    border: 1px solid #d1fae5;
+    border-radius: var(--radius-sm);
+    padding: 10px 14px;
+    margin-top: 8px;
+    font-size: 13px;
+    color: #14532d;
+}
+
+.response-locked-box strong {
+    display: block;
+    color: #065f46;
+    margin-bottom: 2px;
+    font-size: 11px;
+    text-transform: uppercase;
+}
+
+/* Formulario de Respuesta en la Tabla */
+.action-reply-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.action-reply-textarea {
+    width: 100%;
+    height: 60px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    padding: 8px;
+    font-size: 13px;
+    resize: none;
+    outline: none;
+    color: var(--color-dark);
+    transition: var(--transition);
+}
+
+.action-reply-textarea:focus {
+    border-color: var(--color-primary);
+}
+
+.btn-reply-claim {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 8px 12px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    align-self: flex-start;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.btn-reply-claim:hover {
+    background-color: var(--color-primary-hover);
+    transform: translateY(-1px);
+}
+
+/* Toast de Administración */
+.toast-admin {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 1000;
+    animation: slideUp 0.3s ease-out;
+}
+
+.toast-content {
+    background-color: var(--color-dark);
+    color: var(--color-white);
+    border-radius: var(--radius-md);
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 500;
+    box-shadow: var(--shadow-md);
+}
+
+.toast-content i {
+    color: var(--color-primary);
+    font-size: 18px;
+}
+
+/* Animación */
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+}

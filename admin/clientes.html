@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestión de Clientes - NutriFit Admin</title>
+  
+  <!-- Tipografías y CSS FontAwesome -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500;700&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/admin-global.css">
+  <link rel="stylesheet" href="css/clientes.css">
+  
+  <!-- Comprobación de seguridad rápida antes de renderizar (Previene destellos del panel) -->
+  <script>
+    (function() {
+      const session = JSON.parse(localStorage.getItem("nf_session") || "null");
+      if (!session || session.id_rol !== 1) {
+        alert("Acceso denegado. No tienes permisos de administrador.");
+        window.location.replace("../index.html");
+      }
+    })();
+  </script>
+</head>
+<body>
+<div class="app">
+  
+  <!-- SIDEBAR DE ADMINISTRACIÓN -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar__logo">
+      <div class="sidebar__logo-icon">
+        <i class="fa-solid fa-leaf"></i>
+      </div>
+      <span class="sidebar__logo-name">NutriFit</span>
+    </div>
+    
+    <!-- Perfil del Admin -->
+    <div class="sidebar__user">
+      <div class="user-avatar" id="user-avatar" data-user-avatar>A</div>
+      <p class="user-name" id="user-name" data-user-name>Administrador</p>
+      <p class="user-email" id="user-email" data-user-email>admin@nutrifit.com</p>
+    </div>
+    
+    <!-- Botón Retorno a Client -->
+    <div class="sidebar__action-btn">
+      <a href="../index.html" class="btn-return-client">
+        <i class="fa-solid fa-store"></i> Volver a la Vista General
+      </a>
+    </div>
+    
+    <!-- Navegación Admin -->
+    <nav class="sidebar__nav">
+      <span class="nav-section-label">Principal</span>
+      <a href="dashboard.html" class="nav-item" data-page="dashboard">
+        <i class="fa-solid fa-chart-line"></i> Panel de Control
+      </a>
+      
+      <span class="nav-section-label">Gestión Operativa</span>
+      <a href="pedidos.html" class="nav-item" data-page="pedidos">
+        <i class="fa-solid fa-truck-fast"></i> Pedidos
+      </a>
+      <a href="menu.html" class="nav-item" data-page="carta">
+        <i class="fa-solid fa-bowl-food"></i> Menu NutriFit
+      </a>
+      <a href="clientes.html" class="nav-item active" data-page="clientes">
+        <i class="fa-solid fa-users"></i> Clientes
+      </a>
+      <a href="reclamos.html" class="nav-item" data-page="reclamos">
+        <i class="fa-solid fa-envelope-open-text"></i> Reclamos
+      </a>
+      
+      <span class="nav-section-label">Reportes y Config.</span>
+      <a href="ventas.html" class="nav-item" data-page="ventas">
+        <i class="fa-solid fa-chart-pie"></i> Reporte de Ventas
+      </a>
+      <a href="servicios.html" class="nav-item" data-page="servicios">
+        <i class="fa-solid fa-screwdriver-wrench"></i> Servicios
+      </a>
+      <a href="sobre-nosotros.html" class="nav-item" data-page="sobre-nosotros">
+        <i class="fa-solid fa-circle-info"></i> Sobre Nosotros
+      </a>
+    </nav>
+    
+    <!-- Cierre de Sesión -->
+    <div class="sidebar__logout">
+      <button class="btn-logout" id="btn-logout-sidebar">
+        <i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión
+      </button>
+    </div>
+  </aside>
+
+  <!-- Overlay para menú móvil -->
+  <div class="overlay" id="overlay"></div>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="main">
+    
+    <!-- Topbar para móviles -->
+    <div class="topbar">
+      <div class="topbar-logo">
+        <div class="sidebar__logo-icon" style="width:30px;height:30px;font-size:13px;">
+          <i class="fa-solid fa-leaf"></i>
+        </div>
+        <span>NutriFit Admin</span>
+      </div>
+      <button class="btn-menu" id="btn-menu" aria-label="Menú">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+
+    <!-- Panel de Contenido -->
+    <div class="content">
+      <header class="page-header">
+        <h1>Gestión de Clientes</h1>
+        <p>Administra las cuentas de los usuarios, monitorea sus pedidos, montos acumulados gastados y gestiona sus estados de cuenta e historial crediticio.</p>
+      </header>
+
+      <!-- Indicadores de Resumen (Métricas de Clientes) -->
+      <section class="clientes-metrics-grid">
+        <article class="metric-card">
+          <div class="metric-icon total">
+            <i class="fa-solid fa-users"></i>
+          </div>
+          <div class="metric-data">
+            <h3>Total Clientes</h3>
+            <p id="metric-total-clientes">0</p>
+          </div>
+        </article>
+        
+        <article class="metric-card">
+          <div class="metric-icon available">
+            <i class="fa-solid fa-circle-check"></i>
+          </div>
+          <div class="metric-data">
+            <h3>Al Día</h3>
+            <p id="metric-al-dia">0</p>
+          </div>
+        </article>
+        
+        <article class="metric-card">
+          <div class="metric-icon out-of-stock">
+            <i class="fa-solid fa-file-invoice-dollar"></i>
+          </div>
+          <div class="metric-data">
+            <h3>Deudores</h3>
+            <p id="metric-deudores">0</p>
+          </div>
+        </article>
+
+        <article class="metric-card">
+          <div class="metric-icon debt-total">
+            <i class="fa-solid fa-hand-holding-dollar"></i>
+          </div>
+          <div class="metric-data">
+            <h3>Deuda Total</h3>
+            <p id="metric-deuda-total">S/ 0.00</p>
+          </div>
+        </article>
+      </section>
+
+      <!-- Toolbar de Filtros y Búsqueda -->
+      <section class="toolbar-clientes">
+        <!-- Pestañas Rápidas de Estado -->
+        <div class="tabs-estado-clientes">
+          <button class="btn-tab-estado active" data-estado="todos">Todos</button>
+          <button class="btn-tab-estado" data-estado="al_dia">Al Día</button>
+          <button class="btn-tab-estado" data-estado="deudores">Deudores</button>
+        </div>
+
+        <!-- Buscador por nombre o correo -->
+        <div class="search-box">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" id="clientes-search-input" placeholder="Buscar por cliente o correo...">
+        </div>
+      </section>
+
+      <!-- Datatable de Clientes -->
+      <section class="table-container-card">
+        <div class="table-responsive">
+          <table class="clientes-table" id="clientes-table">
+            <thead>
+              <tr>
+                <th>Cliente</th>
+                <th>Total Pedidos</th>
+                <th>Monto Gastado</th>
+                <th>Deuda Pendiente</th>
+                <th>Estado de Cuenta</th>
+                <th style="text-align: center;">Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="clientes-table-body">
+              <!-- Carga dinámica de clientes -->
+              <tr>
+                <td colspan="6" class="table-loading-row">
+                  <i class="fa-solid fa-spinner fa-spin"></i> Cargando clientes...
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+
+<!-- ========================================== MODAL REGISTRAR PAGO ========================================== -->
+<div id="modal-registrar-pago" class="modal-overlay">
+  <div class="modal-card modal-card-small">
+    <button class="cerrar-modal" id="btn-close-pago-modal">&times;</button>
+    <h2>Registrar Pago Manual</h2>
+    <p class="modal-subtitle">Regulariza la cuenta del cliente ingresando el abono recibido físicamente o por transferencia bancaria.</p>
+    
+    <form id="form-registrar-pago">
+      <input type="hidden" id="pago-cliente-id">
+      
+      <div class="grupo-campo">
+        <label style="font-weight:bold;">Cliente seleccionado</label>
+        <input type="text" id="pago-cliente-nombre" disabled style="background-color: var(--color-bg-light); font-weight: 500;">
+      </div>
+
+      <div class="grupo-campo">
+        <label style="font-weight:bold;">Deuda Acumulada</label>
+        <input type="text" id="pago-deuda-actual" disabled style="background-color: #fef2f2; color: #e53935; font-weight: 700;">
+      </div>
+
+      <div class="grupo-campo">
+        <label for="pago-monto">Monto a Regularizar (S/) <span class="req">*</span></label>
+        <input type="number" id="pago-monto" min="1" step="0.10" required placeholder="Ingresa el monto pagado">
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="btn-cancelar" id="btn-cancel-pago">Cancelar</button>
+        <button type="submit" class="btn-guardar-submit">Registrar Pago</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Scripts de Supabase y Lógica de Administración -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabase-config.js"></script>
+<script src="js/clientes.js"></script>
+</body>
+</html>

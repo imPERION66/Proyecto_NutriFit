@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Perfil - NutriFit</title>
+    
+    <!-- CSS Dependencies -->
+    <link rel="stylesheet" href="../css/normalize.css">
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/perfil-cliente.css">
+    
+    <!-- Icons FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+    <div class="contenedor">
+        
+        <!-- HEADER / NAVBAR -->
+        <header class="header">
+            <div class="logo" onclick="location.href='../index.html'">
+                <p>Nutri<span>Fit</span></p>
+            </div>
+            <div class="hamburguesa" id="btn-hamburguesa">
+                <img src="../assets/img/menu_hamburguesa.jpg" alt="Menu hamburguesa" onerror="this.src='https://cdn-icons-png.flaticon.com/512/561/561115.png'">
+            </div>
+            <nav class="menu" id="menu-navegacion">
+                <ul class="navegacion">
+                    <li><a href="../index.html">Inicio</a></li>
+                    <li><a href="menu-saludable.html">Menú</a></li>
+                    <li><a href="servicios.html">Servicios</a></li>
+                    <li><a href="sobre-nosotros.html">Sobre Nosotros</a></li>
+                    <li><a href="contacto.html">Contacto</a></li>
+                    <li id="auth-buttons"> 
+                        <a href="#" id="abrir-login" class="btn-login-nav">Iniciar Sesión</a> 
+                        <a href="#" id="abrir-registro" class="btn-reg-nav">Registrarse</a>
+                     </li>
+        </header>
+
+        <!-- SECCIÓN DE ESTADO DE CESTA GLOBAL -->
+        <section class="menu-control-panel">
+            <div class="cart-summary-bar">
+                <div class="cart-info">
+                    <span class="total-label">Total a pagar:</span>
+                    <span class="total-value" id="cart-total">S/ 0.00</span>
+                </div>
+                
+                <div class="cart-actions">
+                    <div class="cart-icon-container">
+                        <i class="fa-solid fa-cart-shopping cart-icon"></i>
+                        <span class="cart-badge" id="cart-count">0</span>
+                    </div>
+                    <button class="btn-cart-secondary" id="btn-ir-cesta">Ir a la cesta</button>
+                    <button class="btn-cart-primary" id="btn-continuar">Continuar</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN HERO DE PERFIL -->
+        <section class="perfil-hero">
+            <div class="perfil-hero-info">
+                <div class="avatar-container">
+                    <img id="user-avatar" src="https://cdn-icons-png.flaticon.com/512/147/147144.png" alt="Avatar Usuario">
+                </div>
+                <div class="perfil-resumen">
+                    <h1 id="resumen-nombre">Cargando usuario...</h1>
+                    <p id="resumen-correo">Cargando correo...</p>
+                    <div class="perfil-badges">
+                        <span id="badge-objetivo" class="badge-profile-goal">Objetivo: --</span>
+                        <span id="badge-imc" class="badge-profile-imc">IMC: --</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Contenedor Deuda Destacado -->
+            <div id="contenedor-deuda-cliente" class="deuda-destacada-card" style="display: none;">
+                <div class="deuda-icon-text">
+                    <i class="fa-solid fa-file-invoice-dollar" style="font-size: 28px; color: #e53935;"></i>
+                    <div style="text-align: left;">
+                        <h3 style="font-size: 16px; margin: 0 0 4px 0; color: #e53935; font-family: 'DM Sans', sans-serif; font-weight: 700;">Saldo Pendiente</h3>
+                        <p style="font-size: 13px; margin: 0; color: var(--color-text);">Tu cuenta registra una deuda de: <strong id="deuda-monto-cliente" style="font-size: 15px; color: #e53935;">S/ 0.00</strong></p>
+                    </div>
+                </div>
+                <button type="button" class="btn-pagar-deuda-online" id="btn-pagar-deuda-online">
+                    <i class="fa-solid fa-credit-card"></i> Pagar Deuda Online
+                </button>
+            </div>
+        </section>
+
+        <main class="perfil-contenido">
+            
+            <!-- PANEL IZQUIERDO / MENÚ DE PESTAÑAS -->
+            <aside class="perfil-sidebar">
+                <button class="tab-btn active" data-tab="datos">
+                    <i class="fa-solid fa-user-gear"></i>
+                    <span>Datos Personales</span>
+                </button>
+                <button class="tab-btn" data-tab="direccion">
+                    <i class="fa-solid fa-map-location-dot"></i>
+                    <span>Dirección y GPS</span>
+                </button>
+                <button class="tab-btn" data-tab="billetera">
+                    <i class="fa-solid fa-wallet"></i>
+                    <span>Billetera NutriFit</span>
+                </button>
+            </aside>
+
+            <!-- CONTENEDOR DE PESTAÑAS -->
+            <section class="perfil-panels">
+                
+                <!-- PESTAÑA 1: DATOS PERSONALES -->
+                <div class="tab-panel active" id="panel-datos">
+                    <h2>Datos Personales</h2>
+                    <p class="panel-descripcion">Visualiza y edita tus datos de contacto y tus objetivos físicos. Haz clic en el lápiz para modificar un campo.</p>
+                    
+                    <div class="datos-grid">
+                        <!-- Nombre Completo -->
+                        <div class="dato-row" data-field="nombre_completo">
+                            <div class="dato-info">
+                                <span class="dato-label">Nombre Completo</span>
+                                <span class="dato-value" id="val-nombre">Cargando...</span>
+                                <input type="text" class="dato-input" id="input-nombre" style="display: none;">
+                            </div>
+                            <button class="btn-edit-inline" aria-label="Editar Nombre">
+                                <i class="fa-solid fa-pen icon-edit"></i>
+                                <i class="fa-solid fa-check icon-save" style="display: none;"></i>
+                            </button>
+                        </div>
+
+                        <!-- Correo Electrónico (No Editable por seguridad) -->
+                        <div class="dato-row readonly">
+                            <div class="dato-info">
+                                <span class="dato-label">Correo Electrónico</span>
+                                <span class="dato-value" id="val-correo">Cargando...</span>
+                            </div>
+                            <span class="lock-badge"><i class="fa-solid fa-lock"></i></span>
+                        </div>
+
+                        <!-- Teléfono -->
+                        <div class="dato-row" data-field="telefono">
+                            <div class="dato-info">
+                                <span class="dato-label">Teléfono / Celular</span>
+                                <span class="dato-value" id="val-telefono">No especificado</span>
+                                <input type="tel" class="dato-input" id="input-telefono" style="display: none;" placeholder="Ej. 999888777">
+                            </div>
+                            <button class="btn-edit-inline" aria-label="Editar Teléfono">
+                                <i class="fa-solid fa-pen icon-edit"></i>
+                                <i class="fa-solid fa-check icon-save" style="display: none;"></i>
+                            </button>
+                        </div>
+
+                        <!-- Objetivo Físico -->
+                        <div class="dato-row" data-field="objetivo">
+                            <div class="dato-info">
+                                <span class="dato-label">Objetivo Físico</span>
+                                <span class="dato-value" id="val-objetivo">No especificado</span>
+                                <select class="dato-input select" id="input-objetivo" style="display: none;">
+                                    <option value="bajar">Bajar de Peso 📉</option>
+                                    <option value="mantener">Mantenerse en Forma ⚖️</option>
+                                    <option value="ganar">Ganar Masa Muscular 💪</option>
+                                </select>
+                            </div>
+                            <button class="btn-edit-inline" aria-label="Editar Objetivo">
+                                <i class="fa-solid fa-pen icon-edit"></i>
+                                <i class="fa-solid fa-check icon-save" style="display: none;"></i>
+                            </button>
+                        </div>
+
+                        <!-- Peso -->
+                        <div class="dato-row" data-field="peso">
+                            <div class="dato-info">
+                                <span class="dato-label">Peso (kg)</span>
+                                <span class="dato-value" id="val-peso">-- kg</span>
+                                <input type="number" step="0.1" class="dato-input" id="input-peso" style="display: none;" placeholder="Ej. 70.5">
+                            </div>
+                            <button class="btn-edit-inline" aria-label="Editar Peso">
+                                <i class="fa-solid fa-pen icon-edit"></i>
+                                <i class="fa-solid fa-check icon-save" style="display: none;"></i>
+                            </button>
+                        </div>
+
+                        <!-- Talla -->
+                        <div class="dato-row" data-field="talla">
+                            <div class="dato-info">
+                                <span class="dato-label">Talla (cm)</span>
+                                <span class="dato-value" id="val-talla">-- cm</span>
+                                <input type="number" step="1" class="dato-input" id="input-talla" style="display: none;" placeholder="Ej. 175">
+                            </div>
+                            <button class="btn-edit-inline" aria-label="Editar Talla">
+                                <i class="fa-solid fa-pen icon-edit"></i>
+                                <i class="fa-solid fa-check icon-save" style="display: none;"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PESTAÑA 2: DIRECCIÓN Y GPS -->
+                <div class="tab-panel" id="panel-direccion">
+                    <h2>Dirección de Entrega</h2>
+                    <p class="panel-descripcion">Configura tu dirección habitual de despacho. Utiliza la geolocalización de tu dispositivo para registrar tus coordenadas GPS exactas y acelerar tus pedidos.</p>
+                    
+                    <div class="direccion-box">
+                        <div class="grupo-campo">
+                            <label for="input-direccion">Dirección de Despacho</label>
+                            <div class="input-gps-wrapper">
+                                <input type="text" id="input-direccion" placeholder="Ej. Av. Larco 123, Dpto. 401, Miraflores">
+                                <button type="button" id="btn-gps" class="btn-gps" title="Detectar mi ubicación actual">
+                                    <i class="fa-solid fa-compass"></i>
+                                    <span>Detectar</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="coordenadas-display">
+                            <div class="coord-item">
+                                <span class="coord-label">Latitud</span>
+                                <span class="coord-val" id="val-latitud">--</span>
+                            </div>
+                            <div class="coord-item">
+                                <span class="coord-label">Longitud</span>
+                                <span class="coord-val" id="val-longitud">--</span>
+                            </div>
+                        </div>
+
+                        <button type="button" id="btn-guardar-direccion" class="btn-guardar-panel">
+                            Guardar Ubicación
+                        </button>
+                    </div>
+                </div>
+
+                <!-- PESTAÑA 3: BILLETERA NUTRIFIT -->
+                <div class="tab-panel" id="panel-billetera">
+                    <h2>Billetera NutriFit</h2>
+                    <p class="panel-descripcion">Administra tus métodos de pago para agilizar el proceso de compra. Puedes guardar tus tarjetas de crédito o débito de forma segura.</p>
+                    
+                    <!-- MÉTODOS DE PAGO GENERALES -->
+                    <div class="metodos-pago-row">
+                        <div class="metodo-item active">
+                            <div class="metodo-icon"><i class="fa-solid fa-credit-card"></i></div>
+                            <span>Tarjeta de Crédito/Débito</span>
+                        </div>
+                        <div class="metodo-item">
+                            <div class="metodo-icon"><i class="fa-solid fa-money-bill-wave"></i></div>
+                            <span>Efectivo contra entrega</span>
+                        </div>
+                        <div class="metodo-item">
+                            <div class="metodo-icon"><i class="fa-solid fa-mobile-screen-button"></i></div>
+                            <span>Yape / Plin</span>
+                        </div>
+                    </div>
+
+                    <!-- MÓDULO DE TARJETAS GUARDADAS -->
+                    <div class="tarjetas-guardadas-seccion">
+                        <div class="tarjetas-cabecera">
+                            <h3>Mis Tarjetas Guardadas</h3>
+                            <button type="button" id="btn-abrir-tarjeta-modal" class="btn-add-card-trigger">
+                                <i class="fa-solid fa-plus"></i> Agregar Tarjeta
+                            </button>
+                        </div>
+
+                        <!-- Grid de Tarjetas -->
+                        <div class="tarjetas-grid" id="tarjetas-grid">
+                            <!-- Inyectadas dinámicamente -->
+                        </div>
+
+                        <!-- Estado Vacío -->
+                        <div class="tarjetas-vacio" id="tarjetas-vacio" style="display: none;">
+                            <div class="vacio-icon"><i class="fa-solid fa-credit-card"></i></div>
+                            <h4>No tienes tarjetas guardadas</h4>
+                            <p>Registra una tarjeta para evitar escribir tus datos en cada compra. La información se enmascarará de forma segura.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+        </main>
+
+        <!-- FOOTER INTEGRADO -->
+        <footer class="footer" style="padding-top: 40px; border-top: 1px solid var(--color-border);">
+            <div class="footer-contenido" style="padding-bottom: 20px;">
+                <div class="footer-col-marca">
+                    <div class="logo-footer">
+                        <p>Nutri<span>Fit</span></p>
+                    </div>
+                    <p class="marca-descripcion">
+                        Cuidamos tu salud ofreciéndote deliciosas comidas personalizadas según tus objetivos físicos (bajar de peso, mantenerte en forma o ganar masa muscular).
+                    </p>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Navegación</h3>
+                    <ul>
+                        <li><a href="../index.html">Inicio</a></li>
+                        <li><a href="menu-saludable.html">Nuestro Menú</a></li>
+                        <li><a href="servicios.html">Servicios</a></li>
+                        <li><a href="sobre-nosotros.html">Sobre Nosotros</a></li>
+                        <li><a href="contacto.html">Contacto</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Horarios</h3>
+                    <ul>
+                        <li>Lunes a Viernes:</li>
+                        <li class="destacado-horario">8:00 AM - 9:00 PM</li>
+                        <li>Sábados y Domingos:</li>
+                        <li class="destacado-horario">9:00 AM - 6:00 PM</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom" style="margin-top: 20px;">
+                <p>&copy; 2026 NutriFit. Todos los derechos reservados. Diseñado para tu bienestar.</p>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- MODAL AGREGAR TARJETA -->
+    <div id="modal-tarjeta" class="modal-overlay">
+        <div class="tarjeta-modal-card modal-card">
+            <button class="cerrar-modal" id="btn-cerrar-tarjeta-modal">&times;</button>
+            <div class="logo">
+                <p>Nutri<span>Fit</span></p>
+            </div>
+            <h2>Guardar Nueva Tarjeta</h2>
+            <p class="subtitulo">Tus datos serán enmascarados y guardados de forma 100% segura.</p>
+
+            <form id="form-tarjeta">
+                <div class="grupo-campo">
+                    <label for="card-number">Número de Tarjeta <span class="required">*</span></label>
+                    <input type="text" id="card-number" maxlength="19" placeholder="4000 1234 5678 9010" required>
+                </div>
+
+                <div class="campo-doble">
+                    <div class="grupo-campo">
+                        <label for="card-expiry">Vencimiento <span class="required">*</span></label>
+                        <input type="text" id="card-expiry" maxlength="5" placeholder="MM/AA" required>
+                    </div>
+                    <div class="grupo-campo">
+                        <label for="card-cvv">CVV / CVC <span class="required">*</span></label>
+                        <input type="password" id="card-cvv" maxlength="4" placeholder="123" required>
+                    </div>
+                </div>
+
+                <div class="grupo-campo">
+                    <label for="card-holder">Nombre del Titular <span class="required">*</span></label>
+                    <input type="text" id="card-holder" placeholder="Ej. Juan Pérez" required>
+                </div>
+
+                <div id="error-tarjeta" class="mensaje-error"></div>
+                <button type="submit" class="btn-guardar-tarjeta">Guardar Tarjeta</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ALERTA TOAST -->
+    <div id="toast-notificacion" class="toast-overlay">
+        <div class="toast-card">
+            <div class="toast-icon">
+                <i id="toast-icon-element" class="fa-solid fa-circle-check"></i>
+            </div>
+            <div class="toast-contenido">
+                <h4 id="toast-titulo">¡Acción exitosa!</h4>
+                <p id="toast-mensaje">El cambio ha sido registrado correctamente.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL LOGIN (Reutilizado para sesiones expiradas o recargas) -->
+    <div id="modal-login" class="modal-overlay">
+        <div class="login-tarjeta modal-card"> 
+            <button class="cerrar-modal" data-close="modal-login">&times;</button>
+            <div class="logo"> 
+                <p>Nutri<span>Fit</span></p>
+            </div> 
+            <h2>Bienvenido de nuevo</h2> 
+            <p class="subtitulo">Ingresa tus credenciales para acceder a tu cuenta.</p> 
+            <form id="form-login">
+                <div class="grupo-campo"> 
+                    <label for="log-correo">Correo Electrónico</label> 
+                    <input type="email" id="log-correo" placeholder="correo@ejemplo.com" required> 
+                </div>
+                <div class="grupo-campo"> 
+                    <label for="log-contrasena">Contraseña</label>
+                    <input type="password" id="log-contrasena" placeholder="Tu contraseña de acceso" required> 
+                </div> 
+                <div id="error-login" class="mensaje-error"></div>
+                <button type="submit" class="btn-login">Ingresar</button> 
+            </form> 
+            <p class="enlace-registro">¿No tienes una cuenta aún? 
+                <a href="#" id="switch-to-register">Regístrate aquí</a>
+            </p> 
+        </div> 
+    </div>
+
+    <!-- MODAL REGISTRO --> 
+    <div id="modal-registro" class="modal-overlay">
+        <div class="registro-tarjeta modal-card"> 
+            <button class="cerrar-modal" data-close="modal-registro">&times;</button> 
+            <div class="logo"> 
+                <p>Nutri<span>Fit</span></p>
+            </div> 
+            <h2>Únete a nosotros</h2>
+            <p class="subtitulo">Empieza tu cambio hacia una vida más saludable hoy mismo.</p> 
+            <form id="form-registro"> 
+                <div class="grupo-campo">
+                    <label for="reg-nombre">Nombre Completo</label>
+                    <input type="text" id="reg-nombre" placeholder="Ej. Juan Pérez" required>
+                </div> 
+                <div class="grupo-campo"> 
+                    <label for="reg-correo">Correo Electrónico</label> 
+                    <input type="email" id="reg-correo" placeholder="correo@ejemplo.com" required> 
+                </div> 
+                <div class="grupo-campo"> 
+                    <label for="reg-contrasena">Contraseña</label>
+                    <input type="password" id="reg-contrasena" placeholder="Mínimo 6 caracteres" required> 
+                </div> 
+                <div id="error-registro" class="mensaje-error"></div> 
+                <button type="submit" class="btn-registro">Crear Cuenta</button> 
+            </form> 
+            <p class="enlace-login">¿Ya tienes una cuenta? 
+                <a href="#" id="switch-to-login">Inicia sesión aquí</a>
+            </p> 
+        </div> 
+    </div>
+
+    <!-- MODAL BLOQUEANTE DE PERFIL INCOMPLETO -->
+    <div id="modal-pendiente" class="modal-flotante">
+        <div class="modal-contenido" style="max-width: 450px; text-align: left;">
+            <h3 style="text-align: center; margin-top: 0; font-size: 24px;">¡Completa tu Perfil! 🥦</h3>
+            <p style="text-align: center; margin-bottom: 20px; font-size: 15px; color: #555; line-height: 1.5;">
+                Para poder continuar y calcular tu IMC y dieta personalizada, es obligatorio completar la siguiente información clave:
+            </p>
+            <form id="form-completar-perfil-modal" style="display: flex; flex-direction: column; gap: 15px;">
+                <div class="grupo-campo" style="margin-bottom: 0; display: flex; flex-direction: column; gap: 5px;">
+                    <label for="modal-telefono" style="font-weight: 600; color: var(--color-dark);">Teléfono / Celular <span class="required" style="color: var(--color-accent-red); font-weight: bold;">*</span></label>
+                    <input type="tel" id="modal-telefono" placeholder="Ej. 999888777" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px; font-size: 14px;">
+                </div>
+                <div class="campo-doble" style="display: flex; gap: 15px; width: 100%;">
+                    <div class="grupo-campo" style="flex: 1; margin-bottom: 0; display: flex; flex-direction: column; gap: 5px;">
+                        <label for="modal-peso" style="font-weight: 600; color: var(--color-dark);">Peso (kg) <span class="required" style="color: var(--color-accent-red); font-weight: bold;">*</span></label>
+                        <input type="number" step="0.1" id="modal-peso" placeholder="Ej. 70.5" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px; font-size: 14px;">
+                    </div>
+                    <div class="grupo-campo" style="flex: 1; margin-bottom: 0; display: flex; flex-direction: column; gap: 5px;">
+                        <label for="modal-talla" style="font-weight: 600; color: var(--color-dark);">Talla (cm) <span class="required" style="color: var(--color-accent-red); font-weight: bold;">*</span></label>
+                        <input type="number" step="1" id="modal-talla" placeholder="Ej. 175" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px; font-size: 14px;">
+                    </div>
+                </div>
+                <div id="error-completar-modal" class="mensaje-error" style="color: var(--color-accent-red); font-size: 13px; display: none; margin-top: 5px; font-weight: 600;"></div>
+                <button type="submit" class="btn-guardar-panel" style="width: 100%; padding: 12px; margin-top: 10px; background-color: var(--color-primary); color: white; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 16px; transition: background 0.2s;">
+                    Guardar Perfil y Continuar
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts de Supabase y Lógica -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/supabase-config.js"></script>
+    <script src="../js/index.js"></script>
+    <script src="../js/perfil-cliente.js"></script>
+</body>
+</html>

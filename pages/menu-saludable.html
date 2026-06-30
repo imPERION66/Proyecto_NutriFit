@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú Saludable - NutriFit</title>
+    
+    <!-- CSS Dependencies -->
+    <link rel="stylesheet" href="../css/normalize.css">
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/menu-saludable.css">
+    
+    <!-- Icons FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+    <div class="contenedor">
+        
+        <!-- HEADER / NAVBAR -->
+        <header class="header">
+            <div class="logo" onclick="location.href='../index.html'">
+                <p>Nutri<span>Fit</span></p>
+            </div>
+            <div class="hamburguesa" id="btn-hamburguesa">
+                <img src="../assets/img/menu_hamburguesa.jpg" alt="Menu hamburguesa" onerror="this.src='https://cdn-icons-png.flaticon.com/512/561/561115.png'">
+            </div>
+            <nav class="menu" id="menu-navegacion">
+                <ul class="navegacion">
+                    <li><a href="../index.html">Inicio</a></li>
+                    <li><a href="#" class="active-nav" style="color: var(--color-primary); font-weight: 700;">Menú</a></li>
+                    <li><a href="servicios.html">Servicios</a></li>
+                    <li><a href="sobre-nosotros.html">Sobre Nosotros</a></li>
+                    <li><a href="contacto.html">Contacto</a></li>
+                    <li id="auth-buttons"> 
+                        <a href="#" id="abrir-login" class="btn-login-nav">Iniciar Sesión</a> 
+                        <a href="#" id="abrir-registro" class="btn-reg-nav">Registrarse</a>
+                     </li>
+                </ul>
+            </nav>
+        </header>
+
+        <!-- SECCIÓN DE FILTROS Y ESTADO DE CESTA -->
+        <section class="menu-control-panel">
+            
+            <!-- Barra de Herramientas (Filtros) -->
+            <div class="filter-toolbar">
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                    <input type="text" id="search-input" placeholder="Buscar por nombre...">
+                </div>
+                
+                <div class="select-box">
+                    <select id="category-select">
+                        <option value="todos">Cualquier momento</option>
+                        <option value="desayuno">Desayuno</option>
+                        <option value="almuerzo">Almuerzo</option>
+                        <option value="cena">Cena</option>
+                        <option value="postre">Postre</option>
+                    </select>
+                </div>
+                
+                <div class="goal-filters" id="goal-filters-container">
+                    <button class="btn-filter active" data-goal="todos">Todos</button>
+                    <button class="btn-filter" data-goal="bajar">Bajar</button>
+                    <button class="btn-filter" data-goal="mantener">Mantener</button>
+                    <button class="btn-filter" data-goal="ganar">Ganar Masa</button>
+                </div>
+            </div>
+
+            <!-- Fila de Estado de Compra (Cesta) -->
+            <div class="cart-summary-bar">
+                <div class="cart-info">
+                    <span class="total-label">Total a pagar:</span>
+                    <span class="total-value" id="cart-total">S/ 0.00</span>
+                </div>
+                
+                <div class="cart-actions">
+                    <div class="cart-icon-container">
+                        <i class="fa-solid fa-cart-shopping cart-icon"></i>
+                        <span class="cart-badge" id="cart-count">0</span>
+                    </div>
+                    <button class="btn-cart-secondary" id="btn-ir-cesta">Ir a la cesta</button>
+                    <button class="btn-cart-primary" id="btn-continuar">Continuar</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- GRID DEL CATÁLOGO DE PLATOS -->
+        <main class="menu-catalog-section">
+            <div class="platos-grid" id="menu-catalog-grid">
+                <p class="loading-msg">Cargando platos saludables...</p>
+            </div>
+        </main>
+        
+    </div>
+
+    <!-- ========================================== MODAL LOGIN ========================================== -->
+    <div id="modal-login" class="modal-overlay">
+        <div class="login-tarjeta modal-card"> 
+            <button class="cerrar-modal" data-close="modal-login">&times;</button>
+            <div class="logo"> 
+                <p>Nutri<span>Fit</span></p>
+            </div> 
+            <h2>Bienvenido de nuevo</h2> 
+            <p class="subtitulo">Ingresa tus credenciales para acceder a tu cuenta.</p> 
+            <form id="form-login">
+                <div class="grupo-campo"> 
+                    <label for="log-correo">Correo Electrónico</label> 
+                    <input type="email" id="log-correo" placeholder="correo@ejemplo.com" required> 
+                </div>
+                <div class="grupo-campo"> 
+                    <label for="log-contrasena">Contraseña</label>
+                    <input type="password" id="log-contrasena" placeholder="Tu contraseña de acceso" required> 
+                </div> 
+                <div id="error-login" class="mensaje-error"></div>
+                <button type="submit" class="btn-login">Ingresar</button> 
+            </form> 
+            <p class="enlace-registro">¿No tienes una cuenta aún? 
+                <a href="#" id="switch-to-register">Regístrate aquí</a>
+            </p> 
+        </div> 
+    </div>
+
+    <!-- ========================================== MODAL REGISTRO ========================================== --> 
+    <div id="modal-registro" class="modal-overlay">
+        <div class="registro-tarjeta modal-card"> 
+            <button class="cerrar-modal" data-close="modal-registro">&times;</button> 
+            <div class="logo"> 
+                <p>Nutri<span>Fit</span></p>
+            </div> 
+            <h2>Únete a nosotros</h2>
+            <p class="subtitulo">Empieza tu cambio hacia una vida más saludable hoy mismo.</p> 
+            <form id="form-registro"> 
+                <div class="grupo-campo">
+                    <label for="reg-nombre">Nombre Completo</label>
+                    <input type="text" id="reg-nombre" placeholder="Ej. Juan Pérez" required>
+                </div> 
+                <div class="grupo-campo"> 
+                    <label for="reg-correo">Correo Electrónico</label> 
+                    <input type="email" id="reg-correo" placeholder="correo@ejemplo.com" required> 
+                </div> 
+                <div class="grupo-campo"> 
+                    <label for="reg-contrasena">Contraseña</label>
+                    <input type="password" id="reg-contrasena" placeholder="Mínimo 6 caracteres" required> 
+                </div> 
+                <div id="error-registro" class="mensaje-error"></div> 
+                <button type="submit" class="btn-registro">Crear Cuenta</button> 
+            </form> 
+            <p class="enlace-login">¿Ya tienes una cuenta? 
+                <a href="#" id="switch-to-login">Inicia sesión aquí</a>
+            </p> 
+        </div> 
+    </div>
+
+    <!-- ========================================== MODAL PERFIL PENDIENTE ========================================== -->
+    <div id="modal-pendiente" class="modal-flotante">
+        <div class="modal-contenido">
+            <h3>¡Completa tu Perfil! 🥦</h3>
+            <p>Para ofrecerte un menú personalizado según tus objetivos de salud, necesitamos conocer tu peso y talla actual.</p>
+            <div class="modal-botones">
+                <button id="btn-completar-perfil" class="btn-modal-ok">Completar Ahora</button>
+                <button id="btn-cerrar-modal" class="btn-modal-cancel">Más tarde</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts de Supabase y Lógica General -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/supabase-config.js"></script>
+    <script src="../js/index.js"></script>
+    <script src="../js/menu-saludable.js"></script>
+</body>
+</html>

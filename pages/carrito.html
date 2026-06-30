@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Cesta de Compras - NutriFit</title>
+    
+    <!-- CSS Dependencies -->
+    <link rel="stylesheet" href="../css/normalize.css">
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/carrito.css">
+    
+    <!-- Icons FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+    <div class="contenedor">
+        
+        <!-- HEADER / NAVBAR -->
+        <header class="header">
+            <div class="logo" onclick="location.href='../index.html'">
+                <p>Nutri<span>Fit</span></p>
+            </div>
+            <div class="hamburguesa" id="btn-hamburguesa">
+                <img src="../assets/img/menu_hamburguesa.jpg" alt="Menu hamburguesa" onerror="this.src='https://cdn-icons-png.flaticon.com/512/561/561115.png'">
+            </div>
+            <nav class="menu" id="menu-navegacion">
+                <ul class="navegacion">
+                    <li><a href="../index.html">Inicio</a></li>
+                    <li><a href="menu-saludable.html">Menú</a></li>
+                    <li><a href="servicios.html">Servicios</a></li>
+                    <li><a href="sobre-nosotros.html">Sobre Nosotros</a></li>
+                    <li><a href="contacto.html">Contacto</a></li>
+                    <li id="auth-buttons"> 
+                        <a href="#" id="abrir-login" class="btn-login-nav">Iniciar Sesión</a> 
+                        <a href="#" id="abrir-registro" class="btn-reg-nav">Registrarse</a>
+                     </li>
+                </ul>
+            </nav>
+        </header>
+
+        <!-- SECCIÓN DE ESTADO DE CESTA GLOBAL (OCULTA POR DEFECTO EN CSS) -->
+        <section class="menu-control-panel">
+            <div class="cart-summary-bar">
+                <div class="cart-info">
+                    <span class="total-label">Total a pagar:</span>
+                    <span class="total-value" id="cart-total">S/ 0.00</span>
+                </div>
+                
+                <div class="cart-actions">
+                    <div class="cart-icon-container">
+                        <i class="fa-solid fa-cart-shopping cart-icon"></i>
+                        <span class="cart-badge" id="cart-count">0</span>
+                    </div>
+                    <button class="btn-cart-secondary" id="btn-ir-cesta">Ir a la cesta</button>
+                    <button class="btn-cart-primary" id="btn-continuar">Continuar</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTENIDO DEL CARRITO -->
+        <main class="carrito-container">
+            <h1 class="carrito-titulo">Tu Cesta de Compras 🛒</h1>
+            
+            <!-- STEPPER DE 3 PUNTOS -->
+            <div class="checkout-stepper" id="checkout-stepper-bar">
+                <div class="step-item active" id="step-1-indicator">
+                    <div class="step-circle"><i class="fa-solid fa-circle"></i></div>
+                    <span class="step-label">CUSTOMER DETAILS</span>
+                </div>
+                <div class="step-line" id="line-1"></div>
+                <div class="step-item" id="step-2-indicator">
+                    <div class="step-circle">2</div>
+                    <span class="step-label">PAYMENT METHOD</span>
+                </div>
+                <div class="step-line" id="line-2"></div>
+                <div class="step-item" id="step-3-indicator">
+                    <div class="step-circle">3</div>
+                    <span class="step-label">CONFIRMATION</span>
+                </div>
+            </div>
+
+            <!-- PASO 1: DETALLE DE LA CESTA Y RESUMEN -->
+            <div class="checkout-step active" id="step-1-container">
+                <div class="carrito-grid" id="carrito-lleno-grid">
+                    <!-- LISTADO DE PRODUCTOS -->
+                    <section class="carrito-productos" id="carrito-productos-lista">
+                        <p class="loading-msg">Cargando tu cesta...</p>
+                    </section>
+                    
+                    <!-- RESUMEN DEL PEDIDO -->
+                    <aside class="carrito-resumen">
+                        <div class="resumen-card">
+                            <h3>Resumen del Pedido</h3>
+                            
+                            <div class="resumen-detalle">
+                                <div class="resumen-fila">
+                                    <span>Subtotal</span>
+                                    <span id="resumen-subtotal">S/ 0.00</span>
+                                </div>
+                                <div class="resumen-fila">
+                                    <span>Costo de envío</span>
+                                    <span id="resumen-envio">S/ 5.00</span>
+                                </div>
+                                <div class="resumen-fila descuento" id="resumen-descuento-fila" style="display: none;">
+                                    <span>Descuento (Cupón)</span>
+                                    <span id="resumen-descuento">-S/ 0.00</span>
+                                </div>
+                                <hr class="resumen-divider">
+                                <div class="resumen-fila total">
+                                    <span>Total a pagar</span>
+                                    <span id="resumen-total">S/ 0.00</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Cupón de descuento -->
+                            <div class="cupon-container">
+                                <input type="text" id="cupon-input" placeholder="Código de cupón (Ej. NUTRI10)">
+                                <button type="button" id="btn-aplicar-cupon">Aplicar</button>
+                            </div>
+                            <div id="cupon-mensaje" class="cupon-msg"></div>
+                            
+                            <button class="btn-checkout" id="btn-procesar-pago">
+                                Procesar Pago <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                            
+                            <a href="menu-saludable.html" class="enlace-seguir-comprando">
+                                <i class="fa-solid fa-chevron-left"></i> Continuar Comprando
+                            </a>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+
+            <!-- PASO 2: PASARELA DE SELECCIÓN DE MÉTODO DE PAGO -->
+            <div class="checkout-step" id="step-2-container" style="display: none;">
+                <div class="carrito-grid">
+                    <!-- Formulario de Pago y Dirección -->
+                    <section class="payment-form-section">
+                        <div class="payment-card">
+                            <h3>Selecciona tu Método de Pago</h3>
+                            
+                            <!-- Pasarela de selección -->
+                            <div class="payment-methods-grid">
+                                <label class="method-option">
+                                    <input type="radio" name="payment-method" value="mastercard" id="method-mastercard">
+                                    <div class="method-box">
+                                        <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Mastercard" class="payment-logo-img">
+                                    </div>
+                                </label>
+                                <label class="method-option">
+                                    <input type="radio" name="payment-method" value="visa" id="method-visa" checked>
+                                    <div class="method-box">
+                                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_2021.svg" alt="Visa" class="payment-logo-img">
+                                    </div>
+                                </label>
+                                <label class="method-option">
+                                    <input type="radio" name="payment-method" value="paypal" id="method-paypal">
+                                    <div class="method-box">
+                                        <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" alt="PayPal" class="payment-logo-img">
+                                    </div>
+                                </label>
+                                <label class="method-option">
+                                    <input type="radio" name="payment-method" value="efectivo" id="method-efectivo">
+                                    <div class="method-box label-text">
+                                        <span>CASH ON DELIVERY</span>
+                                    </div>
+                                </label>
+                            </div>
+                            
+                            <!-- Campos de Tarjeta de Crédito/Débito -->
+                            <div class="card-details-fields" id="card-fields-container">
+                                <div class="form-row">
+                                    <div class="form-group col-6">
+                                        <label for="card-number">Card number *</label>
+                                        <input type="text" id="card-number" placeholder="xxxx xxxx xxxx xxxx" maxlength="19" required>
+                                    </div>
+                                    <div class="form-group col-6">
+                                        <label for="card-holder">Cardholder *</label>
+                                        <input type="text" id="card-holder" placeholder="Ej. Juan Pérez" required>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-6">
+                                        <label>Expiry date *</label>
+                                        <div class="expiry-selects">
+                                            <select id="card-expiry-month" required>
+                                                <option value="" disabled selected>Mes</option>
+                                                <option value="01">01</option>
+                                                <option value="02">02</option>
+                                                <option value="03">03</option>
+                                                <option value="04">04</option>
+                                                <option value="05">05</option>
+                                                <option value="06">06</option>
+                                                <option value="07">07</option>
+                                                <option value="08">08</option>
+                                                <option value="09">09</option>
+                                                <option value="10">10</option>
+                                                <option value="11">11</option>
+                                                <option value="12">12</option>
+                                            </select>
+                                            <select id="card-expiry-year" required>
+                                                <option value="" disabled selected>Año</option>
+                                                <option value="2026">2026</option>
+                                                <option value="2027">2027</option>
+                                                <option value="2028">2028</option>
+                                                <option value="2029">2029</option>
+                                                <option value="2030">2030</option>
+                                                <option value="2031">2031</option>
+                                                <option value="2032">2032</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-6">
+                                        <label for="card-cvc">CVC * <i class="fa-solid fa-circle-question" title="Código de seguridad de 3 dígitos al reverso"></i></label>
+                                        <input type="password" id="card-cvc" placeholder="***" maxlength="3" required>
+                                    </div>
+                                </div>
+                                <div class="form-checkbox-row">
+                                    <input type="checkbox" id="save-card-details" checked>
+                                    <label for="save-card-details">Save my details for future purchases</label>
+                                </div>
+                            </div>
+
+                            <!-- Campos de dirección y contacto de entrega -->
+                            <div class="delivery-details-fields">
+                                <h3>Dirección de Entrega y Contacto</h3>
+                                <div class="form-row">
+                                    <div class="form-group col-6">
+                                        <div class="label-row" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                                            <label for="delivery-address" style="margin-bottom: 0;">Dirección completa *</label>
+                                            <button type="button" id="btn-change-address" class="btn-address-link" style="display: none;">+ Usar otra dirección</button>
+                                        </div>
+                                        <input type="text" id="delivery-address" placeholder="Ej. Av. Javier Prado Este 1024, San Isidro" required>
+                                        
+                                        <!-- Checkbox de actualización opcional del perfil -->
+                                        <div class="form-checkbox-row" id="save-profile-address-row" style="display: none; margin-top: 8px;">
+                                            <input type="checkbox" id="save-address-to-profile">
+                                            <label for="save-address-to-profile" style="font-size: 11px; color: var(--color-text);">Actualizar como dirección principal en mi perfil</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-6">
+                                        <label for="delivery-phone">Teléfono móvil *</label>
+                                        <input type="tel" id="delivery-phone" placeholder="Ej. 987654321" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    
+                    <!-- Resumen del Pago -->
+                    <aside class="carrito-resumen">
+                        <div class="resumen-card">
+                            <h3>Resumen del Pedido</h3>
+                            
+                            <div class="resumen-detalle">
+                                <div class="resumen-fila">
+                                    <span id="pago-subtotal-label">Subtotal</span>
+                                    <span id="pago-subtotal">S/ 0.00</span>
+                                </div>
+                                <div class="resumen-fila">
+                                    <span>Costo de envío</span>
+                                    <span id="pago-envio">S/ 5.00</span>
+                                </div>
+                                <div class="resumen-fila descuento" id="pago-descuento-fila" style="display: none;">
+                                    <span>Descuento (Cupón)</span>
+                                    <span id="pago-descuento">-S/ 0.00</span>
+                                </div>
+                                <hr class="resumen-divider">
+                                <div class="resumen-fila total">
+                                    <span>Total a pagar</span>
+                                    <span id="pago-total">S/ 0.00</span>
+                                </div>
+                            </div>
+                            
+                            <button class="btn-checkout" id="btn-confirmar-pago">
+                                CONFIRMAR PEDIDO
+                            </button>
+                            
+                            <button class="btn-back-step" id="btn-regresar-paso-1">
+                                <i class="fa-solid fa-chevron-left"></i> Volver a la Cesta
+                            </button>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+
+            <!-- PASO 3: CONFIRMACIÓN DE PEDIDO -->
+            <div class="checkout-step" id="step-3-container" style="display: none;">
+                <div class="success-panel">
+                    <div class="success-icon-wrapper">
+                        <i class="fa-solid fa-circle-check"></i>
+                    </div>
+                    <h2>¡Pedido Realizado con Éxito!</h2>
+                    <p class="success-desc">Hemos recibido tu orden y ya está en preparación por nuestros chefs especializados.</p>
+                    
+                    <div class="order-details-container">
+                        <h3>Detalles de la Compra</h3>
+                        
+                        <div class="order-info-grid">
+                            <div class="info-item">
+                                <span class="info-label">ID del Pedido:</span>
+                                <span class="info-val" id="order-id-display">NF-PENDIENTE</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Método de Pago:</span>
+                                <span class="info-val" id="order-payment-display">-</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Dirección de Entrega:</span>
+                                <span class="info-val" id="order-address-display">-</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Tiempo Estimado:</span>
+                                <span class="info-val text-highlight" id="order-time-display">45 - 60 minutos</span>
+                            </div>
+                        </div>
+                        
+                        <div class="order-items-summary">
+                            <h4>Platos Pagados</h4>
+                            <div class="order-items-list" id="order-items-display">
+                                <!-- Se renderiza dinámicamente -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="success-actions">
+                        <button onclick="location.href='menu-saludable.html'" class="btn-success-menu">Explorar Nuestro Menú</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Carrito Vacío -->
+            <div class="carrito-vacio-panel" id="carrito-vacio" style="display: none;">
+                <div class="vacio-icon-wrapper">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                </div>
+                <h2>Tu cesta de compras está vacía</h2>
+                <p>Parece que aún no has agregado platos saludables a tu pedido.</p>
+                <button onclick="location.href='menu-saludable.html'" class="btn-vacio-ir-menu">Explorar Nuestro Menú</button>
+            </div>
+        </main>
+
+        <!-- Toast Flotante de Éxito -->
+        <div id="toast-pago-exito" class="toast-pago-overlay" style="display: none;">
+            <div class="toast-pago-card">
+                <i class="fa-solid fa-circle-check toast-pago-icon"></i>
+                <span>Pedido realizado con éxito</span>
+            </div>
+        </div>
+        
+        <!-- ========================================== FOOTER ========================================== -->
+        <footer class="footer" style="padding-top: 40px; border-top: 1px solid var(--color-border); margin-top: 50px;">
+            <div class="footer-contenido" style="padding-bottom: 20px;">
+                <div class="footer-col-marca">
+                    <div class="logo-footer">
+                        <p>Nutri<span>Fit</span></p>
+                    </div>
+                    <p class="marca-descripcion">
+                        Cuidamos tu salud ofreciéndote deliciosas comidas personalizadas según tus objetivos físicos (bajar de peso, mantenerte en forma o ganar masa muscular).
+                    </p>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Navegación</h3>
+                    <ul>
+                        <li><a href="../index.html">Inicio</a></li>
+                        <li><a href="menu-saludable.html">Nuestro Menú</a></li>
+                        <li><a href="servicios.html">Servicios</a></li>
+                        <li><a href="sobre-nosotros.html">Sobre Nosotros</a></li>
+                        <li><a href="contacto.html">Contacto</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Horarios</h3>
+                    <ul>
+                        <li>Lunes a Viernes:</li>
+                        <li class="destacado-horario">8:00 AM - 9:00 PM</li>
+                        <li>Sábados y Domingos:</li>
+                        <li class="destacado-horario">9:00 AM - 6:00 PM</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom" style="margin-top: 20px;">
+                <p>&copy; 2026 NutriFit. Todos los derechos reservados. Diseñado para tu bienestar.</p>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- ========================================== MODAL LOGIN ========================================== -->
+    <div id="modal-login" class="modal-overlay">
+        <div class="login-tarjeta modal-card"> 
+            <button class="cerrar-modal" data-close="modal-login">&times;</button>
+            <div class="logo"> 
+                <p>Nutri<span>Fit</span></p>
+            </div> 
+            <h2>Bienvenido de nuevo</h2> 
+            <p class="subtitulo">Ingresa tus credenciales para acceder a tu cuenta.</p> 
+            <form id="form-login">
+                <div class="grupo-campo"> 
+                    <label for="log-correo">Correo Electrónico</label> 
+                    <input type="email" id="log-correo" placeholder="correo@ejemplo.com" required> 
+                </div>
+                <div class="grupo-campo"> 
+                    <label for="log-contrasena">Contraseña</label>
+                    <input type="password" id="log-contrasena" placeholder="Tu contraseña de acceso" required> 
+                </div> 
+                <div id="error-login" class="mensaje-error"></div>
+                <button type="submit" class="btn-login">Ingresar</button> 
+            </form> 
+            <p class="enlace-registro">¿No tienes una cuenta aún? 
+                <a href="#" id="switch-to-register">Regístrate aquí</a>
+            </p> 
+        </div> 
+    </div>
+
+    <!-- ========================================== MODAL REGISTRO ========================================== --> 
+    <div id="modal-registro" class="modal-overlay">
+        <div class="registro-tarjeta modal-card"> 
+            <button class="cerrar-modal" data-close="modal-registro">&times;</button> 
+            <div class="logo"> 
+                <p>Nutri<span>Fit</span></p>
+            </div> 
+            <h2>Únete a nosotros</h2>
+            <p class="subtitulo">Empieza tu cambio hacia una vida más saludable hoy mismo.</p> 
+            <form id="form-registro"> 
+                <div class="grupo-campo">
+                    <label for="reg-nombre">Nombre Completo</label>
+                    <input type="text" id="reg-nombre" placeholder="Ej. Juan Pérez" required>
+                </div> 
+                <div class="grupo-campo"> 
+                    <label for="reg-correo">Correo Electrónico</label> 
+                    <input type="email" id="reg-correo" placeholder="correo@ejemplo.com" required> 
+                </div> 
+                <div class="grupo-campo"> 
+                    <label for="reg-contrasena">Contraseña</label>
+                    <input type="password" id="reg-contrasena" placeholder="Mínimo 6 caracteres" required> 
+                </div> 
+                <div id="error-registro" class="mensaje-error"></div> 
+                <button type="submit" class="btn-registro">Crear Cuenta</button> 
+            </form> 
+            <p class="enlace-login">¿Ya tienes una cuenta? 
+                <a href="#" id="switch-to-login">Inicia sesión aquí</a>
+            </p> 
+        </div> 
+    </div>
+
+    <!-- Scripts de Supabase y Lógica -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/supabase-config.js"></script>
+    <script src="../js/index.js"></script>
+    <script src="../js/carrito.js"></script>
+</body>
+</html>

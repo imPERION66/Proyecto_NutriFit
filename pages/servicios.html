@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Servicios y Recetas - NutriFit</title>
+    
+    <!-- CSS Dependencies -->
+    <link rel="stylesheet" href="../css/normalize.css">
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/servicios.css">
+    
+    <!-- Icons FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+    <div class="contenedor">
+        
+        <!-- HEADER / NAVBAR -->
+        <header class="header">
+            <div class="logo" onclick="location.href='../index.html'">
+                <p>Nutri<span>Fit</span></p>
+            </div>
+            <div class="hamburguesa" id="btn-hamburguesa">
+                <img src="../assets/img/menu_hamburguesa.jpg" alt="Menu hamburguesa" onerror="this.src='https://cdn-icons-png.flaticon.com/512/561/561115.png'">
+            </div>
+            <nav class="menu" id="menu-navegacion">
+                <ul class="navegacion">
+                    <li><a href="../index.html">Inicio</a></li>
+                    <li><a href="menu-saludable.html">Menú</a></li>
+                    <li><a href="#" class="active-nav" style="color: var(--color-primary); font-weight: 700;">Servicios</a></li>
+                    <li><a href="sobre-nosotros.html">Sobre Nosotros</a></li>
+                    <li><a href="contacto.html">Contacto</a></li>
+                    <li id="auth-buttons"> 
+                        <a href="#" id="abrir-login" class="btn-login-nav">Iniciar Sesión</a> 
+                        <a href="#" id="abrir-registro" class="btn-reg-nav">Registrarse</a>
+                     </li>
+                </ul>
+        </header>
+
+        <!-- SECCIÓN DE ESTADO DE CESTA GLOBAL -->
+        <section class="menu-control-panel">
+            <div class="cart-summary-bar">
+                <div class="cart-info">
+                    <span class="total-label">Total a pagar:</span>
+                    <span class="total-value" id="cart-total">S/ 0.00</span>
+                </div>
+                
+                <div class="cart-actions">
+                    <div class="cart-icon-container">
+                        <i class="fa-solid fa-cart-shopping cart-icon"></i>
+                        <span class="cart-badge" id="cart-count">0</span>
+                    </div>
+                    <button class="btn-cart-secondary" id="btn-ir-cesta">Ir a la cesta</button>
+                    <button class="btn-cart-primary" id="btn-continuar">Continuar</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN DE CABECERA DE SERVICIOS -->
+        <section class="services-hero">
+            <div class="services-hero-content">
+                <h1>Nuestros Servicios Especializados</h1>
+                <p>Brindamos soluciones integrales para potenciar tu nutrición, salud y bienestar con asesoría experta y tecnología digital.</p>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 1: PLANES DE ALIMENTACIÓN -->
+        <section class="services-section">
+            <div class="section-title">
+                <h2>Planes de Alimentación</h2>
+                <p>Programas personalizados según tus objetivos (bajar de peso, mantenimiento o ganancia muscular) con entregas diarias.</p>
+            </div>
+            
+            <div class="plans-grid">
+                <!-- Tarjeta Plan Semanal -->
+                <article class="plan-card">
+                    <div class="plan-badge">Popular</div>
+                    <div class="plan-header">
+                        <h3>Plan Semanal Fit</h3>
+                        <div class="plan-price">
+                            <span class="currency">S/</span>
+                            <span class="amount">89</span>
+                            <span class="cents">.90</span>
+                            <span class="period">/semana</span>
+                        </div>
+                    </div>
+                    <ul class="plan-features">
+                        <li><i class="fa-solid fa-check"></i> 6 desayunos, almuerzos o cenas</li>
+                        <li><i class="fa-solid fa-check"></i> Menú balanceado según tu objetivo</li>
+                        <li><i class="fa-solid fa-check"></i> Información de Kcal y Macros</li>
+                        <li><i class="fa-solid fa-check"></i> Delivery directo a tu domicilio</li>
+                        <li><i class="fa-solid fa-check"></i> Ingredientes 100% frescos</li>
+                    </ul>
+                    <button class="btn-service-action" onclick="adquirirPlan('Plan Semanal Fit')">Adquirir Plan</button>
+                </article>
+
+                <!-- Tarjeta Plan Mensual -->
+                <article class="plan-card premium">
+                    <div class="plan-badge premium">Mejor Valor</div>
+                    <div class="plan-header">
+                        <h3>Plan Mensual Premium</h3>
+                        <div class="plan-price">
+                            <span class="currency">S/</span>
+                            <span class="amount">299</span>
+                            <span class="cents">.90</span>
+                            <span class="period">/mes</span>
+                        </div>
+                    </div>
+                    <ul class="plan-features">
+                        <li><i class="fa-solid fa-check"></i> 24 platos personalizados (Macros listos)</li>
+                        <li><i class="fa-solid fa-check"></i> Flexibilidad de entrega programada</li>
+                        <li><i class="fa-solid fa-check"></i> Asesoría de inicio con nutricionista</li>
+                        <li><i class="fa-solid fa-check"></i> Envío gratuito prioritario</li>
+                        <li><i class="fa-solid fa-check"></i> Variedad de más de 40 platos</li>
+                        <li><i class="fa-solid fa-check"></i> Monitoreo de progreso IMC</li>
+                    </ul>
+                    <button class="btn-service-action" onclick="adquirirPlan('Plan Mensual Premium')">Adquirir Plan</button>
+                </article>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 2: ASESORÍA NUTRICIONAL -->
+        <section class="services-section consultoria-bg">
+            <div class="consultation-block">
+                <div class="consultation-content">
+                    <span class="consultation-tag"><i class="fa-solid fa-stethoscope"></i> Citas Médicas</span>
+                    <h2>Asesoría Nutricional Profesional</h2>
+                    <p>Conversa con nuestros nutricionistas colegiados de forma virtual o presencial. Elaboraremos una evaluación integral de tus medidas antropométricas, hábitos y objetivos específicos para diseñar la carta ideal para ti.</p>
+                    <ul class="consultation-perks">
+                        <li><i class="fa-solid fa-user-doctor"></i> Nutricionistas expertos certificados</li>
+                        <li><i class="fa-solid fa-laptop-medical"></i> Consultas virtuales cómodas o presenciales</li>
+                        <li><i class="fa-solid fa-clipboard-check"></i> Diagnóstico clínico y plan de metas</li>
+                    </ul>
+                    <button class="btn-service-action font-large" onclick="agendarCita()">Agendar Cita Nutricional</button>
+                </div>
+                <div class="consultation-image">
+                    <img src="https://images.unsplash.com/photo-1579684389782-64d84b5e901d?w=600&q=80" alt="Nutricionista profesional">
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 3: SEGUIMIENTO DE MÉTRICAS -->
+        <section class="services-section">
+            <div class="tracking-banner">
+                <div class="tracking-content">
+                    <h2>¿Conoces tu estado físico actual?</h2>
+                    <p>Registra tus métricas de talla y peso en tu perfil de cliente. Nuestro sistema calculará de forma automática tu Índice de Masa Corporal (IMC) y te brindará recomendaciones nutricionales específicas adaptadas a tu cuerpo.</p>
+                </div>
+                <div class="tracking-action">
+                    <button class="btn-tracking" onclick="irACalculadora()">Calcular mi IMC ahora <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 4: COMUNIDAD DE RECETAS SALUDABLES -->
+        <section class="services-section recipes-section-wrapper">
+            <div class="section-title">
+                <h2>Comunidad de Recetas Saludables</h2>
+                <p>Explora preparaciones nutritivas y deliciosas que puedes elaborar en minutos para complementar tu alimentación.</p>
+            </div>
+
+            <!-- Buscador Simple de Recetas -->
+            <div class="recipe-search-toolbar">
+                <div class="recipe-search-box">
+                    <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                    <input type="text" id="recipe-search" placeholder="Buscar receta por nombre o ingrediente...">
+                </div>
+            </div>
+
+            <!-- Grid Dinámico de Recetas -->
+            <div class="recipes-grid" id="recipes-grid">
+                <p class="loading-msg">Cargando recetas de la comunidad...</p>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- ========================================== MODAL LOGIN ========================================== -->
+    <div id="modal-login" class="modal-overlay">
+        <div class="login-tarjeta modal-card"> 
+            <button class="cerrar-modal" data-close="modal-login">&times;</button>
+            <div class="logo"> 
+                <p>Nutri<span>Fit</span></p>
+            </div> 
+            <h2>Bienvenido de nuevo</h2> 
+            <p class="subtitulo">Ingresa tus credenciales para acceder a tu cuenta.</p> 
+            <form id="form-login">
+                <div class="grupo-campo"> 
+                    <label for="log-correo">Correo Electrónico</label> 
+                    <input type="email" id="log-correo" placeholder="correo@ejemplo.com" required> 
+                </div>
+                <div class="grupo-campo"> 
+                    <label for="log-contrasena">Contraseña</label>
+                    <input type="password" id="log-contrasena" placeholder="Tu contraseña de acceso" required> 
+                </div> 
+                <div id="error-login" class="mensaje-error"></div>
+                <button type="submit" class="btn-login">Ingresar</button> 
+            </form> 
+            <p class="enlace-registro">¿No tienes una cuenta aún? 
+                <a href="#" id="switch-to-register">Regístrate aquí</a>
+            </p> 
+        </div> 
+    </div>
+
+    <!-- ========================================== MODAL REGISTRO ========================================== --> 
+    <div id="modal-registro" class="modal-overlay">
+        <div class="registro-tarjeta modal-card"> 
+            <button class="cerrar-modal" data-close="modal-registro">&times;</button> 
+            <div class="logo"> 
+                <p>Nutri<span>Fit</span></p>
+            </div> 
+            <h2>Únete a nosotros</h2>
+            <p class="subtitulo">Empieza tu cambio hacia una vida más saludable hoy mismo.</p> 
+            <form id="form-registro"> 
+                <div class="grupo-campo">
+                    <label for="reg-nombre">Nombre Completo</label>
+                    <input type="text" id="reg-nombre" placeholder="Ej. Juan Pérez" required>
+                </div> 
+                <div class="grupo-campo"> 
+                    <label for="reg-correo">Correo Electrónico</label> 
+                    <input type="email" id="reg-correo" placeholder="correo@ejemplo.com" required> 
+                </div> 
+                <div class="grupo-campo"> 
+                    <label for="reg-contrasena">Contraseña</label>
+                    <input type="password" id="reg-contrasena" placeholder="Mínimo 6 caracteres" required> 
+                </div> 
+                <div id="error-registro" class="mensaje-error"></div> 
+                <button type="submit" class="btn-registro">Crear Cuenta</button> 
+            </form> 
+            <p class="enlace-login">¿Ya tienes una cuenta? 
+                <a href="#" id="switch-to-login">Inicia sesión aquí</a>
+            </p> 
+        </div> 
+    </div>
+
+    <!-- ========================================== MODAL PERFIL PENDIENTE ========================================== -->
+    <div id="modal-pendiente" class="modal-flotante">
+        <div class="modal-contenido">
+            <h3>¡Completa tu Perfil! 🥦</h3>
+            <p>Para ofrecerte un menú personalizado según tus objetivos de salud, necesitamos conocer tu peso y talla actual.</p>
+            <div class="modal-botones">
+                <button id="btn-completar-perfil" class="btn-modal-ok">Completar Ahora</button>
+                <button id="btn-cerrar-modal" class="btn-modal-cancel">Más tarde</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================== MODAL AGENDAR CITA NUTRICIONAL ========================================== -->
+    <div id="modal-agendar-cita" class="modal-overlay">
+        <div class="modal-card" style="max-width: 520px; z-index: 10000; padding: 25px;">
+            <button class="cerrar-modal" id="btn-close-cita-modal">&times;</button>
+            <h2 style="font-family: 'Playfair Display', serif; font-size: 22px; color: var(--color-dark); margin-bottom: 5px; text-align: left;">Agendar Cita Nutricional</h2>
+            <p class="modal-subtitle" style="font-size: 13px; color: var(--color-text-light); margin-bottom: 20px; text-align: left;">Completa tu reserva en 2 sencillos pasos.</p>
+            
+            <!-- Indicador de Pasos -->
+            <div class="stepper-cita" style="display: flex; justify-content: space-between; margin-bottom: 20px; border-bottom: 1px solid var(--color-border); padding-bottom: 10px;">
+                <span id="step1-label" style="font-weight: 700; color: var(--color-primary); font-size: 13px;">1. Datos Personales</span>
+                <span id="step2-label" style="font-weight: 500; color: var(--color-text-light); font-size: 13px;">2. Nutricionista y Horario</span>
+            </div>
+
+            <form id="form-agendar-cita">
+                <!-- PASO 1: DATOS PERSONALES -->
+                <div id="cita-paso-1">
+                    <div class="grupo-campo">
+                        <label for="cita-nombre" style="font-weight: 700; font-size: 12.5px; color: var(--color-dark);">Nombre Completo</label>
+                        <input type="text" id="cita-nombre" required placeholder="Tu nombre" style="width:100%; padding:10px; border:1px solid var(--color-border); border-radius:8px; outline:none; background-color: var(--color-bg-light);">
+                    </div>
+                    <div class="grupo-campo" style="margin-top: 15px;">
+                        <label for="cita-correo" style="font-weight: 700; font-size: 12.5px; color: var(--color-dark);">Correo Electrónico</label>
+                        <input type="email" id="cita-correo" required placeholder="Tu correo" style="width:100%; padding:10px; border:1px solid var(--color-border); border-radius:8px; outline:none; background-color: var(--color-bg-light);">
+                    </div>
+                    <div class="grupo-campo" style="margin-top: 15px;">
+                        <label for="cita-motivo" style="font-weight: 700; font-size: 12.5px; color: var(--color-dark);">Motivo de la Consulta</label>
+                        <textarea id="cita-motivo" rows="2" placeholder="Ej. Control de peso, nutrición deportiva, etc." style="width:100%; padding:10px; border:1px solid var(--color-border); border-radius:8px; outline:none; background-color: var(--color-bg-light); resize: none; font-family:inherit; font-size: 13.5px;"></textarea>
+                    </div>
+                    <div style="text-align: right; margin-top: 20px;">
+                        <button type="button" class="btn-login" id="btn-cita-siguiente" style="width: auto; padding: 10px 24px; font-size: 13px; font-weight: 700;">
+                            Siguiente Paso <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- PASO 2: NUTRICIONISTA Y HORARIO -->
+                <div id="cita-paso-2" style="display: none;">
+                    <div class="grupo-campo">
+                        <label style="font-weight: 700; font-size: 12.5px; color: var(--color-dark); margin-bottom: 8px; display: block; text-align: left;">Selecciona un Nutricionista Activo</label>
+                        <div id="cita-nutricionistas-list" style="display: flex; flex-direction: column; gap: 8px; max-height: 180px; overflow-y: auto; padding: 4px;">
+                            <!-- Cargados dinámicamente -->
+                        </div>
+                    </div>
+                    <div class="grupo-campo" style="margin-top: 15px;">
+                        <label for="cita-horario" style="font-weight: 700; font-size: 12.5px; color: var(--color-dark);">Horarios Libres Disponibles</label>
+                        <select id="cita-horario" required style="width:100%; padding:10px; border:1px solid var(--color-border); border-radius:8px; outline:none; background-color: var(--color-bg-light);">
+                            <option value="">Selecciona un nutricionista primero...</option>
+                        </select>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-top: 25px; align-items: center;">
+                        <button type="button" id="btn-cita-atras" style="background:transparent; border:1px solid var(--color-border); padding:9px 18px; border-radius:8px; font-size:13px; font-weight:700; cursor:pointer;">
+                            <i class="fa-solid fa-arrow-left"></i> Atrás
+                        </button>
+                        <button type="submit" class="btn-login" style="width: auto; padding: 10px 24px; font-size: 13px; font-weight: 700;">
+                            Confirmar Cita <i class="fa-solid fa-circle-check"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts de Supabase y Lógica General -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/supabase-config.js"></script>
+    <script src="../js/index.js"></script>
+    <script src="../js/servicios.js"></script>
+</body>
+</html>

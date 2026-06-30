@@ -1,0 +1,541 @@
+/* =========================================================================
+   ESTILOS HISTORIAL DE PEDIDOS - NUTRIFIT
+   ========================================================================= */
+
+.pedidos-container {
+    width: 92%;
+    max-width: 900px;
+    margin: 40px auto;
+    min-height: 60vh;
+}
+
+.pedidos-titulo {
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--color-dark);
+    margin-bottom: 8px;
+}
+
+.pedidos-subtitulo {
+    font-size: 15px;
+    color: var(--color-text);
+    margin-bottom: 30px;
+}
+
+/* =========================================================================
+   CALENDARIO Y FILTROS
+   ========================================================================= */
+
+.filter-card {
+    background-color: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    box-shadow: 0 4px 15px rgba(31, 42, 36, 0.02);
+}
+
+@media(min-width: 600px) {
+    .filter-card {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+}
+
+.filter-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.filter-icon {
+    font-size: 20px;
+    color: var(--color-primary);
+}
+
+.filter-header h3 {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--color-dark);
+}
+
+.filter-controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.date-input-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.date-input-group label {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--color-text);
+}
+
+.input-date {
+    padding: 8px 12px;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    font-size: 14px;
+    color: var(--color-dark);
+    background-color: var(--color-bg-light);
+    outline: none;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.input-date:focus {
+    border-color: var(--color-primary);
+    background-color: var(--color-white);
+    box-shadow: 0 0 0 3px rgba(79, 168, 118, 0.10);
+}
+
+.btn-clear {
+    background-color: var(--color-bg-light);
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-clear:hover {
+    background-color: var(--color-border);
+    color: var(--color-dark);
+}
+
+/* =========================================================================
+   TARJETAS DE PEDIDO
+   ========================================================================= */
+
+.pedidos-list {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.pedido-card {
+    background-color: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 4px 15px rgba(31, 42, 36, 0.03);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.pedido-card:hover {
+    box-shadow: 0 8px 25px rgba(31, 42, 36, 0.06);
+    border-color: rgba(79, 168, 118, 0.15);
+}
+
+/* Cabecera Tarjeta */
+.pedido-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: 12px;
+}
+
+.pedido-id-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.pedido-id {
+    font-size: 16px;
+    font-weight: 900;
+    color: var(--color-dark);
+    letter-spacing: 0.2px;
+}
+
+.pedido-fecha {
+    font-size: 12px;
+    color: var(--color-text-light);
+    font-weight: 600;
+}
+
+/* Estado Badges */
+.pedido-status-badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.status-preparacion {
+    background-color: #fff7e6;
+    color: #d48806;
+    border: 1px solid #ffe7ba;
+}
+
+.status-camino {
+    background-color: #e6f7ff;
+    color: #096dd9;
+    border: 1px solid #bae7ff;
+}
+
+.status-recibido {
+    background-color: var(--color-primary-light);
+    color: var(--color-primary-text);
+    border: 1px solid var(--color-border);
+}
+
+/* Listado de Platos */
+.pedido-platos-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.pedido-plato-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+}
+
+.plato-item-details {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.plato-item-qty {
+    color: var(--color-primary-text);
+    background-color: var(--color-primary-light);
+    font-weight: 700;
+    font-size: 12px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.plato-item-name {
+    font-weight: 700;
+    color: var(--color-dark);
+}
+
+.plato-item-price {
+    font-weight: 700;
+    color: var(--color-text);
+}
+
+/* Footer Tarjeta */
+.pedido-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--color-border);
+    padding-top: 16px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.pedido-total-group {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+}
+
+.pedido-total-label {
+    font-size: 11px;
+    color: var(--color-text-light);
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.pedido-total-val {
+    font-size: 18px;
+    font-weight: 900;
+    color: var(--color-dark);
+}
+
+/* Botón Recepción */
+.btn-confirmar-recepcion {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(79, 168, 118, 0.15);
+}
+
+.btn-confirmar-recepcion:hover {
+    background-color: var(--color-primary-hover);
+    box-shadow: 0 6px 14px rgba(79, 168, 118, 0.25);
+    transform: translateY(-1px);
+}
+
+.btn-confirmar-recepcion:disabled {
+    background-color: var(--color-border);
+    color: var(--color-text-light);
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}
+
+/* =========================================================================
+   VALORACIÓN Y COMENTARIOS
+   ========================================================================= */
+
+.feedback-section {
+    border-top: 1px dashed var(--color-border);
+    padding-top: 20px;
+    margin-top: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.feedback-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.feedback-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--color-dark);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* Estrellas */
+.stars-container {
+    display: flex;
+    gap: 6px;
+}
+
+.star-icon {
+    font-size: 22px;
+    color: #cbd5e1;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.star-icon:not(.disabled):hover {
+    transform: scale(1.20);
+    color: #fadb14;
+}
+
+.star-icon.selected {
+    color: #fadb14;
+}
+
+.star-icon.disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+/* Textarea y Envío */
+.feedback-comment-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.feedback-textarea {
+    width: 100%;
+    height: 76px;
+    padding: 12px 14px;
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    font-size: 13px;
+    color: var(--color-dark);
+    background-color: var(--color-bg-light);
+    resize: none;
+    outline: none;
+    transition: all 0.2s ease;
+    font-family: inherit;
+}
+
+.feedback-textarea:focus:not(:disabled) {
+    border-color: var(--color-primary);
+    background-color: var(--color-white);
+    box-shadow: 0 0 0 3px rgba(79, 168, 118, 0.08);
+}
+
+.feedback-textarea:disabled {
+    background-color: #f1f6f3;
+    color: var(--color-text-light);
+    cursor: not-allowed;
+    border-color: var(--color-border);
+}
+
+.btn-submit-feedback {
+    align-self: flex-end;
+    background-color: var(--color-primary-light);
+    color: var(--color-primary-text);
+    border: 1px solid var(--color-primary);
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-submit-feedback:hover:not(:disabled) {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+}
+
+.btn-submit-feedback:disabled {
+    background-color: var(--color-bg-light);
+    color: var(--color-text-light);
+    border-color: var(--color-border);
+    cursor: not-allowed;
+}
+
+/* =========================================================================
+   ESTADO VACÍO (EMPTY STATE)
+   ========================================================================= */
+
+.pedidos-vacio-panel {
+    text-align: center;
+    padding: 60px 20px;
+    background-color: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(31, 42, 36, 0.03);
+    max-width: 600px;
+    margin: 30px auto 0 auto;
+}
+
+.vacio-icon-wrapper {
+    font-size: 60px;
+    color: var(--color-text-light);
+    margin-bottom: 20px;
+}
+
+.pedidos-vacio-panel h2 {
+    font-size: 20px;
+    color: var(--color-dark);
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.pedidos-vacio-panel p {
+    color: var(--color-text);
+    font-size: 14px;
+    margin-bottom: 25px;
+    line-height: 1.5;
+}
+
+.btn-ir-menu {
+    background-color: var(--color-primary);
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(79, 168, 118, 0.2);
+    transition: all 0.3s;
+}
+
+.btn-ir-menu:hover {
+    background-color: var(--color-primary-hover);
+    transform: translateY(-1px);
+}
+
+.loading-msg {
+    text-align: center;
+    color: var(--color-text);
+    font-size: 15px;
+    padding: 40px 0;
+}
+
+/* =========================================================================
+   ACCIONES DE CANCELACIÓN Y REPORTES DE PROBLEMA
+   ========================================================================= */
+.pedido-footer-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+.btn-cancelar-pedido {
+    background-color: var(--color-accent-red-bg);
+    color: var(--color-accent-red);
+    border: 1px solid rgba(204, 92, 92, 0.2);
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-cancelar-pedido:hover:not(.disabled) {
+    background-color: var(--color-accent-red);
+    color: white;
+}
+
+.btn-solicitar-devolucion {
+    background-color: var(--color-primary-light);
+    color: var(--color-primary-text);
+    border: 1px solid rgba(79, 168, 118, 0.2);
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-solicitar-devolucion:hover {
+    background-color: var(--color-primary);
+    color: white;
+}
+
+/* Highlights */
+.pedido-card-highlight {
+    animation: goldPulse 3s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
+}
+
+@keyframes goldPulse {
+    0% {
+        box-shadow: 0 0 5px rgba(251, 191, 36, 0.2);
+        border-color: rgba(251, 191, 36, 0.5);
+    }
+    100% {
+        box-shadow: 0 0 20px rgba(251, 191, 36, 0.6);
+        border-color: rgba(251, 191, 36, 1);
+    }
+}

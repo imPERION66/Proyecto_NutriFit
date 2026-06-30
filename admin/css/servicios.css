@@ -1,0 +1,704 @@
+/* =========================================================================
+   ESTILOS PARA MÓDULO DE SERVICIOS (ADMINISTRADOR) - NUTRIFIT
+   ========================================================================= */
+
+/* Barra de Navegación de Pestañas (Tabs) */
+.toolbar-tabs-servicios {
+  display: flex;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 10px;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 25px;
+  gap: 10px;
+}
+
+.btn-tab-servicios {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 16px;
+  border: none;
+  background: transparent;
+  color: var(--color-text);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: var(--transition);
+}
+
+.btn-tab-servicios:hover {
+  background-color: var(--color-primary-light);
+  color: var(--color-primary-text);
+}
+
+.btn-tab-servicios.active {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+}
+
+/* Control de Visibilidad de Submódulos */
+.submodule-content {
+  display: none;
+}
+
+.submodule-content.active {
+  display: block;
+}
+
+/* Layout de Suscripciones (Planes) */
+.suscripciones-layout {
+  display: flex;
+  gap: 25px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.card-header-tab {
+  padding: 20px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.card-header-tab h3 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-dark);
+}
+
+/* Editor de Tarifas */
+.card-pricing-control {
+  background-color: var(--color-white);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+  padding: 25px;
+}
+
+.pricing-card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--color-primary-text);
+  margin-bottom: 10px;
+}
+
+.pricing-desc {
+  font-size: 13px;
+  color: var(--color-text-light);
+  margin-bottom: 20px;
+}
+
+/* Estilos de Tabla de Suscripciones */
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.admin-table th {
+  background-color: var(--color-bg-light);
+  color: var(--color-dark);
+  font-weight: 700;
+  font-size: 12px;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--color-border);
+  text-transform: uppercase;
+  letter-spacing: 0.2px;
+}
+
+.admin-table td {
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--color-border);
+  font-size: 14px;
+  color: var(--color-text);
+  vertical-align: middle;
+}
+
+.admin-table tbody tr:hover td {
+  background-color: rgba(79, 168, 118, 0.02);
+}
+
+/* Badges de Suscripción */
+.badge-sub-estado {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 50px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.badge-sub-estado.activo {
+  background-color: rgba(79, 168, 118, 0.12);
+  color: var(--color-primary-text);
+}
+
+.badge-sub-estado.vencido {
+  background-color: #fef2f2;
+  color: #e53935;
+}
+
+/* ==========================================
+   SUBMÓDULO B: NUTRICIONISTAS STAFF
+   ========================================== */
+.nutricionistas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 25px;
+  padding-bottom: 40px;
+}
+
+.nutri-card {
+  background-color: var(--color-white);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: var(--transition);
+  position: relative;
+}
+
+.nutri-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-md);
+}
+
+.nutri-avatar-container {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-bottom: 15px;
+  border: 3px solid var(--color-primary-light);
+}
+
+.nutri-avatar-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.nutri-card h3 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-dark);
+  margin-bottom: 4px;
+}
+
+.nutri-specialty {
+  font-size: 13px;
+  color: var(--color-primary-text);
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.nutri-status-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 50px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.nutri-status-badge.disponible {
+  background-color: rgba(79, 168, 118, 0.12);
+  color: var(--color-primary-text);
+}
+
+.nutri-status-badge.no-disponible {
+  background-color: #f5f5f5;
+  color: #777777;
+}
+
+.nutri-card-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  margin-top: auto;
+  border-top: 1px dashed var(--color-border);
+  padding-top: 15px;
+}
+
+.btn-toggle-nutri-status {
+  padding: 8px 12px;
+  border: 1px solid var(--color-border);
+  background-color: var(--color-bg-light);
+  color: var(--color-text);
+  border-radius: var(--radius-sm);
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.btn-toggle-nutri-status:hover {
+  background-color: #f1f6f3;
+  color: var(--color-dark);
+}
+
+.btn-toggle-nutri-status.active {
+  background-color: rgba(229, 57, 53, 0.08);
+  color: #e53935;
+  border-color: rgba(229, 57, 53, 0.2);
+}
+
+.btn-edit-horarios {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  border: none;
+  padding: 9px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.btn-edit-horarios:hover {
+  background-color: var(--color-primary-hover);
+}
+
+/* ==========================================
+   SUBMÓDULO C: COMUNIDAD DE RECETAS
+   ========================================== */
+.recetas-admin-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 25px;
+  padding-bottom: 40px;
+}
+
+.card-add-new-btn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 380px;
+  border: 2px dashed rgba(79, 168, 118, 0.4);
+  background-color: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 20px;
+  cursor: pointer;
+  transition: var(--transition);
+  padding: 30px;
+  text-align: center;
+}
+
+.card-add-new-btn:hover {
+  border-color: var(--color-primary);
+  background-color: rgba(79, 168, 118, 0.08);
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-md);
+}
+
+.card-add-new-content i {
+  font-size: 50px;
+  color: var(--color-primary);
+  margin-bottom: 12px;
+  transition: var(--transition);
+}
+
+.card-add-new-btn:hover .card-add-new-content i {
+  transform: scale(1.15) rotate(90deg);
+}
+
+.card-add-new-content span {
+  display: block;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--color-primary-text);
+  font-family: 'DM Sans', sans-serif;
+}
+
+.receta-admin-card {
+  background-color: var(--color-white);
+  border-radius: 20px;
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  transition: var(--transition);
+  position: relative;
+}
+
+.receta-admin-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-md);
+}
+
+.receta-badges-row {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  right: 15px;
+  display: flex;
+  justify-content: space-between;
+  z-index: 2;
+}
+
+.badge-receta-cat {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  padding: 4px 10px;
+  border-radius: 50px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.receta-card-img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.receta-card-body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.receta-card-body h3 {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--color-dark);
+  margin-bottom: 6px;
+  font-family: 'DM Sans', sans-serif;
+  line-height: 1.3;
+}
+
+.receta-card-body .desc {
+  font-size: 13px;
+  color: var(--color-text);
+  line-height: 1.5;
+  margin-bottom: 15px;
+  flex: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.receta-info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed var(--color-border);
+  font-size: 12.5px;
+  color: var(--color-text-light);
+}
+
+.receta-info-row strong {
+  color: var(--color-dark);
+}
+
+.receta-card-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: auto;
+}
+
+.btn-receta-edit {
+  background-color: var(--color-primary-light);
+  color: var(--color-primary-text);
+  border: 1px solid var(--color-primary);
+  padding: 8px;
+  border-radius: var(--radius-sm);
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+}
+
+.btn-receta-edit:hover {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+}
+
+.btn-receta-delete {
+  background-color: transparent;
+  color: #e53935;
+  border: 1px solid rgba(229, 57, 53, 0.2);
+  padding: 8px;
+  border-radius: var(--radius-sm);
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+}
+
+.btn-receta-delete:hover {
+  background-color: #fef2f2;
+  border-color: #e53935;
+}
+
+/* ==========================================
+   CHIPS Y ELEMENTOS DE HORARIOS
+   ========================================== */
+.chips-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 10px;
+  background-color: var(--color-bg-light);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  min-height: 50px;
+  max-height: 120px;
+  overflow-y: auto;
+}
+
+.chip-item {
+  background-color: var(--color-primary-light);
+  color: var(--color-primary-text);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: 50px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid rgba(79, 168, 118, 0.15);
+}
+
+.chip-item .btn-remove-chip {
+  background: transparent;
+  border: none;
+  font-size: 14px;
+  color: #e53935;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+.btn-add-chip-action {
+  background-color: var(--color-dark);
+  color: var(--color-white);
+  border: none;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-add-chip-action:hover {
+  background-color: var(--color-primary);
+}
+
+/* ==========================================
+   MODALES GLASSMORPHISM
+   ========================================== */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(31, 42, 36, 0.45);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.modal-overlay.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-card {
+  background-color: var(--color-white);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 600px;
+  padding: 30px;
+  position: relative;
+  transform: scale(0.9) translateY(20px);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+.modal-overlay.show .modal-card {
+  transform: scale(1) translateY(0);
+}
+
+.modal-card-small {
+  max-width: 450px;
+}
+
+.cerrar-modal {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  font-size: 26px;
+  color: var(--color-text-light);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.cerrar-modal:hover {
+  color: #e53935;
+}
+
+.modal-card h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  color: var(--color-dark);
+  margin-bottom: 5px;
+}
+
+.modal-subtitle {
+  font-size: 13px;
+  color: var(--color-text-light);
+  margin-bottom: 20px;
+}
+
+/* Formularios */
+.grupo-campo {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.grupo-campo label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-dark);
+}
+
+.grupo-campo input[type="text"],
+.grupo-campo input[type="number"],
+.grupo-campo select,
+.grupo-campo textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  color: var(--color-dark);
+  background-color: var(--color-bg-light);
+  outline: none;
+  transition: var(--transition);
+}
+
+.grupo-campo input:focus,
+.grupo-campo select:focus,
+.grupo-campo textarea:focus {
+  border-color: var(--color-primary);
+  background-color: var(--color-white);
+  box-shadow: 0 0 0 3px rgba(79, 168, 118, 0.15);
+}
+
+.form-row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-top: 15px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 25px;
+  border-top: 1px solid var(--color-border);
+  padding-top: 15px;
+}
+
+.btn-cancelar {
+  background-color: transparent;
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  padding: 10px 20px;
+  border-radius: var(--radius-sm);
+  font-size: 13.5px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn-cancelar:hover {
+  background-color: #f5f5f5;
+}
+
+.btn-guardar-submit {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  border: none;
+  padding: 10px 24px;
+  border-radius: var(--radius-sm);
+  font-size: 13.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-guardar-submit:hover {
+  background-color: var(--color-primary-hover);
+  box-shadow: 0 4px 12px rgba(79, 168, 118, 0.25);
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+  .suscripciones-layout {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .toolbar-tabs-servicios {
+    flex-direction: column;
+  }
+  .form-row-2 {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}

@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestión de Carta - NutriFit Admin</title>
+  
+  <!-- Tipografías y CSS FontAwesome -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500;700&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/admin-global.css">
+  <link rel="stylesheet" href="css/menu.css">
+  
+  <!-- Comprobación de seguridad rápida antes de renderizar (Previene destellos del panel) -->
+  <script>
+    (function() {
+      const session = JSON.parse(localStorage.getItem("nf_session") || "null");
+      if (!session || session.id_rol !== 1) {
+        alert("Acceso denegado. No tienes permisos de administrador.");
+        window.location.replace("../index.html");
+      }
+    })();
+  </script>
+</head>
+<body>
+<div class="app">
+  
+  <!-- SIDEBAR DE ADMINISTRACIÓN -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar__logo">
+      <div class="sidebar__logo-icon">
+        <i class="fa-solid fa-leaf"></i>
+      </div>
+      <span class="sidebar__logo-name">NutriFit</span>
+    </div>
+    
+    <!-- Perfil del Admin -->
+    <div class="sidebar__user">
+      <div class="user-avatar" id="user-avatar" data-user-avatar>A</div>
+      <p class="user-name" id="user-name" data-user-name>Administrador</p>
+      <p class="user-email" id="user-email" data-user-email>admin@nutrifit.com</p>
+    </div>
+    
+    <!-- Botón Retorno a Cliente -->
+    <div class="sidebar__action-btn">
+      <a href="../index.html" class="btn-return-client">
+        <i class="fa-solid fa-store"></i> Volver a la Vista General
+      </a>
+    </div>
+    
+    <!-- Navegación Admin -->
+    <nav class="sidebar__nav">
+      <span class="nav-section-label">Principal</span>
+      <a href="dashboard.html" class="nav-item" data-page="dashboard">
+        <i class="fa-solid fa-chart-line"></i> Panel de Control
+      </a>
+      
+      <span class="nav-section-label">Gestión Operativa</span>
+      <a href="pedidos.html" class="nav-item" data-page="pedidos">
+        <i class="fa-solid fa-truck-fast"></i> Pedidos
+      </a>
+      <a href="menu.html" class="nav-item active" data-page="carta">
+        <i class="fa-solid fa-bowl-food"></i> Menu NutriFit
+      </a>
+      <a href="clientes.html" class="nav-item" data-page="clientes">
+        <i class="fa-solid fa-users"></i> Clientes
+      </a>
+      <a href="reclamos.html" class="nav-item" data-page="reclamos">
+        <i class="fa-solid fa-envelope-open-text"></i> Reclamos
+      </a>
+      
+      <span class="nav-section-label">Reportes y Config.</span>
+      <a href="ventas.html" class="nav-item" data-page="ventas">
+        <i class="fa-solid fa-chart-pie"></i> Reporte de Ventas
+      </a>
+      <a href="servicios.html" class="nav-item" data-page="servicios">
+        <i class="fa-solid fa-screwdriver-wrench"></i> Servicios
+      </a>
+      <a href="sobre-nosotros.html" class="nav-item" data-page="sobre-nosotros">
+        <i class="fa-solid fa-circle-info"></i> Sobre Nosotros
+      </a>
+    </nav>
+    
+    <!-- Cierre de Sesión -->
+    <div class="sidebar__logout">
+      <button class="btn-logout" id="btn-logout-sidebar">
+        <i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión
+      </button>
+    </div>
+  </aside>
+
+  <!-- Overlay para menú móvil -->
+  <div class="overlay" id="overlay"></div>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="main">
+    
+    <!-- Topbar para móviles -->
+    <div class="topbar">
+      <div class="topbar-logo">
+        <div class="sidebar__logo-icon" style="width:30px;height:30px;font-size:13px;">
+          <i class="fa-solid fa-leaf"></i>
+        </div>
+        <span>NutriFit Admin</span>
+      </div>
+      <button class="btn-menu" id="btn-menu" aria-label="Menú">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+
+    <!-- Panel de Contenido -->
+    <div class="content">
+      <header class="page-header">
+        <h1>Gestión de Platos y Carta</h1>
+        <p>Administra los platos del catálogo, edita precios, objetivos nutricionales y controla el stock disponible en tiempo real.</p>
+      </header>
+
+      <!-- Grid de Métricas de Carta -->
+      <section class="menu-metrics-grid">
+        <article class="metric-card">
+          <div class="metric-icon total">
+            <i class="fa-solid fa-utensils"></i>
+          </div>
+          <div class="metric-data">
+            <h3>Total Platos</h3>
+            <p id="metric-total-platos">0</p>
+          </div>
+        </article>
+        
+        <article class="metric-card">
+          <div class="metric-icon available">
+            <i class="fa-solid fa-circle-check"></i>
+          </div>
+          <div class="metric-data">
+            <h3>Disponibles</h3>
+            <p id="metric-disponibles">0</p>
+          </div>
+        </article>
+        
+        <article class="metric-card">
+          <div class="metric-icon out-of-stock">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+          </div>
+          <div class="metric-data">
+            <h3>Agotados</h3>
+            <p id="metric-agotados">0</p>
+          </div>
+        </article>
+      </section>
+
+      <!-- Buscador y Filtros Rápidos -->
+      <section class="toolbar-filtros">
+        <div class="search-box">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" id="admin-search-input" placeholder="Buscar por nombre...">
+        </div>
+        <div class="select-box">
+          <select id="admin-category-select">
+            <option value="todos">Todas las categorías</option>
+            <option value="desayuno">Desayuno</option>
+            <option value="almuerzo">Almuerzo</option>
+            <option value="cena">Cena</option>
+            <option value="postre">Postre</option>
+          </select>
+        </div>
+        <div class="select-box">
+          <select id="admin-goal-select">
+            <option value="todos">Todos los objetivos</option>
+            <option value="bajar">Bajar de Peso</option>
+            <option value="mantener">Mantener</option>
+            <option value="ganar">Ganar Masa</option>
+          </select>
+        </div>
+      </section>
+
+      <!-- CUADRÍCULA DE PLATOS -->
+      <section class="platos-admin-section">
+        <div class="platos-admin-grid" id="platos-admin-grid">
+          <!-- La primera tarjeta será inyectada estáticamente o dinámicamente como el botón "Agregar Nuevo" -->
+          <button class="card-add-new-btn" id="btn-trigger-add-modal">
+            <div class="card-add-new-content">
+              <i class="fa-solid fa-circle-plus"></i>
+              <span>Agregar Nuevo Plato</span>
+            </div>
+          </button>
+          
+          <!-- Lista dinámica de platos del administrador -->
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+
+<!-- ========================================== MODAL AGREGAR / EDITAR PLATO ========================================== -->
+<div id="modal-plato" class="modal-overlay">
+  <div class="modal-card">
+    <button class="cerrar-modal" id="btn-close-plato-modal">&times;</button>
+    <h2 id="modal-plato-titulo">Agregar Nuevo Plato</h2>
+    <p class="modal-subtitle">Llena los campos requeridos para publicar o actualizar el plato en la carta.</p>
+    
+    <form id="form-plato">
+      <input type="hidden" id="form-plato-id">
+      
+      <div class="grupo-campo">
+        <label for="plato-nombre">Nombre del Plato <span class="req">*</span></label>
+        <input type="text" id="plato-nombre" placeholder="Ej. Pollo Teriyaki Fit" required>
+      </div>
+
+      <div class="grupo-campo">
+        <label for="plato-descripcion">Descripción del Plato <span class="req">*</span></label>
+        <textarea id="plato-descripcion" rows="3" placeholder="Ingredientes claves y beneficios..." required></textarea>
+      </div>
+
+      <div class="form-row-2">
+        <div class="grupo-campo">
+          <label for="plato-precio">Precio (S/) <span class="req">*</span></label>
+          <input type="number" id="plato-precio" step="0.10" min="1" placeholder="0.00" required>
+        </div>
+        <div class="grupo-campo">
+          <label for="plato-imagen">Ruta / URL de la Imagen</label>
+          <input type="text" id="plato-imagen" placeholder="Ej. ../assets/img/platos/pollo.jpg">
+        </div>
+      </div>
+
+      <div class="form-row-2">
+        <div class="grupo-campo">
+          <label for="plato-categoria">Categoría <span class="req">*</span></label>
+          <select id="plato-categoria" required>
+            <option value="">Selecciona...</option>
+            <option value="desayuno">Desayuno</option>
+            <option value="almuerzo">Almuerzo</option>
+            <option value="cena">Cena</option>
+            <option value="postre">Postre</option>
+          </select>
+        </div>
+        <div class="grupo-campo">
+          <label for="plato-objetivo">Objetivo Nutricional <span class="req">*</span></label>
+          <select id="plato-objetivo" required>
+            <option value="">Selecciona...</option>
+            <option value="bajar">Bajar</option>
+            <option value="mantener">Mantener</option>
+            <option value="ganar">Ganar Masa</option>
+          </select>
+        </div>
+      </div>
+
+      <h3 class="form-sub-header">Información Nutricional (Macros)</h3>
+      <div class="form-row-3">
+        <div class="grupo-campo">
+          <label for="plato-kcal">Calorías (Kcal) <span class="req">*</span></label>
+          <input type="number" id="plato-kcal" min="0" placeholder="0" required>
+        </div>
+        <div class="grupo-campo">
+          <label for="plato-proteina">Proteínas (g) <span class="req">*</span></label>
+          <input type="number" id="plato-proteina" min="0" placeholder="0" required>
+        </div>
+        <div class="grupo-campo">
+          <label for="plato-carbs">Carbohidratos (g) <span class="req">*</span></label>
+          <input type="number" id="plato-carbs" min="0" placeholder="0" required>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="btn-cancelar" id="btn-cancel-plato">Cancelar</button>
+        <button type="submit" class="btn-guardar-submit">Guardar Plato</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ========================================== MODAL INVENTARIO / ESTADO ========================================== -->
+<div id="modal-inventario" class="modal-overlay">
+  <div class="modal-card modal-card-small">
+    <button class="cerrar-modal" id="btn-close-inventario-modal">&times;</button>
+    <h2>Inventario y Estado</h2>
+    <p class="modal-subtitle">Actualiza la disponibilidad y el stock en tiempo real para este plato.</p>
+    
+    <form id="form-inventario">
+      <input type="hidden" id="form-inventario-id">
+      
+      <div class="grupo-campo">
+        <label for="inventario-plato-nombre" style="font-weight:bold;">Plato seleccionado</label>
+        <input type="text" id="inventario-plato-nombre" disabled style="background-color: var(--color-background-soft); font-weight: 500;">
+      </div>
+
+      <div class="form-row-2">
+        <div class="grupo-campo">
+          <label for="inventario-estado">Disponibilidad <span class="req">*</span></label>
+          <select id="inventario-estado" required>
+            <option value="Disponible">Disponible</option>
+            <option value="Agotado">Agotado</option>
+          </select>
+        </div>
+        <div class="grupo-campo">
+          <label for="inventario-stock">Stock Disponible <span class="req">*</span></label>
+          <input type="number" id="inventario-stock" min="0" required placeholder="Ej. 15">
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="btn-cancelar" id="btn-cancel-inventario">Cancelar</button>
+        <button type="submit" class="btn-guardar-submit">Actualizar Stock</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Scripts de Supabase y Lógica de Administración -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabase-config.js"></script>
+<script src="../js/index.js"></script> <!-- Cargar menuPlatos locales fallback -->
+<script src="js/menu.js"></script>
+</body>
+</html>

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Administrador - NutriFit</title>
+  
+  <!-- Tipografías y CSS FontAwesome -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500;700&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/admin-global.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  
+  <!-- Comprobación de seguridad rápida antes de renderizar (Previene destellos del panel) -->
+  <script>
+    (function() {
+      const session = JSON.parse(localStorage.getItem("nf_session") || "null");
+      if (!session || session.id_rol !== 1) {
+        alert("Acceso denegado. No tienes permisos de administrador.");
+        window.location.replace("../index.html");
+      }
+    })();
+  </script>
+</head>
+<body>
+<div class="app">
+  
+  <!-- SIDEBAR DE ADMINISTRACIÓN -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar__logo">
+      <div class="sidebar__logo-icon">
+        <i class="fa-solid fa-leaf"></i>
+      </div>
+      <span class="sidebar__logo-name">NutriFit</span>
+    </div>
+    
+    <!-- Perfil del Admin -->
+    <div class="sidebar__user">
+      <div class="user-avatar" id="user-avatar" data-user-avatar>A</div>
+      <p class="user-name" id="user-name" data-user-name>Administrador</p>
+      <p class="user-email" id="user-email" data-user-email>admin@nutrifit.com</p>
+    </div>
+    
+    <!-- Botón Retorno a Cliente -->
+    <div class="sidebar__action-btn">
+      <a href="../index.html" class="btn-return-client">
+        <i class="fa-solid fa-store"></i> Volver a la Vista General
+      </a>
+    </div>
+    
+    <!-- Navegación Admin -->
+    <nav class="sidebar__nav">
+      <span class="nav-section-label">Principal</span>
+      <a href="dashboard.html" class="nav-item active" data-page="dashboard">
+        <i class="fa-solid fa-chart-line"></i> Panel de Control
+      </a>
+      
+      <span class="nav-section-label">Gestión Operativa</span>
+      <a href="pedidos.html" class="nav-item" data-page="pedidos">
+        <i class="fa-solid fa-truck-fast"></i> Pedidos
+      </a>
+      <a href="menu.html" class="nav-item" data-page="carta">
+        <i class="fa-solid fa-bowl-food"></i> Platos y Carta
+      </a>
+      <a href="clientes.html" class="nav-item" data-page="clientes">
+        <i class="fa-solid fa-users"></i> Clientes
+      </a>
+      <a href="reclamos.html" class="nav-item" data-page="reclamos">
+        <i class="fa-solid fa-envelope-open-text"></i> Reclamos
+      </a>
+      
+      <span class="nav-section-label">Reportes y Config.</span>
+      <a href="ventas.html" class="nav-item" data-page="ventas">
+        <i class="fa-solid fa-chart-pie"></i> Reporte de Ventas
+      </a>
+      <a href="servicios.html" class="nav-item" data-page="servicios">
+        <i class="fa-solid fa-screwdriver-wrench"></i> Servicios
+      </a>
+      <a href="sobre-nosotros.html" class="nav-item" data-page="sobre-nosotros">
+        <i class="fa-solid fa-circle-info"></i> Sobre Nosotros
+      </a>
+    </nav>
+    
+    <!-- Cierre de Sesión -->
+    <div class="sidebar__logout">
+      <button class="btn-logout" id="btn-logout-sidebar">
+        <i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión
+      </button>
+    </div>
+  </aside>
+
+  <!-- Overlay para menú móvil -->
+  <div class="overlay" id="overlay"></div>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="main">
+    
+    <!-- Topbar para móviles -->
+    <div class="topbar">
+      <div class="topbar-logo">
+        <div class="sidebar__logo-icon" style="width:30px;height:30px;font-size:13px;">
+          <i class="fa-solid fa-leaf"></i>
+        </div>
+        <span>NutriFit Admin</span>
+      </div>
+      <button class="btn-menu" id="btn-menu" aria-label="Menú">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+
+    <!-- Panel de Contenido -->
+    <div class="content">
+      <header class="page-header">
+        <h1>Hola, <span id="admin-first-name" data-user-first-name>Administrador</span></h1>
+        <p>Resumen analítico de la operación y ventas de NutriFit.</p>
+      </header>
+
+      <!-- Grid de Métricas Analíticas Operativas -->
+      <section class="admin-metrics-grid">
+        <article class="metric-card">
+          <div class="metric-icon money">
+            <i class="fa-solid fa-wallet"></i>
+          </div>
+          <div class="metric-data">
+            <h3>Ingresos Totales</h3>
+            <p id="admin-ingresos">S/ 0.00</p>
+          </div>
+        </article>
+        
+        <article class="metric-card">
+          <div class="metric-icon orders">
+            <i class="fa-solid fa-box-archive"></i>
+          </div>
+          <div class="metric-data">
+            <h3>Pedidos Totales</h3>
+            <p id="admin-pedidos-count">0</p>
+          </div>
+        </article>
+        
+        <article class="metric-card">
+          <div class="metric-icon foods">
+            <i class="fa-solid fa-utensils"></i>
+          </div>
+          <div class="metric-data">
+            <h3>Platos en Carta</h3>
+            <p id="admin-total-platos">0</p>
+          </div>
+        </article>
+        
+        <article class="metric-card">
+          <div class="metric-icon pending">
+            <i class="fa-solid fa-bell"></i>
+          </div>
+          <div class="metric-data">
+            <h3>Pedidos Activos</h3>
+            <p id="admin-pedidos-pendientes">0</p>
+          </div>
+        </article>
+      </section>
+
+      <!-- Panel de Rendimiento y KPIs Detallados (Sin redundancias de accesos directos) -->
+      <section class="panel-card">
+        <h2>Rendimiento y Estados</h2>
+        <div class="admin-kpi-grid">
+          <article class="admin-kpi-card">
+            <div class="admin-kpi-label">Ventas Acumuladas</div>
+            <div class="admin-kpi-value" id="admin-ventas-acumuladas">S/ 0.00</div>
+            <div class="admin-kpi-caption">Monto total facturado en la tienda</div>
+          </article>
+          
+          <article class="admin-kpi-card">
+            <div class="admin-kpi-label">Estado del Inventario</div>
+            <div class="admin-kpi-value" id="admin-inventario-estado">0 categorías activas</div>
+            <div class="admin-kpi-caption">Diversificación del menú de platos</div>
+          </article>
+        </div>
+      </section>
+
+      <!-- Listado de Pedidos Recientes -->
+      <section class="table-card">
+        <div class="table-card__header">
+          <h2>Gestión de Pedidos Recientes</h2>
+          <a href="pedidos.html">Ver todos los pedidos <i class="fa-solid fa-chevron-right" style="font-size:10px; margin-left:2px;"></i></a>
+        </div>
+        
+        <!-- Contenedor donde se insertará la lista dinámica -->
+        <div id="admin-lista-pedidos">
+          <p class="empty-msg">Cargando pedidos de la plataforma...</p>
+        </div>
+      </section>
+
+      <!-- Footer del panel -->
+      <footer class="footer">
+        <div class="footer-bottom-dark">
+          <div class="footer-social-wrapper">
+            <a class="social-item" id="social-whatsapp" href="https://wa.me/#" target="_blank"><i class="fa-brands fa-whatsapp"></i><span>WhatsApp</span></a>
+            <a class="social-item" id="social-facebook" href="https://facebook.com/#" target="_blank"><i class="fa-brands fa-facebook"></i><span>Facebook</span></a>
+            <a class="social-item" id="social-tiktok" href="https://tiktok.com/#" target="_blank"><i class="fa-brands fa-tiktok"></i><span>TikTok</span></a>
+          </div>
+          <p class="copyright-text">© 2026 NutriFit Gourmet · Panel de Administración</p>
+        </div>
+      </footer>
+    </div>
+  </main>
+</div>
+
+<!-- Scripts de Supabase y Lógica -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabase-config.js"></script>
+<script src="js/dashboard.js"></script>
+</body>
+</html>
