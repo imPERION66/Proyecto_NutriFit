@@ -26,10 +26,10 @@ const server = http.createServer((req, res) => {
     // Decodificar la URL para soportar caracteres especiales
     const decodedUrl = decodeURIComponent(req.url);
     console.log(`[REQUEST] URL: ${req.url} -> Decoded: ${decodedUrl}`);
-    
+
     // 1. Endpoint seguro para exponer la configuración pública de Supabase
     if (decodedUrl === '/api/config') {
-        res.writeHead(200, { 
+        res.writeHead(200, {
             'Content-Type': 'application/json',
             'Cache-Control': 'no-store, max-age=0'
         });
@@ -43,17 +43,17 @@ const server = http.createServer((req, res) => {
     // 2. Servir archivos estáticos de manera segura
     // Separar los parámetros de búsqueda de la ruta
     const urlPath = decodedUrl.split('?')[0].split('#')[0];
-    
+
     // Normalizar la ruta y mapear la raíz a index.html
     const normalizedPath = urlPath === '/' ? '/index.html' : urlPath;
-    
+
     // Construir la ruta absoluta del archivo resolviéndola en el directorio de la aplicación
     const filePath = path.join(__dirname, normalizedPath);
 
     // Seguridad: Bloquear acceso a archivos sensibles y de configuración
     const sensitiveFiles = ['.env', 'db_schema.sql', 'package.json', 'package-lock.json', 'server.js'];
     const fileName = path.basename(filePath);
-    
+
     if (sensitiveFiles.includes(fileName) || fileName.startsWith('.')) {
         console.warn(`[403] Acceso prohibido a archivo sensible: ${normalizedPath}`);
         res.writeHead(403, { 'Content-Type': 'text/plain' });
