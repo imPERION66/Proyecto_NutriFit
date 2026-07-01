@@ -1040,6 +1040,11 @@ document.addEventListener("click",(e)=>{
         const isSubFolder = window.location.pathname.includes("/pages/") || window.location.pathname.includes("/admin/");
         const basePath = isSubFolder ? "../" : "./";
 
+        // Suscribirse a notificaciones de respuestas a reclamos en tiempo real
+        setTimeout(() => {
+            escucharRespuestasReclamosCliente(usuario.id, basePath);
+        }, 1000);
+
         let opcionesMenu = `
             <a href="${basePath}pages/perfil.html">Mi Perfil</a>
             <a href="${basePath}pages/mis_pedidos.html">Mis Pedidos</a>
@@ -1489,3 +1494,112 @@ function verificarEstadoDeudorUsuario() {
 // Escuchar cambios de estado para actualizar la UI en vivo
 window.addEventListener("nf_clientes_estado_modificado", verificarEstadoDeudorUsuario);
 });
+
+/**
+ * Escucha en tiempo real (Supabase Realtime) las respuestas a los reclamos del usuario
+ */
+function escucharRespuestasReclamosCliente(usuarioId, basePath) {
+    if (window.supabaseClient) {
+        window.supabaseClient
+            .channel('respuestas-reclamos-' + usuarioId)
+            .on(
+                'postgres_changes',
+                {
+                    event: 'UPDATE',
+                    schema: 'public',
+                    table: 'reclamos',
+                    filter: `usuario_id=eq.${usuarioId}`
+                },
+                (payload) => {
+                    console.log('Cliente Realtime: Reclamo actualizado:', payload.new);
+                    const reclamo = payload.new;
+                    
+                    if (reclamo.estado === 'resuelto') {
+                        // Extraer la respuesta del administrador de la columna detalle
+                        let respuestaText = "Tu sugerencia ha sido resuelta.";
+                        const parts = reclamo.detalle.split('\n[Respuesta del Administrador]: ');
+                        if (parts.length > 1) {
+                            respuestaText = parts[1].trim();
+                        }
+                        
+                        // Encontrar la orden asociada a este reclamo
+                        let orderId = "";
+                        const match = reclamo.detalle.match(/Pedido\s+#([A-Za-z0-9-]+)/i);
+                        if (match && match[1]) {
+                            const shortId = match[1].toUpperCase();
+                            const orders = JSON.parse(localStorage.getItem("nf_orders") || "[]");
+                            const found = orders.find(o => o.id.toUpperCase().startsWith(shortId) || o.id.slice(0, 8).toUpperCase() === shortId);
+                            if (found) {
+                                orderId = found.id;
+                            }
+                        }
+
+                        const msg = `NutriFit ha respondido a tu sugerencia. ¡Haz clic para ver la solución!`;
+                        const notifId = `notif-res-${reclamo.id}`;
+                        const notifs = JSON.parse(localStorage.getItem("nf_notifications") || "[]");
+                        
+                        // Evitar agregar duplicados
+                        if (!notifs.some(n => n.id === notifId)) {
+                            notifs.unshift({
+                                id: notifId,
+                                tipo: "respuesta_reclamo",
+                                mensaje: msg,
+                                leida: false,
+                                fecha: new Date().toISOString(),
+                                pedidoId: orderId || reclamo.id,
+                                respuestaText: respuestaText
+                            });
+                            localStorage.setItem("nf_notifications", JSON.stringify(notifs));
+                            
+                            // Mostrar toast aesthetic al cliente
+                            if (typeof window.mostrarToastAesthetic === 'function') {
+                                window.mostrarToastAesthetic(msg, "exito");
+                            } else {
+                                alert(msg);
+                            }
+                            
+                            // Actualizar la interfaz del navbar
+                            const badge = document.getElementById("notif-badge-count");
+                            if (badge) {
+                                const unreadCount = notifs.filter(n => !n.leida).length;
+                                if (unreadCount > 0) {
+                                    badge.textContent = unreadCount;
+                                    badge.style.display = "flex";
+                                } else {
+                                    badge.style.display = "none";
+                                }
+                            }
+                            
+                            // Si el dropdown de notificaciones está visible, re-renderizarlo
+                            const dropdownList = document.getElementById("notif-dropdown-list");
+                            if (dropdownList && dropdownList.offsetParent !== null) {
+                                dropdownList.innerHTML = notifs.map(n => {
+                                    const isUnread = !n.leida;
+                                    const dateObj = new Date(n.fecha);
+                                    const timeStr = isNaN(dateObj.getTime()) ? "" : dateObj.toLocaleTimeString("es-PE", { hour: '2-digit', minute: '2-digit' });
+                                    let iconClass = "fa-solid fa-envelope-open-text";
+                                    let iconColor = "#2b7a78";
+                                    
+                                    return `
+                                        <div class="notif-item ${isUnread ? 'unread' : ''}" onclick="clicNotificacion('${n.id}', '${basePath}')">
+                                            <div class="notif-item__icon-wrapper" style="background-color: ${iconColor}15; color: ${iconColor};">
+                                                <i class="${iconClass}"></i>
+                                            </div>
+                                            <div class="notif-item__content">
+                                                <p class="notif-item__text">${n.mensaje}</p>
+                                                <span class="notif-item__time">${timeStr}</span>
+                                            </div>
+                                            ${isUnread ? '<span class="unread-dot"></span>' : ''}
+                                        </div>
+                                    `;
+                                }).join("");
+                            }
+                        }
+                    }
+                }
+            )
+            .subscribe();
+            
+        console.log("NutriFit: Suscrito a respuestas de reclamos en tiempo real.");
+    }
+}

@@ -434,3 +434,13 @@ function mostrarToast(mensaje, tipo = "success") {
 window.toggleEstadoCliente = toggleEstadoCliente;
 window.abrirModalPago = abrirModalPago;
 window.actualizarVistaClientes = actualizarVistaClientes;
+
+// Cargar notificaciones en tiempo real del administrador de forma dinámica
+(function() {
+  if (!document.getElementById('admin-notif-script')) {
+    const script = document.createElement('script');
+    script.id = 'admin-notif-script';
+    script.src = 'js/admin-notifications.js';
+    document.body.appendChild(script);
+  }
+})();

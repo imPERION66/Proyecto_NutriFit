@@ -353,3 +353,13 @@ function showToast(message, type = "exito") {
 
 // Exponer a nivel global para compatibilidad con onclicks
 window.responderReclamoTabla = responderReclamoTabla;
+
+// Cargar notificaciones en tiempo real del administrador de forma dinámica
+(function() {
+  if (!document.getElementById('admin-notif-script')) {
+    const script = document.createElement('script');
+    script.id = 'admin-notif-script';
+    script.src = 'js/admin-notifications.js';
+    document.body.appendChild(script);
+  }
+})();

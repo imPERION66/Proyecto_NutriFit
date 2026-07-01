@@ -212,10 +212,14 @@
         <textarea id="plato-descripcion" rows="3" placeholder="Ingredientes claves y beneficios..." required></textarea>
       </div>
 
-      <div class="form-row-2">
+      <div class="form-row-3">
         <div class="grupo-campo">
-          <label for="plato-precio">Precio (S/) <span class="req">*</span></label>
+          <label for="plato-precio">Precio Base (S/) <span class="req">*</span></label>
           <input type="number" id="plato-precio" step="0.10" min="1" placeholder="0.00" required>
+        </div>
+        <div class="grupo-campo">
+          <label for="plato-descuento">Porcentaje de Descuento (%) <span class="req">*</span></label>
+          <input type="number" id="plato-descuento" min="0" max="100" placeholder="0" value="0" required>
         </div>
         <div class="grupo-campo">
           <label for="plato-imagen">Ruta / URL de la Imagen</label>

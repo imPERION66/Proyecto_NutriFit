@@ -24,6 +24,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     
     // 4. Renderizar el catálogo por primera vez
     renderCatalog();
+
+    // 5. Suscribirse a cambios de platos en tiempo real
+    suscribirseCambiosStock();
 });
 
 /**
@@ -64,9 +67,21 @@ async function cargarPlatos() {
                 proteina: p.proteina,
                 carbohidratos: p.carbohidratos,
                 precio: parseFloat(p.precio || 0),
+                precio_original: p.precio_original ? parseFloat(p.precio_original) : parseFloat(p.precio || 0),
                 image_path: p.imagen_url,
-                descuento: calcularDescuentoPlato(p.id)
+                descuento: p.descuento || 0
             }));
+            
+            // Sincronizar inventario local (stock/estado) desde Supabase
+            const inventario = JSON.parse(localStorage.getItem("nf_inventario") || "{}");
+            data.forEach(p => {
+                inventario[p.id] = {
+                    stock: p.stock !== undefined && p.stock !== null ? p.stock : (inventario[p.id]?.stock || 10),
+                    estado: p.estado || (inventario[p.id]?.estado || "Disponible")
+                };
+            });
+            localStorage.setItem("nf_inventario", JSON.stringify(inventario));
+            
             console.log("NutriFit: Catálogo cargado exitosamente desde Supabase.");
         } else {
             throw new Error("Supabase client no definido.");
@@ -85,6 +100,7 @@ async function cargarPlatos() {
                 proteina: p.proteina,
                 carbohidratos: p.carbohidratos,
                 precio: p.precio,
+                precio_original: p.precio,
                 image_path: p.image_path,
                 descuento: calcularDescuentoPlato(p.id)
             }));
@@ -208,17 +224,11 @@ function renderCatalog() {
         // Descripción dinámica del plato (macros)
         const descriptionText = `Disfruta de este delicioso plato elaborado con insumos frescos. Aporta ${plato.kcal} Kcal, con ${plato.proteina}g de proteína magra y ${plato.carbohidratos}g de carbohidratos saludables.`;
 
-        // Sistema de ofertas
+        // Sistema de ofertas (desde la base de datos)
         const precioActual = plato.precio;
         const hasDiscount = (plato.descuento && plato.descuento > 0);
-        let precioOriginal = precioActual;
-        if (hasDiscount) {
-            if (plato.descuento === 20) {
-                precioOriginal = precioActual * 1.25;
-            } else {
-                precioOriginal = precioActual / (1 - (plato.descuento / 100));
-            }
-        }
+        const precioOriginal = plato.precio_original || precioActual;
+        const discountPercentage = plato.descuento || 0;
 
         const infoStock = inventario[plato.id] || { stock: 10, estado: "Disponible" };
         const isAgotado = infoStock.estado === "Agotado" || infoStock.stock <= 0;
@@ -226,7 +236,7 @@ function renderCatalog() {
         const badgeAgotado = isAgotado ? `<span class="badge-agotado-flotante">AGOTADO</span>` : "";
 
         const discountBadgeHtml = (hasDiscount && !isAgotado) 
-            ? `<span class="descuento-tag-flotante">-${plato.descuento}%</span>` 
+            ? `<span class="descuento-tag-flotante">-${discountPercentage}%</span>` 
             : "";
 
         const priceHtml = hasDiscount
@@ -234,7 +244,7 @@ function renderCatalog() {
                     <div class="precio-actual">S/ ${precioActual.toFixed(2)}</div>
                     <div class="precio-antes-row">
                         <span class="precio-antes">S/ ${precioOriginal.toFixed(2)}</span>
-                        <span class="descuento-tag">-${plato.descuento}%</span>
+                        <span class="descuento-tag">-${discountPercentage}%</span>
                     </div>
                </div>`
             : `<div class="precio-container">
@@ -457,3 +467,48 @@ document.addEventListener("click", (e) => {
         localStorage.setItem("nf_favorites", JSON.stringify(favorites));
     }
 });
+
+/**
+ * Escucha cambios de la tabla 'platos' en tiempo real vía Supabase Realtime.
+ */
+function suscribirseCambiosStock() {
+    if (window.supabaseClient) {
+        window.supabaseClient
+            .channel('cambios-platos-realtime')
+            .on(
+                'postgres_changes',
+                {
+                    event: 'UPDATE',
+                    schema: 'public',
+                    table: 'platos'
+                },
+                (payload) => {
+                    console.log('Cambio recibido en tiempo real para plato:', payload.new);
+                    const platoActualizado = payload.new;
+                    
+                    // Actualizar el catálogo de platos en memoria
+                    const idx = catalogPlatos.findIndex(p => p.id === platoActualizado.id);
+                    if (idx > -1) {
+                        catalogPlatos[idx].precio = parseFloat(platoActualizado.precio || 0);
+                        catalogPlatos[idx].precio_original = platoActualizado.precio_original ? parseFloat(platoActualizado.precio_original) : parseFloat(platoActualizado.precio || 0);
+                        catalogPlatos[idx].descuento = platoActualizado.descuento || 0;
+                    }
+                    
+                    // Actualizar el inventario local
+                    const inventario = JSON.parse(localStorage.getItem("nf_inventario") || "{}");
+                    inventario[platoActualizado.id] = {
+                        stock: platoActualizado.stock !== undefined && platoActualizado.stock !== null ? platoActualizado.stock : (inventario[platoActualizado.id]?.stock || 10),
+                        estado: platoActualizado.estado || (inventario[platoActualizado.id]?.estado || 'Disponible')
+                    };
+                    localStorage.setItem("nf_inventario", JSON.stringify(inventario));
+                    
+                    // Re-renderizar el catálogo sin necesidad de recargar la página entera
+                    renderCatalog();
+                }
+            )
+            .subscribe();
+            
+        console.log("NutriFit: Suscrito exitosamente a cambios de stock en tiempo real.");
+    }
+}
+

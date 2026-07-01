@@ -1,0 +1,96 @@
+/* =========================================================================
+   ESTILOS PARA EL GLOBO DE NOTIFICACIÓN DEL ADMINISTRADOR - NUTRIFIT
+   ========================================================================= */
+
+.admin-notif-balloon {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-left: 5px solid #2b7a78;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+    padding: 16px 20px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    z-index: 10000;
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: pointer;
+    max-width: 380px;
+    border: 1px solid rgba(43, 122, 120, 0.15);
+}
+
+.admin-notif-balloon.show {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.admin-notif-balloon:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 35px rgba(43, 122, 120, 0.2);
+    background: #ffffff;
+}
+
+.admin-notif-icon-box {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+}
+
+.admin-notif-icon-box.claim {
+    background-color: rgba(43, 122, 120, 0.1);
+    color: #2b7a78;
+}
+
+.admin-notif-icon-box.order {
+    background-color: rgba(2, 132, 199, 0.1);
+    color: #0284c7;
+}
+
+.admin-notif-content {
+    flex: 1;
+}
+
+.admin-notif-title {
+    font-weight: 700;
+    font-size: 14px;
+    margin: 0 0 4px 0;
+    color: #1a1a1a;
+    font-family: 'DM Sans', sans-serif;
+}
+
+.admin-notif-desc {
+    font-size: 12px;
+    margin: 0;
+    color: #555555;
+    line-height: 1.4;
+    font-family: 'DM Sans', sans-serif;
+}
+
+.admin-notif-close {
+    background: none;
+    border: none;
+    color: #999999;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 4px;
+    line-height: 1;
+    transition: color 0.2s;
+    flex-shrink: 0;
+    align-self: flex-start;
+    margin-top: -2px;
+}
+
+.admin-notif-close:hover {
+    color: #333333;
+}

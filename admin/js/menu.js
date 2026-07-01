@@ -118,8 +118,22 @@ async function cargarPlatosBase() {
         proteina: p.proteina,
         carbohidratos: p.carbohidratos,
         precio: parseFloat(p.precio || 0),
+        precio_original: p.precio_original ? parseFloat(p.precio_original) : parseFloat(p.precio || 0),
+        descuento: p.descuento || 0,
         image_path: p.imagen_url
       }));
+
+      // Sincronizar inventario local con los valores de la base de datos
+      data.forEach(p => {
+        if (p.stock !== undefined && p.stock !== null) {
+          inventario[p.id] = {
+            stock: p.stock,
+            estado: p.estado || "Disponible"
+          };
+        }
+      });
+      localStorage.setItem("nf_inventario", JSON.stringify(inventario));
+
       console.log("NutriFit Admin: Platos cargados exitosamente desde Supabase.");
     } else {
       throw new Error("Cliente de Supabase no disponible.");
@@ -245,7 +259,8 @@ function abrirModalPlato(platoId = null) {
       document.getElementById("form-plato-id").value = plato.id;
       document.getElementById("plato-nombre").value = plato.name;
       document.getElementById("plato-descripcion").value = plato.desc || plato.descripcion || `Delicioso plato de la categoría ${plato.category}.`;
-      document.getElementById("plato-precio").value = plato.precio;
+      document.getElementById("plato-precio").value = plato.precio_original || plato.precio;
+      document.getElementById("plato-descuento").value = plato.descuento || 0;
       document.getElementById("plato-imagen").value = plato.image_path;
       document.getElementById("plato-categoria").value = plato.category;
       document.getElementById("plato-objetivo").value = plato.goal;
@@ -256,6 +271,7 @@ function abrirModalPlato(platoId = null) {
   } else {
     titulo.textContent = "Agregar Nuevo Plato";
     document.getElementById("form-plato-id").value = "";
+    document.getElementById("plato-descuento").value = 0;
     document.getElementById("plato-imagen").value = "../assets/img/platos/defecto.jpg";
   }
 
@@ -321,11 +337,17 @@ function guardarFormularioPlato(e) {
     }
   }
 
+  const descuentoVal = parseInt(document.getElementById("plato-descuento").value) || 0;
+  const precioOriginal = precio;
+  const precioRebajado = precioOriginal * (1 - descuentoVal / 100);
+
   const platoObjeto = {
     id: platoId,
     name,
     desc,
-    precio,
+    precio: parseFloat(precioRebajado.toFixed(2)),
+    precio_original: parseFloat(precioOriginal.toFixed(2)),
+    descuento: descuentoVal,
     image_path,
     category,
     goal,
@@ -350,12 +372,48 @@ function guardarFormularioPlato(e) {
   }
 
   localStorage.setItem("nf_platos_custom", JSON.stringify(customPlatos));
-  
-  // Sincronizar inmediatamente
-  cargarPlatosBase().then(() => {
-    actualizarVistaCarta();
-    cerrarModalPlato();
-  });
+
+  // Guardar en la base de datos Supabase
+  if (window.supabaseClient) {
+    const platoDB = {
+      id: platoId,
+      nombre: name,
+      categoria: category,
+      objetivo: goal,
+      kcal: kcal,
+      proteina: proteina,
+      carbohidratos: carbohidratos,
+      precio: parseFloat(precioRebajado.toFixed(2)),
+      precio_original: parseFloat(precioOriginal.toFixed(2)),
+      descuento: descuentoVal,
+      imagen_url: image_path,
+      activo: true,
+      stock: id ? (inventario[id]?.stock || 10) : 10,
+      estado: id ? (inventario[id]?.estado || "Disponible") : "Disponible"
+    };
+
+    supabaseClient
+      .from("platos")
+      .upsert([platoDB])
+      .then(({ error }) => {
+        if (error) {
+          console.error("Error al guardar plato en Supabase:", error);
+          mostrarToast("Error al guardar en base de datos.", "error");
+        } else {
+          console.log("Plato guardado exitosamente en Supabase.");
+        }
+        cargarPlatosBase().then(() => {
+          actualizarVistaCarta();
+          cerrarModalPlato();
+        });
+      });
+  } else {
+    // Sincronizar inmediatamente en modo local
+    cargarPlatosBase().then(() => {
+      actualizarVistaCarta();
+      cerrarModalPlato();
+    });
+  }
 }
 
 /**
@@ -376,6 +434,22 @@ function guardarFormularioInventario(e) {
   // Guardar en la estructura global
   inventario[id] = { stock, estado };
   guardarInventarioEnStorage();
+
+  // Guardar en Supabase
+  if (window.supabaseClient) {
+    supabaseClient
+      .from("platos")
+      .update({ stock, estado })
+      .eq("id", id)
+      .then(({ error }) => {
+        if (error) {
+          console.error("Error al actualizar inventario en Supabase:", error);
+          mostrarToast("Error al guardar en base de datos.", "error");
+        } else {
+          console.log("Inventario actualizado en Supabase.");
+        }
+      });
+  }
 
   mostrarToast("Inventario actualizado correctamente.");
   
@@ -535,3 +609,14 @@ window.abrirModalInventario = abrirModalInventario;
 window.actualizarVistaCarta = actualizarVistaCarta;
 window.guardarFormularioPlato = guardarFormularioPlato;
 window.guardarFormularioInventario = guardarFormularioInventario;
+
+// Cargar notificaciones en tiempo real del administrador de forma dinámica
+(function() {
+  if (!document.getElementById('admin-notif-script')) {
+    const script = document.createElement('script');
+    script.id = 'admin-notif-script';
+    script.src = 'js/admin-notifications.js';
+    document.body.appendChild(script);
+  }
+})();
+

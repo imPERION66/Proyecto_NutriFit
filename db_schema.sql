@@ -41,6 +41,10 @@ create table if not exists public.platos (
     precio numeric(10,2) not null,
     imagen_url text not null,
     activo boolean default true,
+    stock integer default 10,
+    estado text default 'Disponible',
+    descuento integer default 0,
+    precio_original numeric(10,2),
     fecha_creacion timestamp with time zone default now()
 );
 
@@ -348,4 +352,22 @@ create policy "Permitir a administradores gestionar todas las tarjetas" on publi
 
 -- Otorgar privilegios a la nueva tabla
 grant all privileges on public.tarjetas_usuario to anon, authenticated;
+
+
+-- =========================================================================
+-- MIGRACIONES Y CONFIGURACIÓN REALTIME PARA PLATOS (NUEVAS COLUMNAS)
+-- =========================================================================
+
+-- Sentencias ALTER para bases de datos existentes
+ALTER TABLE public.platos ADD COLUMN IF NOT EXISTS stock integer DEFAULT 10;
+ALTER TABLE public.platos ADD COLUMN IF NOT EXISTS estado text DEFAULT 'Disponible';
+ALTER TABLE public.platos ADD COLUMN IF NOT EXISTS descuento integer DEFAULT 0;
+ALTER TABLE public.platos ADD COLUMN IF NOT EXISTS precio_original numeric(10,2);
+
+-- Actualizar precio_original con el valor de precio para platos antiguos
+UPDATE public.platos SET precio_original = precio WHERE precio_original IS NULL;
+
+-- Habilitar replicación de tiempo real (Realtime) para la tabla de platos
+alter publication supabase_realtime add table public.platos;
+
 
