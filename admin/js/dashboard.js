@@ -128,15 +128,18 @@ function initLogoutButton() {
  * Destruye la sesión del administrador y lo redirige a la página principal.
  */
 async function logoutAdmin() {
-  localStorage.removeItem("nf_session");
-  if (window.supabaseClient) {
-    try {
-      await supabaseClient.auth.signOut();
-    } catch (err) {
-      console.error("Error al cerrar sesión en Supabase:", err);
+  if (confirm("¿Estás seguro de que deseas cerrar sesión?")) {
+    localStorage.removeItem("nf_session");
+    alert("Sesión cerrada correctamente.");
+    if (window.supabaseClient) {
+      try {
+        await supabaseClient.auth.signOut();
+      } catch (err) {
+        console.error("Error al cerrar sesión en Supabase:", err);
+      }
     }
+    window.location.replace("../index.html");
   }
-  window.location.replace("../index.html");
 }
 
 /**

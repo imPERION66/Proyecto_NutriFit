@@ -502,8 +502,72 @@ function suscribirseCambiosStock() {
                     };
                     localStorage.setItem("nf_inventario", JSON.stringify(inventario));
                     
-                    // Re-renderizar el catálogo sin necesidad de recargar la página entera
-                    renderCatalog();
+                    // Actualizar la interfaz del plato modificado en el DOM de forma inmediata
+                    const id = platoActualizado.id;
+                    const estado = platoActualizado.estado || 'Disponible';
+                    const stock = platoActualizado.stock;
+                    const isAgotado = estado === 'Agotado' || (stock !== undefined && stock <= 0);
+                    
+                    // Buscar los elementos contenedores de este plato
+                    const cards = document.querySelectorAll(`article[data-id="${id}"], .plato-card[data-id="${id}"]`);
+                    
+                    // Determinar si el usuario logueado es deudor
+                    const session = JSON.parse(localStorage.getItem("nf_session") || "null");
+                    let isDeudor = false;
+                    if (session && session.id_rol !== 1) {
+                        const clientesEstado = JSON.parse(localStorage.getItem("nf_clientes_estado") || "{}");
+                        const estadoInfo = clientesEstado[session.id];
+                        if (estadoInfo && estadoInfo.estado === "Deudor") {
+                            isDeudor = true;
+                        }
+                    }
+
+                    cards.forEach(card => {
+                        // Cambiar clase de diseño
+                        if (isAgotado) {
+                            card.classList.add("agotado");
+                        } else {
+                            card.classList.remove("agotado");
+                        }
+                        
+                        // Añadir o remover etiqueta visual de AGOTADO
+                        const imgContainer = card.querySelector(".plato-img-container, .plato-imagen");
+                        if (imgContainer) {
+                            let badge = imgContainer.querySelector(".badge-agotado-flotante");
+                            if (isAgotado) {
+                                if (!badge) {
+                                    imgContainer.insertAdjacentHTML("afterbegin", `<span class="badge-agotado-flotante">AGOTADO</span>`);
+                                }
+                            } else {
+                                if (badge) {
+                                    badge.remove();
+                                }
+                            }
+                        }
+                        
+                        // Deshabilitar o restaurar los botones de agregar/comprar
+                        const buttons = card.querySelectorAll(".btn-agregar, .btn-comprar, .btn-catalog-action-icon, .btn-catalog-action");
+                        buttons.forEach(btn => {
+                            if (isAgotado) {
+                                btn.disabled = true;
+                                btn.style.opacity = "0.5";
+                                btn.style.cursor = "not-allowed";
+                                btn.style.pointerEvents = "none";
+                            } else {
+                                if (isDeudor) {
+                                    btn.disabled = true;
+                                    btn.style.opacity = "0.5";
+                                    btn.style.cursor = "not-allowed";
+                                    btn.style.pointerEvents = "none";
+                                } else {
+                                    btn.disabled = false;
+                                    btn.style.opacity = "";
+                                    btn.style.cursor = "";
+                                    btn.style.pointerEvents = "";
+                                }
+                            }
+                        });
+                    });
                 }
             )
             .subscribe();

@@ -1493,6 +1493,9 @@ function verificarEstadoDeudorUsuario() {
 
 // Escuchar cambios de estado para actualizar la UI en vivo
 window.addEventListener("nf_clientes_estado_modificado", verificarEstadoDeudorUsuario);
+
+// Suscribirse a cambios de platos (stock/estado) en tiempo real
+suscribirseCambiosStockIndex();
 });
 
 /**
@@ -1601,5 +1604,105 @@ function escucharRespuestasReclamosCliente(usuarioId, basePath) {
             .subscribe();
             
         console.log("NutriFit: Suscrito a respuestas de reclamos en tiempo real.");
+    }
+}
+
+/**
+ * Escucha cambios de la tabla 'platos' en tiempo real vía Supabase Realtime para la página de inicio.
+ */
+function suscribirseCambiosStockIndex() {
+    if (window.supabaseClient) {
+        window.supabaseClient
+            .channel('cambios-platos-realtime-index')
+            .on(
+                'postgres_changes',
+                {
+                    event: 'UPDATE',
+                    schema: 'public',
+                    table: 'platos'
+                },
+                (payload) => {
+                    console.log('Cliente Index Realtime: Cambio recibido para plato:', payload.new);
+                    const platoActualizado = payload.new;
+                    
+                    // Actualizar el inventario local en localStorage
+                    const inventario = JSON.parse(localStorage.getItem("nf_inventario") || "{}");
+                    inventario[platoActualizado.id] = {
+                        stock: platoActualizado.stock !== undefined && platoActualizado.stock !== null ? platoActualizado.stock : (inventario[platoActualizado.id]?.stock || 10),
+                        estado: platoActualizado.estado || (inventario[platoActualizado.id]?.estado || 'Disponible')
+                    };
+                    localStorage.setItem("nf_inventario", JSON.stringify(inventario));
+                    
+                    // Lógica de actualización inmediata en la interfaz sin recargar
+                    const id = platoActualizado.id;
+                    const estado = platoActualizado.estado || 'Disponible';
+                    const stock = platoActualizado.stock;
+                    const isAgotado = estado === 'Agotado' || (stock !== undefined && stock <= 0);
+                    
+                    // Buscar los elementos contenedores de este plato
+                    const cards = document.querySelectorAll(`article[data-id="${id}"], .plato-card[data-id="${id}"]`);
+                    
+                    // Determinar si el usuario logueado es deudor
+                    const session = JSON.parse(localStorage.getItem("nf_session") || "null");
+                    let isDeudor = false;
+                    if (session && session.id_rol !== 1) {
+                        const clientesEstado = JSON.parse(localStorage.getItem("nf_clientes_estado") || "{}");
+                        const estadoInfo = clientesEstado[session.id];
+                        if (estadoInfo && estadoInfo.estado === "Deudor") {
+                            isDeudor = true;
+                        }
+                    }
+
+                    cards.forEach(card => {
+                        // Cambiar clase de diseño
+                        if (isAgotado) {
+                            card.classList.add("agotado");
+                        } else {
+                            card.classList.remove("agotado");
+                        }
+                        
+                        // Añadir o remover etiqueta visual de AGOTADO
+                        const imgContainer = card.querySelector(".plato-img-container, .plato-imagen");
+                        if (imgContainer) {
+                            let badge = imgContainer.querySelector(".badge-agotado-flotante");
+                            if (isAgotado) {
+                                if (!badge) {
+                                    imgContainer.insertAdjacentHTML("afterbegin", `<span class="badge-agotado-flotante">AGOTADO</span>`);
+                                }
+                            } else {
+                                if (badge) {
+                                    badge.remove();
+                                }
+                            }
+                        }
+                        
+                        // Deshabilitar o restaurar los botones de agregar/comprar
+                        const buttons = card.querySelectorAll(".btn-agregar, .btn-comprar, .btn-catalog-action-icon, .btn-catalog-action");
+                        buttons.forEach(btn => {
+                            if (isAgotado) {
+                                btn.disabled = true;
+                                btn.style.opacity = "0.5";
+                                btn.style.cursor = "not-allowed";
+                                btn.style.pointerEvents = "none";
+                            } else {
+                                if (isDeudor) {
+                                    btn.disabled = true;
+                                    btn.style.opacity = "0.5";
+                                    btn.style.cursor = "not-allowed";
+                                    btn.style.pointerEvents = "none";
+                                } else {
+                                    btn.disabled = false;
+                                    btn.style.opacity = "";
+                                    btn.style.cursor = "";
+                                    btn.style.pointerEvents = "";
+                                }
+                            }
+                        });
+                    });
+                }
+            )
+            .subscribe();
+            
+        console.log("NutriFit: Suscrito a cambios de stock en tiempo real (Página de Inicio).");
     }
 }
