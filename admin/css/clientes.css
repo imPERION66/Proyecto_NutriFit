@@ -275,14 +275,15 @@
   top: 3px;
   left: 3px;
   transition: transform 0.3s;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
 }
 
-.switch-input:checked + .switch-track {
-  background-color: #e53935; /* Toggle rojo para advertencia de deudor */
+.switch-input:checked+.switch-track {
+  background-color: #e53935;
+  /* Toggle rojo para advertencia de deudor */
 }
 
-.switch-input:checked + .switch-track .switch-thumb {
+.switch-input:checked+.switch-track .switch-thumb {
   transform: translateX(22px);
 }
 
@@ -405,6 +406,7 @@
     flex-direction: column;
     align-items: stretch;
   }
+
   .toolbar-clientes .search-box {
     min-width: 100%;
   }
