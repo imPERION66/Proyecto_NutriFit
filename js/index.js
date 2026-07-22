@@ -686,6 +686,19 @@ async function renderizarRecomendados() {
 
         if (error) throw error;
         platos = data;
+
+        // Sincronizar inventario local (stock/estado) desde Supabase
+        const inventario = JSON.parse(localStorage.getItem("nf_inventario") || "{}");
+        data.forEach(p => {
+            inventario[p.id] = {
+                stock: p.stock !== undefined && p.stock !== null ? p.stock : (inventario[p.id]?.stock || 10),
+                estado: p.estado || (inventario[p.id]?.estado || "Disponible")
+            };
+        });
+        localStorage.setItem("nf_inventario", JSON.stringify(inventario));
+
+        // Re-renderizar populares con el inventario fresco desde la base de datos
+        renderizarPopulares();
     } catch (err) {
         console.warn("No se pudieron cargar los platos desde Supabase, usando locales.", err);
         platos = menuPlatos.slice(0, 15);
